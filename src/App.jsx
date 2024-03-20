@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import History from './pages/student/history/history'
+import FeeRate from './pages/student/feeRate/feeRate'
 
 
 
@@ -16,6 +17,7 @@ function App() {
     <>
       <div>
         <History />
+        <FeeRate/>
       </div>
     </>
   )
