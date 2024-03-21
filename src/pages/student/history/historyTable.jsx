@@ -9,30 +9,30 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-const invoices = [
+const table = [
     {
-        invoice: "01",
-        paymentStatus: "Application ID:",
-        totalAmount: "See Details",
-        paymentMethod: "00001",
+        serial: "01",
+        application: "Application ID:",
+        details: "See Details",
+        applicationID: "00001",
     },
     {
-        invoice: "02",
-        paymentStatus: "Application ID:",
-        totalAmount: "See Details",
-        paymentMethod: "00002",
+        serial: "02",
+        application: "Application ID:",
+        details: "See Details",
+        applicationID: "00002",
     },
     {
-        invoice: "03",
-        paymentStatus: "Application ID:",
-        totalAmount: "See Details",
-        paymentMethod: "00003",
+        serial: "03",
+        application: "Application ID:",
+        details: "See Details",
+        applicationID: "00003",
     },
     {
-        invoice: "04",
-        paymentStatus: "Application ID:",
-        totalAmount: "See Details",
-        paymentMethod: "00004",
+        serial: "04",
+        application: "Application ID:",
+        details: "See Details",
+        applicationID: "00004",
     },
 ]
 
@@ -45,21 +45,21 @@ export function HistoryTable() {
                     <TableHead>Serial No</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Method</TableHead>
-                    <TableHead>Amount</TableHead>
+                    <TableHead>Details</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                        <TableCell className="font-medium text">{invoice.invoice}</TableCell>
-                        <TableCell className="text">{invoice.paymentStatus}</TableCell>
+                {table.map((serial) => (
+                    <TableRow key={serial.serial}>
+                        <TableCell className="font-medium text">{serial.serial}</TableCell>
+                        <TableCell className="text">{serial.application}</TableCell>
                         <TableCell>
                             <div style={{ border: "1px solid #000", borderRadius: "8px" }} >
-                                {invoice.paymentMethod}
+                                {serial.applicationID}
                             </div>
                         </TableCell>
-                        <TableCell className="text">
-                            <a href="#" style={{ textDecoration: "underline" }} >{invoice.totalAmount}</a>
+                        <TableCell>
+                            <a href="#" style={{ textDecoration: "underline" }} >{serial.details}</a>
                         </TableCell>
                     </TableRow>
                 ))}

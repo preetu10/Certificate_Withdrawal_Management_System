@@ -1,11 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import History from './pages/student/history/history'
-
-
-
+import Formfillup from './pages/student/formfillup/formfillup'
 
 
 
@@ -16,6 +12,7 @@ function App() {
     <>
       <div>
         <History />
+        <Formfillup></Formfillup>
       </div>
     </>
   )
