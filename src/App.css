@@ -77,3 +77,29 @@
   font-weight: 700;
   font-style: normal;
 }
+
+.rule {
+  margin-top: 30px;
+  text-align: justify;
+}
+
+.pagination {
+  margin-left: 450px;
+}
+
+.button_primary {
+  background-color: bisque;
+}
+
+.image {
+  margin: auto;
+  height: 150px;
+  width: 150px;
+}
+
+.form_heading{
+  background-color: #b8b2b2;
+  height: 100px;
+  width: 330px;
+  margin: auto;
+}

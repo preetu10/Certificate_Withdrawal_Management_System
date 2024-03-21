@@ -10,7 +10,7 @@ import {
 
 export function PaginationDemo() {
     return (
-        <div style={{  }}>
+        <div className="pagination">
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
