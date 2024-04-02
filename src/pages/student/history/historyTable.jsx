@@ -38,7 +38,7 @@ const table = [
 
 export function HistoryTable() {
     return (
-        <Table>
+        <Table >
             {/* <TableCaption>Your Applications</TableCaption> */}
             <TableHeader>
                 <TableRow>
