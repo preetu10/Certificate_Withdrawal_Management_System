@@ -1,6 +1,5 @@
-"use client";
 import React from 'react'
-
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,7 +27,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 
 
-const First_Section = () => {
+
+const Zero_section = () => {
     const profileFormSchema = z.object({
 
     });
@@ -52,9 +52,14 @@ const First_Section = () => {
             ),
         });
     }
-
     return (
         <Form {...form}>
+            <div className="hind-siliguri-regular">
+                <div className='mx-auto mt-10'>
+                    <img className='mx-auto w-24 h-30' src="cu_logo.png" alt="" />
+                    <h1 className='text-xl font-bold mt-5'>চট্টগ্রাম বিশ্ববিদ্যালয়</h1>
+                </div>
+            </div>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 hind-siliguri-regular">
                 <div className="lg:flex lg:justify-evenly lg:space-x-8">
                     <div className="lg:w-[590px]">
@@ -63,9 +68,9 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>শিক্ষার্থীর নাম (বাংলায়)</FormLabel>
+                                    <FormLabel>আবেদনপত্র গ্রহনের তারিখ</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="শিক্ষার্থীর নাম" required />
+                                        <Input placeholder="আবেদনপত্র গ্রহনের তারিখ" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -78,9 +83,9 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>(ইংরেজিতে)</FormLabel>
+                                    <FormLabel>সনদপত্র প্রদানের তারিখ</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="নাম" required />
+                                        <Input placeholder="সনদপত্র প্রদানের তারিখ" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -88,63 +93,47 @@ const First_Section = () => {
                         />
                     </div>
                 </div>
+                <FormField
+                    control={form.control}
+                    name="fathername"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>প্রভোস্ট / অধ্যক্ষ / বহিরাগত
+                                প্রার্থীর ক্ষেত্রে গেজেটেড অফিসার
+                                কর্তৃক সত্যায়িত ছবি এখানে সংযুক্ত
+                                করতে হবে (এক কপি)</FormLabel>
+                            <FormControl>
+                                <Input placeholder="ছবি" required />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <div className="lg:flex lg:justify-evenly lg:space-x-8">
-                    <div className="lg:w-[590px]">
-                        <FormField
-                            control={form.control}
-                            name="fathername"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>পিতার নাম (বাংলায়)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="পিতার নাম" required />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
                     <div className="lg:w-[590px]">
                         <FormField
                             control={form.control}
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>(ইংরেজিতে)</FormLabel>
+                                    <FormLabel>মূল সনদ ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="নাম" required />
+                                        <Input placeholder="মূল সনদ ফি" />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
                     </div>
-                </div>
-                <div className="lg:flex lg:justify-evenly lg:space-x-8">
                     <div className="lg:w-[590px]">
                         <FormField
                             control={form.control}
                             name="mothername"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>মাতার নাম (বাংলায়)</FormLabel>
+                                    <FormLabel>উস ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="মাতার নাম" required />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <div className="lg:w-[590px]">
-                        <FormField
-                            control={form.control}
-                            name=""
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>(ইংরেজিতে)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="নাম" required />
+                                        <Input placeholder="উস ফি" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -159,9 +148,9 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>গ্রাম</FormLabel>
+                                    <FormLabel>জরুরী ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="গ্রাম" required />
+                                        <Input placeholder="জরুরী ফি" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -174,14 +163,13 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>পোস্ট</FormLabel>
+                                    <FormLabel>ইংরেজিতে সাময়িক সনদ ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="পোস্ট" required />
+                                        <Input placeholder="ইংরেজিতে সাময়িক সনদ ফি" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
-                            )}
-                        />
+                            )} />
                     </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly lg:space-x-8">
@@ -191,9 +179,9 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>থানা</FormLabel>
+                                    <FormLabel>বাংলায় সাময়িক সনদ ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="থানা" required />
+                                        <Input placeholder="বাংলায় সাময়িক সনদ ফি" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -206,37 +194,100 @@ const First_Section = () => {
                             name=""
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>জেলা</FormLabel>
+                                    <FormLabel>মার্কশিট ফি</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="জেলা" required />
+                                        <Input placeholder="মার্কশিট ফি" required />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        />
-                    </div>
+                        /></div>
                 </div>
                 <FormField
                     control={form.control}
                     name=""
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>বর্তমান ঠিকানা</FormLabel>
+                            <FormLabel>ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক মোট টাকা </FormLabel>
                             <FormControl>
-                                <Input placeholder="ঠিকানা" required />
+                                <Input placeholder="ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক মোট টাকা" required />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <div className="lg:flex lg:justify-evenly lg:space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>ডি-ডি/ পে অডার নং</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="ডি-ডি/ পে অডার নং" required />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>টাকা</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="টাকা" required />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                </div>
+                <div className="lg:flex lg:justify-evenly lg:space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>তারিখ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="তারিখ" required />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>অগ্রণী ব্যাংক / জনতা ব্যাংক</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="অগ্রণী ব্যাংক / জনতা ব্যাংক" required />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                </div>
                 <FormField
                     control={form.control}
                     name=""
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>মোবাইল নং/টেলিফোন নং</FormLabel>
+                            <FormLabel>দায়িত্বপ্রাপ্ত কর্মকর্তার স্বাক্ষর</FormLabel>
                             <FormControl>
-                                <Input placeholder="মোবাইল নং" required />
+                                <Input placeholder="স্বাক্ষর" required />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -245,8 +296,7 @@ const First_Section = () => {
                 <Button type="submit">Go to next button</Button>
             </form>
         </Form>
-    );
-
+    )
 }
 
-export default First_Section
+export default Zero_section
