@@ -41,13 +41,12 @@ const table = [
 
 const Provost = () => {
     const handleStatusButtonClick = (status) => {
-        // Handle button click based on the status
         console.log(`Button clicked for status: ${status}`);
     };
 
     return (
         <div>
-            <h1 className='text-2xl font-bold my-10'>Applications for certificate withdrawal</h1>
+            <h1 className='text-2xl font-bold my-10'>Applications for certificate withdrawal(Provost)</h1>
             <Table>
                 <TableHeader>
                     <TableRow>

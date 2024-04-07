@@ -143,7 +143,7 @@ export function FeeTable() {
 
 
             <h1 className="text-xl font-bold">ফিসের হারঃ</h1>
-            <Table>
+            <Table className="">
                 <TableHeader className="hind-siliguri-regular">
                     <TableRow>
                         <TableHead>ক্রমিক নং</TableHead>
