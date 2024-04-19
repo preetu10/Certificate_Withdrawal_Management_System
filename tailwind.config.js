@@ -5,6 +5,7 @@ module.exports = {
     './pages/**/*.{js,jsx}',
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
+    "src/wels-components/**/*.{ts,tsx}",
     './src/**/*.{js,jsx}',
   ],
   // prefix: "yes",

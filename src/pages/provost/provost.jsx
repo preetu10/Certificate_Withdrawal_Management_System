@@ -14,28 +14,28 @@ const table = [
         application: "Student ID:",
         details: "See Details",
         statusButton: "Approve",
-        bgColor: "bg-green-500",
+        bgColor: "bg-success",
     },
     {
         serial: "02",
         application: "Student ID:",
         details: "See Details",
         statusButton: "Reject",
-        bgColor: "bg-red-600",
+        bgColor: "bg-destructive",
     },
     {
         serial: "03",
         application: "Student ID:",
         details: "See Details",
         statusButton: "Pending",
-        bgColor: "bg-yellow-400",
+        bgColor: "bg-warning",
     },
     {
         serial: "04",
         application: "Student ID:",
         details: "See Details",
         statusButton: "Approve",
-        bgColor: "bg-green-500",
+        bgColor: "bg-success",
     },
 ];
 
@@ -65,7 +65,7 @@ const Provost = () => {
                                 <a href="#" style={{ textDecoration: "underline" }}>{item.details}</a>
                             </TableCell>
                             <TableCell className="text">
-                                <button className={`p-2 rounded-lg ${item.bgColor}`} onClick={() => handleStatusButtonClick(item.statusButton)}>
+                                <button className={`p-2 rounded-lg ${item.bgColor} text-primary-foreground`} onClick={() => handleStatusButtonClick(item.statusButton)}>
                                     {item.statusButton}
                                 </button>
                             </TableCell>
