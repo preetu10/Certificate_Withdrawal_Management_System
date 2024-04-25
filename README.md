@@ -10,7 +10,9 @@
 - Create your own branch: (commands)
 
   1. `git checkout -b your_branchName`
-     (e.g.; git checkout -b simu) 2.`git push -u origin your_branchName` (e.g.; git push -u origin simu)
+     (e.g.; git checkout -b simu)
+
+  2. `git push -u origin your_branchName` (e.g.; git push -u origin simu)
 
 - For security, check all the branches: (command)
   `git branch`
