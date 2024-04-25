@@ -10,7 +10,7 @@ import {
 
 export function PaginationDemo() {
     return (
-        <div className="pagination">
+        <div className="pagination mx-auto mt-5">
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>

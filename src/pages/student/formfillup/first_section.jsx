@@ -55,7 +55,7 @@ const First_Section = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 hind-siliguri-regular">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-5 hind-siliguri-regular">
                 <div className="lg:flex lg:justify-evenly lg:space-x-8">
                     <div className="lg:w-[590px]">
                         <FormField
@@ -242,7 +242,6 @@ const First_Section = () => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Go to next button</Button>
             </form>
         </Form>
     );
