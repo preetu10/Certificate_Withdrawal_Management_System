@@ -9,22 +9,25 @@ const Progressbar = () => {
         <div>
             <ProcedureProgress showSerial={true} direction="horizontal">
                 <ProgressStep status="approved" icon={<Check />}>
-                    Order Received
+                    Student
                 </ProgressStep>
                 <ProgressStep status="approved" icon={<LoaderIcon />}>
-                    Order Processing
+                    Provost
                 </ProgressStep>
                 <ProgressStep status="cancelled" icon={<DollarSign />}>
-                    Payment Failed
+                    First Varifier
                 </ProgressStep>
                 <ProgressStep status="waiting" icon={<Package />}>
-                    Packaging
+                    Second Varifier
                 </ProgressStep>
                 <ProgressStep status="waiting" icon={<Truck />}>
-                    Shipment
+                    Section Incharge
                 </ProgressStep>
                 <ProgressStep status="waiting" icon={<PackageCheck />}>
-                    Delivered
+                    Exam Controller
+                </ProgressStep>
+                <ProgressStep status="waiting" icon={<PackageCheck />}>
+                    VC
                 </ProgressStep>
             </ProcedureProgress>;
         </div>

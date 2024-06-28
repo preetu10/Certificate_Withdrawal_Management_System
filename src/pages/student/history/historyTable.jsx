@@ -8,6 +8,15 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectLabel,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 const table = [
     {
@@ -38,38 +47,40 @@ const table = [
 
 export function HistoryTable() {
     return (
-        <Table >
-            {/* <TableCaption>Your Applications</TableCaption> */}
+        <Table className="border">
             <TableHeader>
-                <TableRow>
-                    <TableHead>Serial No</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead>Details</TableHead>
+                <TableRow >
+                    <TableHead className="text-center">Serial No</TableHead>
+                    <TableHead className="text-center">Certificate Type</TableHead>
+                    <TableHead className="text-center">Degree</TableHead>
+                    <TableHead className="text-center">Details</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {table.map((serial) => (
                     <TableRow key={serial.serial}>
-                        <TableCell className="font-medium text">{serial.serial}</TableCell>
-                        <TableCell className="text">{serial.application}</TableCell>
-                        <TableCell>
-                            <div style={{ border: "1px solid #000", borderRadius: "8px" }} >
-                                {serial.applicationID}
-                            </div>
-                        </TableCell>
-                        <TableCell>
-                            <a href="#" style={{ textDecoration: "underline" }} >{serial.details}</a>
+                        <TableCell className="text-center">{serial.serial}</TableCell>
+                        <TableCell className="text-center">{serial.application}</TableCell>
+                        <TableCell className="text-center">{serial.applicationID}</TableCell>
+                        <TableCell className="justify-center flex">
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="See details" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="applications" className="font-semibold">Applications</SelectItem>
+                                    <SelectItem value="form" className="font-semibold">Form</SelectItem>
+                                    <SelectGroup>
+                                        <SelectLabel className="font-semibold">Attachments</SelectLabel>
+                                        <SelectItem value="est" className="ml-5">Marksheet</SelectItem>
+                                        <SelectItem value="cst" className="ml-5">Photos</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
-            {/* <TableFooter>
-                <TableRow>
-                    <TableCell colSpan={3}>Total</TableCell>
-                    <TableCell className="text-right">$2,500.00</TableCell>
-                </TableRow>
-            </TableFooter> */}
         </Table>
 
     )

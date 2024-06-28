@@ -30,7 +30,7 @@ import { toast } from "@/components/ui/use-toast";
 
 const Third_Section = () => {
     const profileFormSchema = z.object({
-        
+
     });
 
     // This can come from your database or API.
@@ -66,20 +66,20 @@ const Third_Section = () => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 hind-siliguri-regular">
-            <FormField
+                <FormField
                     control={form.control}
                     name="username"
                     render={({ field }) => (
                         <FormItem>
-                            <FormDescription>
-                            ২. ডিগ্রী অনার্স/এম.বি.বি.এস./ইঞ্জিনিয়ারিং পরীক্ষা 
+                            <FormDescription className="mt-5 font-bold">
+                                ২. ডিগ্রী অনার্স/এম.বি.বি.এস./ইঞ্জিনিয়ারিং পরীক্ষা
                             </FormDescription>
                             <FormDescription>
-                            ক। ১ম বর্ষ/১ম প্রফেশনাল/বিষয়
+                                ক। ১ম বর্ষ/১ম প্রফেশনাল/বিষয়
                             </FormDescription>
                             <FormLabel>১ম বর্ষ/১ম প্রফেশনাল /বিষয়</FormLabel>
                             <FormControl>
-                                <Input placeholder="১ম বর্ষ/১ম প্রফেশনাল /বিষয়" required />
+                                <Input placeholder="১ম বর্ষ/১ম প্রফেশনাল /বিষয়"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -92,109 +92,109 @@ const Third_Section = () => {
                         <FormItem>
                             <FormLabel>হল/কলেজ</FormLabel>
                             <FormControl>
-                                <Input placeholder="হল/কলেজ" required/>
+                                <Input placeholder="হল/কলেজ"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার নাম</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার নাম" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                </div>
-                <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> রোল নং/আই. ডি . নং
-</FormLabel>
-                            <FormControl>
-                                <Input placeholder=" রোল নং/আই. ডি . নং
-" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                            <FormControl>
-                                <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার নাম</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার নাম"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="শিক্ষাবর্ষ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> রোল নং/আই. ডি . নং
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder=" রোল নং/আই. ডি . নং
+"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                <div className="lg:flex lg:justify-evenly space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="শিক্ষাবর্ষ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ "  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <FormField
                     control={form.control}
@@ -203,158 +203,158 @@ const Third_Section = () => {
                         <FormItem>
                             <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
                             <FormControl>
-                                <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" required/>
+                                <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-        <FormField
+                <FormField
                     control={form.control}
                     name=""
                     render={({ field }) => (
                         <FormItem>
                             <FormDescription>
-                            খ। ২য় বর্ষ/২য় প্রফেশনাল/বিষয়
+                                খ। ২য় বর্ষ/২য় প্রফেশনাল/বিষয়
                             </FormDescription>
                             <FormLabel>২য় বর্ষ/২য় প্রফেশনাল/বিষয়</FormLabel>
                             <FormControl>
-                                <Input placeholder="২য় বর্ষ/২য় প্রফেশনাল/বিষয়" required />
+                                <Input placeholder="২য় বর্ষ/২য় প্রফেশনাল/বিষয়"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>হল/কলেজ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="হল/কলেজ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার নাম</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার নাম" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                </div>
-                <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার বৎসর"required />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> রোল নং/আই. ডি . নং
-</FormLabel>
-                            <FormControl>
-                                <Input placeholder=" রোল নং/আই. ডি . নং
-" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>হল/কলেজ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="হল/কলেজ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার নাম</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার নাম"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                
-                                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                            <FormControl>
-                                <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                                </div>
-                                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="শিক্ষাবর্ষ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> রোল নং/আই. ডি . নং
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder=" রোল নং/আই. ডি . নং
+"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    <div className="lg:w-[590px]">
+
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="শিক্ষাবর্ষ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                <div className="lg:flex lg:justify-evenly space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ "  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <FormField
                     control={form.control}
@@ -362,145 +362,145 @@ const Third_Section = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormDescription>
-                            গ। ৩য় বর্ষ/৩য় প্রফেশনাল /বিষয়
+                                গ। ৩য় বর্ষ/৩য় প্রফেশনাল /বিষয়
                             </FormDescription>
                             <FormLabel>৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়</FormLabel>
                             <FormControl>
-                                <Input placeholder="৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়" required/>
+                                <Input placeholder="৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>হল/কলেজ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="হল/কলেজ" required />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার নাম</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার নাম" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                </div>
-                <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> রোল নং/আই. ডি . নং
-</FormLabel>
-                            <FormControl>
-                                <Input placeholder=" রোল নং/আই. ডি . নং
-" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>হল/কলেজ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="হল/কলেজ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার নাম</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার নাম"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                            <FormControl>
-                                <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="শিক্ষাবর্ষ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> রোল নং/আই. ডি . নং
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder=" রোল নং/আই. ডি . নং
+"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="শিক্ষাবর্ষ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                <div className="lg:flex lg:justify-evenly space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ "  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <FormField
                     control={form.control}
@@ -508,147 +508,146 @@ const Third_Section = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormDescription>
-                            ঘ। ৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়
+                                ঘ। ৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়
                             </FormDescription>
                             <FormLabel>৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়</FormLabel>
                             <FormControl>
-                                <Input placeholder="৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়" required />
+                                <Input placeholder="৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়"  />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>হল/কলেজ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="হল/কলেজ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার নাম</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার নাম" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                </div>
-                <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষার বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> রোল নং/আই. ডি . নং
-</FormLabel>
-                            <FormControl>
-                                <Input placeholder=" রোল নং/আই. ডি . নং
-" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>হল/কলেজ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="হল/কলেজ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার নাম</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার নাম"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                            <FormControl>
-                                <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="শিক্ষাবর্ষ" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষার বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> রোল নং/আই. ডি . নং
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input placeholder=" রোল নং/আই. ডি . নং
+"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
                 <div className="lg:flex lg:justify-evenly space-x-8">
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                            <FormControl>
-                                <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="শিক্ষাবর্ষ"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className="lg:w-[590px]">
-                <FormField
-                    control={form.control}
-                    name=""
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                            <FormControl>
-                                <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" required/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="lg:flex lg:justify-evenly space-x-8">
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ "  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="lg:w-[590px]">
+                        <FormField
+                            control={form.control}
+                            name=""
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর"  />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                </div>
-                <Button type="submit">Go to next button</Button>
             </form>
         </Form>
     );
