@@ -36,7 +36,6 @@ const Pdf = () => {
                 }
             });
         };
-
         renderPDFPage(page1Ref.current, 1);
         renderPDFPage(page2Ref.current, 2);
     };

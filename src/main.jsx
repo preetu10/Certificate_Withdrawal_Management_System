@@ -14,6 +14,10 @@ import Formfillup from './pages/student/formfillup/formfillup.jsx';
 import Pdf from './pages/PDF/pdf.jsx';
 import Payment from './pages/student/fee/payment.jsx';
 import Provost from './pages/provost/provost.jsx';
+import ExamController from './pages/ExamController/ExamController.jsx';
+import Varifier from './pages/Varifier/Varifier.jsx';
+import Progressbar from './pages/ProgressBar/ProgressBar.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -44,6 +48,18 @@ const router = createBrowserRouter([
       {
         path: '/provost',
         element: <Provost></Provost>
+      },
+      {
+        path: '/examController',
+        element: <ExamController></ExamController>
+      },
+      {
+        path: '/varifier',
+        element: <Varifier></Varifier>
+      },
+      {
+        path: '/progressbar',
+        element: <Progressbar></Progressbar>
       }
     ]
   },
