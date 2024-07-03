@@ -102,7 +102,50 @@ const Formfillup = () => {
     fourthYearRegistrationNo: '',
     fourthYearAcademicYear: '',
     fourthYearObtainedClassGPA: '',
-    fourthYearExamMonthYear: ''
+    fourthYearExamMonthYear: '',
+
+
+    masterSubject: '',
+    masterCollegeName: '',
+    masterExamName: '',
+    masterRollNumber: '',
+    masterExamYear: '',
+    masterGpa: '',
+    masterRegistrationNumber: '',
+    masterAcademicYear: '',
+    masterSupplementaryPassDate: '',
+
+
+    msSubject: '',
+    msCollegeName: '',
+    msExamName: '',
+    msRollNumber: '',
+    msExamYear: '',
+    msGpa: '',
+    msRegistrationNumber: '',
+    msAcademicYear: '',
+    msSupplementaryPassDate: '',
+    msCertificateNumber: '',
+
+
+    bAddCollegeName: '',
+    bAddExamYear: '',
+    bAddRollNumber: '',
+    bAddGrade: '',
+    bAddRegistrationNumber: '',
+    bAddAcademicYear: '',
+    bAddExamDate: '',
+
+
+    militaryExamName: '',
+    militaryRollNumber: '',
+    militaryExamYear: '',
+    militaryRegistrationNumber: '',
+    militaryAcademicYear: '',
+    militaryResult: '',
+    militaryCertificateNumber: '',
+    militaryInstitute: '',
+
   });
 
 
@@ -1391,7 +1434,7 @@ const Formfillup = () => {
                 </FormDescription>
                 <FormLabel>বিষয়</FormLabel>
                 <FormControl>
-                  <Input placeholder="বিষয়" />
+                  <Input placeholder="বিষয়" onChange={handleChange} value={formData.masterSubject} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1404,7 +1447,7 @@ const Formfillup = () => {
               <FormItem>
                 <FormLabel>কলেজের নাম/কেন্দ্রের নাম</FormLabel>
                 <FormControl>
-                  <Input placeholder="কলেজ/কেন্দ্র/হল" />
+                  <Input placeholder="কলেজ/কেন্দ্র/হল" onChange={handleChange} value={formData.masterCollegeName} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1419,7 +1462,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার নাম</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" />
+                      <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.masterExamName} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1434,7 +1477,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel> রোল নং</FormLabel>
                     <FormControl>
-                      <Input placeholder=" রোল নং" />
+                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.masterRollNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1451,7 +1494,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" />
+                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.masterExamYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1466,7 +1509,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>প্রাপ্ত শ্রেণী /জিপিএ</FormLabel>
                     <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" />
+                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" onChange={handleChange} value={formData.masterGpa} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1483,7 +1526,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" />
+                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.masterRegistrationNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1498,7 +1541,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>শিক্ষাবর্ষ</FormLabel>
                     <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" />
+                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.masterAcademicYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1513,7 +1556,7 @@ const Formfillup = () => {
               <FormItem>
                 <FormLabel>সম্পুরক পাস হলে অনুষ্ঠিত মাস ও বৎসর</FormLabel>
                 <FormControl>
-                  <Input placeholder="মাস ও বৎসর" />
+                  <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.masterSupplementaryPassDate} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1532,7 +1575,7 @@ const Formfillup = () => {
                 </FormDescription>
                 <FormLabel>বিষয়</FormLabel>
                 <FormControl>
-                  <Input placeholder="বিষয়" />
+                  <Input placeholder="বিষয়" onChange={handleChange} value={formData.msSubject} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1545,7 +1588,7 @@ const Formfillup = () => {
               <FormItem>
                 <FormLabel>কলেজের নাম/কেন্দ্রের নাম</FormLabel>
                 <FormControl>
-                  <Input placeholder="কলেজ/কেন্দ্র/হল" />
+                  <Input placeholder="কলেজ/কেন্দ্র/হল" onChange={handleChange} value={formData.msCollegeName} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1560,7 +1603,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার নাম</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" />
+                      <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.msExamName} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1575,7 +1618,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel> রোল নং</FormLabel>
                     <FormControl>
-                      <Input placeholder=" রোল নং" />
+                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.msRollNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1592,7 +1635,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" />
+                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.msExamYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1607,7 +1650,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>প্রাপ্ত শ্রেণী /জিপিএ</FormLabel>
                     <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" />
+                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" onChange={handleChange} value={formData.msGpa} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1624,7 +1667,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" />
+                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.msRegistrationNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1639,7 +1682,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>শিক্ষাবর্ষ</FormLabel>
                     <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" />
+                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.msAcademicYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1656,7 +1699,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>সম্পুরক পাস হলে অনুষ্ঠিত মাস ও বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="মাস ও বৎসর" />
+                      <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.msSupplementaryPassDate} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1671,7 +1714,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>সনদপত্র নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="সনদপত্র নং" />
+                      <Input placeholder="সনদপত্র নং" onChange={handleChange} value={formData.msCertificateNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1689,7 +1732,7 @@ const Formfillup = () => {
                 </FormDescription>
                 <FormLabel>বি.এডঃ কলেজ</FormLabel>
                 <FormControl>
-                  <Input placeholder="বি.এডঃ কলেজ" />
+                  <Input placeholder="বি.এডঃ কলেজ" onChange={handleChange} value={formData.bAddCollegeName} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1704,7 +1747,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" />
+                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.bAddExamYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1719,7 +1762,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel> রোল নং</FormLabel>
                     <FormControl>
-                      <Input placeholder=" রোল নং" />
+                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.bAddRollNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1736,7 +1779,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>প্রাপ্ত শ্রেণী</FormLabel>
                     <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী" />
+                      <Input placeholder="প্রাপ্ত শ্রেণী" onChange={handleChange} value={formData.bAddGrade} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1751,7 +1794,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" />
+                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.bAddRegistrationNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1768,7 +1811,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>শিক্ষাবর্ষ</FormLabel>
                     <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" />
+                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.bAddAcademicYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1783,7 +1826,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="মাস ও বৎসর" />
+                      <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.bAddExamDate} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1802,7 +1845,7 @@ const Formfillup = () => {
                 </FormDescription>
                 <FormLabel>পরীক্ষার নাম</FormLabel>
                 <FormControl>
-                  <Input placeholder="পরীক্ষার নাম" />
+                  <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.militaryExamName} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -1817,7 +1860,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel> রোল নং</FormLabel>
                     <FormControl>
-                      <Input placeholder=" রোল নং" />
+                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.militaryRollNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1832,7 +1875,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>পরীক্ষার বৎসর</FormLabel>
                     <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" />
+                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.militaryExamYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1849,7 +1892,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" />
+                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.militaryRegistrationNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1864,7 +1907,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>শিক্ষাবর্ষ</FormLabel>
                     <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" />
+                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.militaryAcademicYear} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1881,7 +1924,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>ফলাফল</FormLabel>
                     <FormControl>
-                      <Input placeholder="ফলাফল" />
+                      <Input placeholder="ফলাফল" onChange={handleChange} value={formData.militaryResult} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1896,7 +1939,7 @@ const Formfillup = () => {
                   <FormItem>
                     <FormLabel>সনদপত্র নং</FormLabel>
                     <FormControl>
-                      <Input placeholder="সনদপত্র নং" />
+                      <Input placeholder="সনদপত্র নং" onChange={handleChange} value={formData.militaryCertificateNumber} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -1911,7 +1954,7 @@ const Formfillup = () => {
               <FormItem>
                 <FormLabel>হল/কলেজ/ইনস্টিটিউট</FormLabel>
                 <FormControl>
-                  <Input placeholder="হল/কলেজ/ইনস্টিটিউট" required />
+                  <Input placeholder="হল/কলেজ/ইনস্টিটিউট" required onChange={handleChange} value={formData.militaryInstitute} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
