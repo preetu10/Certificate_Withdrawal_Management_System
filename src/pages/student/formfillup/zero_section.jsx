@@ -138,7 +138,7 @@ const Zero_section = () => {
             <div className="lg:flex lg:justify-evenly lg:space-x-8">
                 <div className="lg:w-[590px]">
                     <label htmlFor="amount">টাকা</label>
-                    <input type="text" id="amount" name="amount" placeholder="টাকা" required />
+                    <input type="text" id="amount" name="amount" placeholder="টাকা" required/>
                 </div>
                 <div className="lg:w-[590px]">
                     <label htmlFor="bankName">অগ্রণী ব্যাংক / জনতা ব্যাংক</label>
