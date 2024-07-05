@@ -4,11 +4,9 @@ import { cn } from "@/lib/utils";
 
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
@@ -52,7 +50,15 @@ export default function Navbar() {
                     <NavigationMenuItem>
                         <Link to="/progressbar" >
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Progree Bar
+                                Progress Bar
+                            </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
+
+                    <NavigationMenuItem>
+                        <Link to="/login" >
+                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                               Login
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>

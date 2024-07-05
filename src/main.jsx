@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+
+import './App.css'
 import './index.css'
 import {
   createBrowserRouter,
@@ -17,7 +18,11 @@ import Provost from './pages/provost/provost.jsx';
 import ExamController from './pages/ExamController/ExamController.jsx';
 import Varifier from './pages/Varifier/Varifier.jsx';
 import Progressbar from './pages/ProgressBar/ProgressBar.jsx';
-
+import Login from './pages/Login/Login.jsx';
+import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -34,7 +39,7 @@ const router = createBrowserRouter([
         element: <FeeTable></FeeTable>
       },
       {
-        path: '/allsections',
+        path: '/certificate-withdrawal-form',
         element: <Formfillup></Formfillup>
       },
       {
@@ -60,13 +65,23 @@ const router = createBrowserRouter([
       {
         path: '/progressbar',
         element: <Progressbar></Progressbar>
+      },
+      {
+        path:"/login",
+        element:<Login></Login>
       }
     ]
   },
 ]);
 
+const queryClient=new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+  <QueryClientProvider client={queryClient}>
+  <HelmetProvider>
+  <RouterProvider router={router} />
+  </HelmetProvider>
+  </QueryClientProvider>
+  <ToastContainer />
   </React.StrictMode>
 )
