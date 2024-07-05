@@ -1,13 +1,13 @@
 import axios from "axios";
-
-
-const axiosPublic=axios.create({
-    // baseURL:'http://localhost:5000'
-    baseURL:'http://bike-csecu.com:5000/api'
-})
+// export const baseURL = "http://bike-csecu.com:5000/api";
+export const baseURL = "http://localhost:5000/api";
+const axiosPublic = axios.create({
+  // baseURL:'http://localhost:5000'
+  baseURL: baseURL,
+});
 
 const useAxiosPublic = () => {
-       return axiosPublic;
+  return axiosPublic;
 };
 
 export default useAxiosPublic;

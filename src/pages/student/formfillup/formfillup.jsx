@@ -1,13 +1,14 @@
 import { useState } from "react";
 ("use client");
 
-import { toast } from "@/components/ui/use-toast";
+// import { toast } from "@/components/ui/use-toast"
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
 import { useQuery } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Formfillup = () => {
   const [files, setFiles] = useState([]);
@@ -104,6 +105,7 @@ const Formfillup = () => {
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("items", files[i]);
+      console.log(files[i]);
     }
 
     try {
@@ -123,23 +125,23 @@ const Formfillup = () => {
       const data = {
         academic_session: student?.academic_session,
         form_type: formTypeValue || "",
-        money: payment,
+        money: Number(payment) || null,
         payorder_id: payorderID,
         degree: student?.program_abbr,
         district: student?.permanentAddress[0].district,
         father_name_bn: student?.fathers_name_bn,
         father_name_eng: student?.fathers_name,
         fifth_year_exam_actual_year: "",
-        fifth_year_exam_cgpa: "",
+        fifth_year_exam_cgpa: null,
         fifth_year_exam_name: "",
         fifth_year_exam_time: "",
         fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
-        fir_year_exam_cgpa: student?.results[1]?.cgpa || "",
+        fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
         fir_year_exam_name: student?.results[1]?.exam_name || "",
         fir_year_exam_time:
           formattedDate1 == "Invalid Date" ? "" : formattedDate1,
         fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
-        fourth_year_exam_cgpa: student?.results[7]?.cgpa || "",
+        fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
         fourth_year_exam_name: student?.results[7]?.exam_name || "",
         fourth_year_exam_time:
           formattedDate4 == "Invalid Date" ? "" : formattedDate4,
@@ -151,16 +153,16 @@ const Formfillup = () => {
         present_address: presentAddress,
         profile_image: student?.profile_image,
         sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
-        sec_year_exam_cgpa: student?.results[3]?.cgpa || "",
+        sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
         sec_year_exam_name: student?.results[3]?.exam_name || "",
         sec_year_exam_time:
           formattedDate2 == "Invalid Date" ? "" : formattedDate2,
-        student_id: student.student_id,
+        student_id: Number(student?.student_id),
         student_name_bn: student.first_name,
         student_name_eng: student.first_name_bn,
         thana: student?.permanentAddress[0].thana,
         third_year_exam_actual_year: student?.results[5]?.exam_session || "",
-        third_year_exam_cgpa: student?.results[5]?.cgpa || "",
+        third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
         third_year_exam_name: student?.results[5]?.exam_name || "",
         third_year_exam_time:
           formattedDate3 == "Invalid Date" ? "" : formattedDate3,
@@ -168,18 +170,19 @@ const Formfillup = () => {
         file_attachments: file_attachments,
       };
       console.log(data);
-      await axiosPublic
-        .post("/certificate-withdrawal/post-form", data, {
+      const formResponse = await axiosPublic.post(
+        "/certificate-withdrawal/post-form",
+        data,
+        {
           headers: {
             "Content-Type": "application/json",
           },
-        })
-        // .then((response) => {
-        //   if (response.status == 200) {
-        //     toast.success("Submission successful");
-        //     navigate("/");
-        //   }
-        // });
+        }
+      );
+      if (formResponse.status == 200) {
+        toast.success("Submission successful");
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -1143,6 +1146,7 @@ const Formfillup = () => {
           <input
             type="file"
             name="attachments"
+            accept="application/pdf"
             required
             multiple={true}
             placeholder="মার্কশীট ও অন্যান্য এটাচমেন্ট জমা দিন"
