@@ -18,7 +18,11 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
     "@react-pdf/renderer": "^3.4.2",
+<<<<<<< HEAD
     "@tanstack/react-query": "^5.50.1",
+=======
+    "@tanstack/react-query": "^5.49.2",
+>>>>>>> main
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -33,6 +37,7 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.51.2",
     "react-router-dom": "^6.22.3",
+    "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

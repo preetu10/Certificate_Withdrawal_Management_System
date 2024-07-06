@@ -1,16 +1,15 @@
+import { Outlet } from "react-router-dom";
 
-import Navbar from '@/pages/Navbar/Navbar'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Root = () => {
-    return (
-        <div>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-        </div>
-    )
-}
+  return (
+    <div className="max-w-7xl mx-auto">
+      <Outlet></Outlet>
+      <ToastContainer />
+    </div>
+  );
+};
 
-export default Root
+export default Root;

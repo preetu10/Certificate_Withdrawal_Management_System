@@ -2,15 +2,26 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import {
+<<<<<<< HEAD
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
+=======
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+>>>>>>> main
 } from "@/components/ui/navigation-menu";
+import { AuthContext } from "@/components/functions/AuthProvider";
+import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
+<<<<<<< HEAD
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -77,4 +88,66 @@ export default function Navbar() {
             </NavigationMenu>
         </div>
     );
+=======
+  const { user, logOut } = React.useContext(AuthContext);
+  return (
+    <div>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link to="/">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Student
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link to="/provost">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Provost
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link to="/examController">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Exam Controller
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link to="/varifier">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Varifier
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link to="/progressbar">
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Progress Bar
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            {user ? (
+              <Button onClick={logOut}>Logout</Button>
+            ) : (
+              <Link to="/login">
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Login
+                </NavigationMenuLink>
+              </Link>
+            )}
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
+  );
+>>>>>>> main
 }
