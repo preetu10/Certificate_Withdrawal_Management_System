@@ -1,1986 +1,1103 @@
-import React, { useState } from 'react'
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+import { useState } from "react";
+("use client");
 
-import { cn } from "@/lib/utils";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast";
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { useLoaderData, useParams } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
+import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
+import { useQuery } from "@tanstack/react-query";
 
 const Formfillup = () => {
-  const profileFormSchema = z.object({});
+  //const students = useLoaderData();
 
-  const defaultValues = {};
-
-  const [formData, setFormData] = useState({
-    applicationDate: '',
-    certificateIssueDate: '',
-    guardianOfficerPhoto: '',
-    fees: '',
-    englishTemporaryCertificateFee: '',
-    banglaTemporaryCertificateFee: '',
-    marksheetFee: '',
-    managerBankAmount: '',
-    ddOrPayOrderNumber: '',
-    bankName: '',
-    responsibleOfficerSignature: '',
-    date: '',
-    studentNameBangla: '',
-    studentNameEnglish: '',
-    fatherNameBangla: '',
-    fatherNameEnglish: '',
-    motherNameBangla: '',
-    motherNameEnglish: '',
-    village: '',
-    postOffice: '',
-    thana: '',
-    district: '',
-    currentAddress: '',
-    mobileNumber: '',
-    collegeName: '',
-    examName: '',
-    rollNumber: '',
-    examYear: '',
-    obtainedDivision: '',
-    registrationNumber: '',
-    academicYear: '',
-    supplementaryPassedMonthYear: '',
-    supplementaryRollNumber: '',
-    username: '',
-    college: '',
-    examName: '',
-    examYear: '',
-    rollNo: '',
-    regNo: '',
-    academicYear: '',
-    grade: '',
-    examMonthYear: '',
-    subject: '',
-    secondYearCollege: '',
-    secondYearExamName: '',
-    secondYearExamYear: '',
-    secondYearRollNo: '',
-    secondYearRegNo: '',
-    secondYearAcademicYear: '',
-    secondYearGrade: '',
-    secondYearExamMonthYear: '',
-    thirdYearSubject: '',
-    thirdYearhallCollege: '',
-    thirdYearexamName: '',
-    thirdYearexamYear: '',
-    thirdYearrollNo: '',
-    thirdYearregistrationNo: '',
-    thirdYearacademicYear: '',
-    thirdYearobtainedClassGPA: '',
-    thirdYearexamMonthYear: '',
-
-    fourthYearSubject: '',
-    fourthYearHallCollege: '',
-    fourthYearExamName: '',
-    fourthYearExamYear: '',
-    fourthYearRollNo: '',
-    fourthYearRegistrationNo: '',
-    fourthYearAcademicYear: '',
-    fourthYearObtainedClassGPA: '',
-    fourthYearExamMonthYear: '',
+  //const { form_id } = useParams();
 
 
-    masterSubject: '',
-    masterCollegeName: '',
-    masterExamName: '',
-    masterRollNumber: '',
-    masterExamYear: '',
-    masterGpa: '',
-    masterRegistrationNumber: '',
-    masterAcademicYear: '',
-    masterSupplementaryPassDate: '',
+  //const studentData = students.find(student => student.form_id === form_id);
 
 
-    msSubject: '',
-    msCollegeName: '',
-    msExamName: '',
-    msRollNumber: '',
-    msExamYear: '',
-    msGpa: '',
-    msRegistrationNumber: '',
-    msAcademicYear: '',
-    msSupplementaryPassDate: '',
-    msCertificateNumber: '',
+  const [files, setFiles] = useState([]);
+  const [payorderID, setPayorderID] = useState("");
+  const [formType, setFormType] = useState("");
+  const [isAble, setIsAble] = useState("true");
+  const [payment, setPayment] = useState("0");
+  const [formTypeValue, setFormTypeValue] = useState("");
 
-
-    bAddCollegeName: '',
-    bAddExamYear: '',
-    bAddRollNumber: '',
-    bAddGrade: '',
-    bAddRegistrationNumber: '',
-    bAddAcademicYear: '',
-    bAddExamDate: '',
-
-
-    militaryExamName: '',
-    militaryRollNumber: '',
-    militaryExamYear: '',
-    militaryRegistrationNumber: '',
-    militaryAcademicYear: '',
-    militaryResult: '',
-    militaryCertificateNumber: '',
-    militaryInstitute: '',
-
+  const axiosPublic = useAxiosPublic();
+  const { data: student = {}, isPending } = useQuery({
+    queryKey: "student",
+    queryFn: async () => {
+      try {
+        const res = await axiosPublic.get(
+          "/api/certificate-withdrawal/93712c7c-0304-11ef-a96d-3c5282764ceb"
+        );
+        return res.data;
+      } catch (error) {
+        console.log("Failed to fetch student data");
+      }
+    },
   });
 
-
-  const form = useForm({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues,
-    mode: "onChange",
-  });
-
-
-
-  function onSubmit(data) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  if (isPending) {
+    return <div>Loading...</div>;
   }
+  //console.log(student);
+  // if(student?.program.toLowerCase()=='bsc(engg)'||student?.program.toLowerCase()=='bba'){
+  //   if(student?.results[7].cgpa){
+  //     setIsAble(true);
+  //   }
+  //   else{
+  //     setIsAble(false);
+  //   }
+  // }
+  // if(student?.program.toLowerCase()=='msc(engg)'||student?.program.toLowerCase()=='mba'){
+  //   if(student?.results[2].cgpa){
+  //     setIsAble(true);
+  //   }
+  //   else{
+  //     setIsAble(false);
+  //   }
+  // }
+
+  const date = new Date(student?.results[1]?.exam_start_date);
+  const options = { year: "numeric", month: "long" };
+  const formattedDate1 = date.toLocaleDateString("en-US", options);
+
+  const date2 = new Date(student?.results[3]?.exam_start_date);
+  const options2 = { year: "numeric", month: "long" };
+  const formattedDate2 = date2.toLocaleDateString("en-US", options2);
+
+  const date3 = new Date(student?.results[5]?.exam_start_date);
+  const options3 = { year: "numeric", month: "long" };
+  const formattedDate3 = date3.toLocaleDateString("en-US", options3);
+
+  const date4 = new Date(student?.results[7]?.exam_start_date);
+  const options4 = { year: "numeric", month: "long" };
+  const formattedDate4 = date4.toLocaleDateString("en-US", options4);
+
+  const date_masters = new Date(student?.results[2]?.exam_start_date);
+  const option_masters = { year: "numeric", month: "long" };
+  const formattedDateMasters = date_masters.toLocaleDateString(
+    "en-US",
+    option_masters
+  );
+
+  const handlePayorderID = (e) => {
+    setPayorderID(e.target.value);
+  };
+  const handleFormTypeChange = (e) => {
+    setFormType(e.target.value);
+    if (e.target.value == "মূল সনদপত্র নিয়মিত") {
+      setPayment("৮০০");
+      setFormTypeValue("Main");
+    }
+    if (e.target.value == "ডুবলিকেট মূল সনদ") {
+      setPayment("১৫০০");
+      setFormTypeValue("Main");
+    }
+    if (e.target.value == "সাময়িক সনদ") {
+      setPayment("৪০০");
+      setFormTypeValue("Provisional");
+    }
+    if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
+      setPayment("১১০০");
+      setFormTypeValue("Provisional");
+    }
+  };
+
+  const handleFileChange = (event) => {
+    setFiles(event.target.files);
+    //console.log(files[0].name)
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      ...student,
+      payorderID,
+      formTypeValue,
+      files: [...files], // Ensure files is an array, if not, adjust accordingly
+    };
+    console.log(data);
+    axiosPublic.post("/api/post", data)
+      .then(response => {
+        if (response.statusCode == 201) {
+          toast({
+            title: "You submitted the form successfully",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              </pre>
+            ),
+          });
+        }
+      })
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
   return (
     <div>
-      <Form {...form}>
-
+      <Helmet>
+        <title>Certificate-Withdrawal-Form | CU-Certificate-Section</title>
+      </Helmet>
+      {/* main page start */}
+      <form onSubmit={handleSubmit} className="space-y-8 hind-siliguri-regular">
         <div className="hind-siliguri-regular">
-          <div className='mx-auto'>
-            <img className='mx-auto w-24 h-30' src="cu_logo.png" alt="" />
-            <h1 className='text-xl font-bold mt-5'>চট্টগ্রাম বিশ্ববিদ্যালয়</h1>
-            <div className='flex mx-auto justify-center mt-5 mb-5'>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="সনদের ধরণ" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">মূল সনদপত্র নিয়মিত</SelectItem>
-                  <SelectItem value="light">মূল সনদপত্র বহিরাগত</SelectItem>
-                  <SelectItem value="light">জরুরী ফিসসহ নিয়মিত</SelectItem>
-                  <SelectItem value="light">জরুরী ফিসসহ বহিরাগত</SelectItem>
-                  <SelectItem value="light">ডুবলিকেট মূল সনদ</SelectItem>
-                  <SelectItem value="light">দ্বিতীয় ডুবলিকেট মূল সনদ</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ পুরাতন বাংলা</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ পুরাতন বাংলা বহিরাগত</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ ইংরেজি বহিরাগত</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ ইংরেজি পুরাতন</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ ইংরেজি নতুন</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ (ডুবলিকেট)</SelectItem>
-                  <SelectItem value="light">সাময়িক সনদ (ডুবলিকেট) বহিরাগত </SelectItem>
-                </SelectContent>
-              </Select>
+          <div className="mx-auto">
+            <img className="mx-auto w-24 h-30" src="cu_logo.png" alt="" />
+            <h1 className="text-xl font-bold mt-5">চট্টগ্রাম বিশ্ববিদ্যালয়</h1>
+            <div className="flex mx-auto justify-center mt-5 mb-5">
+              <select
+                required
+                className="w-[180px] p-3 border-2 border-gray-300 rounded-xl"
+                placeholder="সনদের ধরণ"
+                value={formType}
+                onChange={handleFormTypeChange}
+              >
+                <option disabled selected>
+                  ---সনদের ধরণ---
+                </option>
+                <option>মূল সনদপত্র নিয়মিত</option>
+                <option>ডুবলিকেট মূল সনদ</option>
+                <option>সাময়িক সনদ</option>
+                <option>সাময়িক সনদ (ডুবলিকেট)</option>
+              </select>
             </div>
+          </div>
+        </div>
+        {/* main form with input fields start */}
+        {/* student image */}
+        <div className="flex mx-auto justify-center mt-5 mb-5">
+          <img
+            className="border-2 border-gray-300"
+            name="profile_image"
+            src={student?.profile_image}
+            alt="ছবি"
+            width="180px"
+            height="180px"
+          />
+        </div>
+        {/* pay order info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center ">
+          <div className="">
+            <label>
+              <span className="text-black">ডি-ডি/ পে অডার নং</span>
+            </label>
+            <input
+              type="text"
+              name="payorder_id"
+              placeholder="ডি-ডি/ পে অডার নং"
+              onChange={handlePayorderID}
+              className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+              required
+            />
+          </div>
+          <div className="">
+            <label>
+              <span className="text-black">
+                {" "}
+                ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক
+                মোট টাকা{" "}
+              </span>
+            </label>
+            {/* eta select er upor depend kore change kora lgbe usestate er maddhome */}
+            <input
+              type="text"
+              name="payment_amount"
+              value={payment}
+              placeholder="ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক মোট টাকা"
+              className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+              disabled
+            />
+          </div>
+        </div>
+        {/* student name in eng and bangla  */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষার্থীর নাম (বাংলায়)</span>
+            </label>
+            <input
+              type="text"
+              name="first_name_bn"
+              disabled
+              value={student.first_name_bn}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">(ইংরেজিতে)</span>
+            </label>
+            <input
+              type="text"
+              name="first_name"
+              disabled
+              value={student.first_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* father's name in eng and bangla */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পিতার নাম (বাংলায়)</span>
+            </label>
+            <input
+              type="text"
+              name="fathers_name_bn"
+              placeholder="পিতার নাম"
+              disabled
+              value={student.fathers_name_bn}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">(ইংরেজিতে)</span>
+            </label>
+            <input
+              type="text"
+              name="fathers_name"
+              placeholder="নাম"
+              disabled
+              value={student.fathers_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* mother's name in eng and bangla */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">মাতার নাম (বাংলায়)</span>
+            </label>
+            <input
+              type="text"
+              name="mothers_name_bn"
+              disabled
+              value={student.mothers_name_bn}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">(ইংরেজিতে)</span>
+            </label>
+            <input
+              type="text"
+              name="mothers_name"
+              disabled
+              value={student.mothers_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* village and post office */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">গ্রাম</span>
+            </label>
+            <input
+              type="text"
+              name="village"
+              disabled
+              value={student.village}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পোস্ট</span>
+            </label>
+            <input
+              type="text"
+              name="post_office"
+              disabled
+              value={student.post_office}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* thana & district */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">থানা</span>
+            </label>
+            <input
+              type="text"
+              name="thana"
+              disabled
+              value={student.thana}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">জেলা</span>
+            </label>
+            <input
+              type="text"
+              name="district"
+              disabled
+              value={student.district}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* present address */}
+        <div className="w-full px-8  items-stretch">
+          <label>
+            <span className="text-black">বর্তমান ঠিকানা</span>
+          </label>
+          <input
+            type="text"
+            name="thana"
+            disabled
+            value=""
+            className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+          />
+        </div>
+        {/* mobile no */}
+        <div className="w-full px-5 items-stretch">
+          <label>
+            <span className="text-black">মোবাইল নং/টেলিফোন নং</span>
+          </label>
+          <input
+            type="text"
+            name="phone"
+            disabled
+            value={student.phone}
+            className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+          />
+        </div>
 
+        {/* ekahne student.program ashbe  */}
 
+        {/* {(student?.program.toLowerCase()=="bsc(engg)"||student?.program=="bba")
+       && <> */}
+        {/* ka section */}
+        <div className="py-2">
+          {/* <span className="text-black font-bold ">{(student?.program.toLowerCase()=='bsc(engg)')
+           ?'বিএসসি (ইন্জিনিয়ারিং) পরীক্ষা ' : 'বিবিএ পরীক্ষা'}</span><br /><br /> */}
+          <span className="text-black font-bold ">
+            বিএসসি (ইন্জিনিয়ারিং) পরীক্ষা{" "}
+          </span>
+          <br />
+          <br />
+          <span className="text-center text-xl font-bold ">ক।</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black"> ১ম বর্ষ/১ম প্রফেশনাল/বিষয়</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={formattedDate1}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* kha section */}
+        <div className="py-2">
+          <br />
+          <br />
+          <span className="text-center text-xl font-bold ">খ।</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black"> ২য় বর্ষ/২য় প্রফেশনাল/বিষয়</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[3]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[3]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[3]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 hind-siliguri-regular">
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>আবেদনপত্র গ্রহনের তারিখ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="আবেদনপত্র গ্রহনের তারিখ" required value={formData.applicationDate} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>সনদপত্র প্রদানের তারিখ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="সনদপত্র প্রদানের তারিখ" required value={formData.certificateIssueDate}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[3]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={formattedDate2 == "Invalid Date" ? "" : formattedDate2}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* গ। section */}
+        <div className="py-2">
+          <br />
+          <br />
+          <span className="text-center text-xl font-bold ">গ।</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black"> ৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[5]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[5]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[5]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
 
-          <FormField
-            control={form.control}
-            name="fathername"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>প্রভোস্ট / অধ্যক্ষ / বহিরাগত
-                  প্রার্থীর ক্ষেত্রে গেজেটেড অফিসার
-                  কর্তৃক সত্যায়িত ছবি এখানে সংযুক্ত
-                  করতে হবে (এক কপি)</FormLabel>
-                <FormControl>
-                  <Input placeholder="ছবি" required value={formData.guardianOfficerPhoto}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>মূল সনদ ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মূল সনদ ফি" required value={formData.fees}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name="mothername"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>উস ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="উস ফি" required />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>জরুরী ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="জরুরী ফি" required value={formData.emergencyFee}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ইংরেজিতে সাময়িক সনদ ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ইংরেজিতে সাময়িক সনদ ফি" required value={formData.englishTemporaryCertificateFee}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-            </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>বাংলায় সাময়িক সনদ ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="বাংলায় সাময়িক সনদ ফি" required value={formData.banglaTemporaryCertificateFee}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>মার্কশিট ফি</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মার্কশিট ফি" required value={formData.marksheetFee}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[5]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক মোট টাকা </FormLabel>
-                <FormControl>
-                  <Input placeholder="ম্যানেজার জনতা ব্যাংক / অগ্রণী ব্যাংক, চ. বি. শাখা অনুগ্রহপূর্বক মোট টাকা" required value={formData.managerBankAmount}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ডি-ডি/ পে অডার নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ডি-ডি/ পে অডার নং" required value={formData.ddOrPayOrderNumber}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>টাকা</FormLabel>
-                    <FormControl>
-                      <Input placeholder="টাকা" required value={formData.amount}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={formattedDate3 == "Invalid Date" ? "" : formattedDate3}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>তারিখ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="তারিখ" required value={formData.date}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>অগ্রণী ব্যাংক / জনতা ব্যাংক</FormLabel>
-                    <FormControl>
-                      <Input placeholder="অগ্রণী ব্যাংক / জনতা ব্যাংক" required value={formData.bankName}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>দায়িত্বপ্রাপ্ত কর্মকর্তার স্বাক্ষর</FormLabel>
-                <FormControl>
-                  <Input placeholder="স্বাক্ষর" required />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষার্থীর নাম (বাংলায়)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষার্থীর নাম" required value={formData.studentNameBangla}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>(ইংরেজিতে)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="নাম" required value={formData.studentNameEnglish}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name="fathername"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পিতার নাম (বাংলায়)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পিতার নাম" required value={formData.fatherNameBangla}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>(ইংরেজিতে)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="নাম" required value={formData.fatherNameEnglish}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name="mothername"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>মাতার নাম (বাংলায়)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মাতার নাম" required value={formData.motherNameBangla}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>(ইংরেজিতে)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="নাম" required value={formData.motherNameEnglish}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>গ্রাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="গ্রাম" required value={formData.village}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পোস্ট</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পোস্ট" required value={formData.postOffice}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly lg:space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>থানা</FormLabel>
-                    <FormControl>
-                      <Input placeholder="থানা" required value={formData.thana}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>জেলা</FormLabel>
-                    <FormControl>
-                      <Input placeholder="জেলা" required value={formData.district}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>বর্তমান ঠিকানা</FormLabel>
-                <FormControl>
-                  <Input placeholder="ঠিকানা" required value={formData.currentAddress}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>মোবাইল নং/টেলিফোন নং</FormLabel>
-                <FormControl>
-                  <Input placeholder="মোবাইল নং" required value={formData.mobileNumber}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ১. ডিগ্রী পাস পরীক্ষা (বি. এ /
-                  বি. এসসি/ বি.এস.এস/
-                  বি.কম ও বি.এফ.এ. পাস)
-                </FormDescription>
-                <FormLabel>কলেজের নাম/কেন্দ্রের নাম</FormLabel>
-                <FormControl>
-                  <Input placeholder="কলেজের নাম/কেন্দ্রের নাম" value={formData.collegeName}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" value={formData.examName}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" value={formData.rollNumber}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" value={formData.examYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত বিভাগ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত বিভাগ" value={formData.obtainedDivision}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" value={formData.registrationNumber}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" value={formData.academicYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>সম্পুরক পাস হলে অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মাস ও বৎসর" value={formData.supplementaryPassedMonthYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" value={formData.supplementaryRollNumber}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ২. ডিগ্রী অনার্স/এম.বি.বি.এস./ইঞ্জিনিয়ারিং পরীক্ষা
-                </FormDescription>
-                <FormDescription>
-                  ক। ১ম বর্ষ/১ম প্রফেশনাল/বিষয়
-                </FormDescription>
-                <FormLabel>১ম বর্ষ/১ম প্রফেশনাল /বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="১ম বর্ষ/১ম প্রফেশনাল /বিষয়" value={formData.username}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>হল/কলেজ</FormLabel>
-                <FormControl>
-                  <Input placeholder="হল/কলেজ" value={formData.college}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" value={formData.examName}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" value={formData.examYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং/আই. ডি . নং
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং/আই. ডি . নং
-"  value={formData.rollNo}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" value={formData.regNo}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" value={formData.academicYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " value={formData.grade}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                <FormControl>
-                  <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" value={formData.examMonthYear}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription>
-                  খ। ২য় বর্ষ/২য় প্রফেশনাল/বিষয়
-                </FormDescription>
-                <FormLabel>২য় বর্ষ/২য় প্রফেশনাল/বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="২য় বর্ষ/২য় প্রফেশনাল/বিষয়" value={formData.subject}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>হল/কলেজ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="হল/কলেজ" value={formData.secondYearCollege}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" value={formData.secondYearExamName}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" value={formData.secondYearExamYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং/আই. ডি . নং
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং/আই. ডি . নং
-"  value={formData.secondYearRollNo}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
+        </div>
 
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" value={formData.secondYearRegNo}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" value={formData.secondYearAcademicYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        {/* gha section */}
+        <div className="py-2">
+          <br />
+          <br />
+          <span className="text-center text-xl font-bold "> ঘ।</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">
+                {" "}
+                ৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়
+              </span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " value={formData.secondYearGrade}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" value={formData.secondYearExamMonthYear}
-                        onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[7]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription>
-                  গ। ৩য় বর্ষ/৩য় প্রফেশনাল /বিষয়
-                </FormDescription>
-                <FormLabel>৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="৩য় বর্ষ/৩য় প্রফেশনাল/বিষয়" value={formData.thirdYearSubject}
-                    onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[7]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[7]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[7]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={formattedDate4 == "Invalid Date" ? "" : formattedDate4}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* </>} */}
 
-
-
-
-
-
-
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>হল/কলেজ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="হল/কলেজ" value={formData.thirdYearhallCollege} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" value={formData.thirdYearexamName} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        {/* masters degree start */}
+        {/* {(student?.thana.toLowerCase()=="msc"||student?.thana.toLowerCase()=="mba") 
+           &&
+          <> */}
+        {/* preli */}
+        <div className="py-2">
+          {/* <span className="text-black font-bold ">{(student?.program.toLowerCase()=='msc(engg)')
+           ?'এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা ' : 'এমবিএ  (প্রিলিমিনারি) পরীক্ষা'}</span><br /><br /> */}
+          <span className="text-black font-bold ">
+            এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা{" "}
+          </span>
+          <br />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black"> বিষয়</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" value={formData.thirdYearexamYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং/আই. ডি . নং
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং/আই. ডি . নং
-"  value={formData.thirdYearrollNo} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" value={formData.thirdYearregistrationNo} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" value={formData.thirdYearacademicYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " value={formData.thirdYearobtainedClassGPA} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" value={formData.thirdYearexamMonthYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
           </div>
-
-
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription>
-                  ঘ। ৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়
-                </FormDescription>
-                <FormLabel>৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="৪র্থ বর্ষ/৪র্থ প্রফেশনাল/বিষয়" value={formData.fourthYearSubject} onChange={handleChange} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[1]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* final */}
+        <div className="py-2">
+          {/* <span className="text-black font-bold ">{(student?.program.toLowerCase()=='msc(engg)')
+           ?'এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা ' : 'এমবিএ  (প্রিলিমিনারি) পরীক্ষা'}</span><br /><br /> */}
+          <span className="text-black font-bold ">
+            এম.এসসি. (ইন্জিনিয়ারিং) (ফাইনাল) পরীক্ষা{" "}
+          </span>
+          <br />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black"> বিষয়</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">হল/কলেজ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[2]?.exam_centre}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার নাম</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[2]?.exam_name}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষার বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[2]?.exam_session}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">রোল নং/আই. ডি . নং</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.student_id}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">শিক্ষাবর্ষ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value=""
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={student?.results[2]?.cgpa}
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+          <div className="w-full lg:w-[590px]">
+            <label>
+              <span className="text-black">পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</span>
+            </label>
+            <input
+              type="text"
+              name=""
+              disabled
+              value={
+                formattedDateMasters == "Invalid Date"
+                  ? ""
+                  : formattedDateMasters
+              }
+              className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            />
+          </div>
+        </div>
+        {/* </>} */}
+        {/* attachments */}
+        <div className="w-full px-5 items-stretch">
+          <label>
+            <span className="text-black">
+              মার্কশীট ও অন্যান্য এটাচমেন্ট জমা দিন
+            </span>
+          </label>
+          <input
+            type="file"
+            name="attachments"
+            required
+            multiple="true"
+            placeholder="মার্কশীট ও অন্যান্য এটাচমেন্ট জমা দিন"
+            className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+            onChange={handleFileChange}
           />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>হল/কলেজ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="হল/কলেজ" value={formData.fourthYearHallCollege} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" value={formData.fourthYearExamName} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" value={formData.fourthYearExamYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং/আই. ডি . নং
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং/আই. ডি . নং
-" value={formData.fourthYearRollNo} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং/আই. ডি . নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং/আই. ডি . নং" value={formData.fourthYearRegistrationNo} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" value={formData.fourthYearAcademicYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী/জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী/জিপিএ " value={formData.fourthYearObtainedClassGPA} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষা অনুষ্ঠিত মাস ও বৎসর" value={formData.fourthYearExamMonthYear} onChange={handleChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ৩. মাস্টার ডিগ্রী / এলএল.বি. (প্রিলিমিনারি) পরীক্ষাঃ (এম.এ / এম.এসসি. /
-                  এম.এস.এস /এম.কম.)
-                </FormDescription>
-                <FormLabel>বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="বিষয়" onChange={handleChange} value={formData.masterSubject} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>কলেজের নাম/কেন্দ্রের নাম</FormLabel>
-                <FormControl>
-                  <Input placeholder="কলেজ/কেন্দ্র/হল" onChange={handleChange} value={formData.masterCollegeName} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.masterExamName} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.masterRollNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.masterExamYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী /জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" onChange={handleChange} value={formData.masterGpa} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.masterRegistrationNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.masterAcademicYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>সম্পুরক পাস হলে অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                <FormControl>
-                  <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.masterSupplementaryPassDate} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ৪. মাস্টার ডিগ্রী / এলএল.বি. (ফাইনাল) পরীক্ষাঃ (এম.এ / এম.এসসি. /
-                  এম.এস.এস /এম.কম./
-                  এম.বি.এ/এলএল.এম/
-                  এম.এস)
-                </FormDescription>
-                <FormLabel>বিষয়</FormLabel>
-                <FormControl>
-                  <Input placeholder="বিষয়" onChange={handleChange} value={formData.msSubject} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>কলেজের নাম/কেন্দ্রের নাম</FormLabel>
-                <FormControl>
-                  <Input placeholder="কলেজ/কেন্দ্র/হল" onChange={handleChange} value={formData.msCollegeName} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার নাম</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.msExamName} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.msRollNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.msExamYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী /জিপিএ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী /জিপিএ" onChange={handleChange} value={formData.msGpa} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.msRegistrationNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.msAcademicYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>সম্পুরক পাস হলে অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.msSupplementaryPassDate} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>সনদপত্র নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="সনদপত্র নং" onChange={handleChange} value={formData.msCertificateNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ৫. বি.এডঃ কলেজ
-                </FormDescription>
-                <FormLabel>বি.এডঃ কলেজ</FormLabel>
-                <FormControl>
-                  <Input placeholder="বি.এডঃ কলেজ" onChange={handleChange} value={formData.bAddCollegeName} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.bAddExamYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.bAddRollNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>প্রাপ্ত শ্রেণী</FormLabel>
-                    <FormControl>
-                      <Input placeholder="প্রাপ্ত শ্রেণী" onChange={handleChange} value={formData.bAddGrade} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.bAddRegistrationNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.bAddAcademicYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষা অনুষ্ঠিত মাস ও বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="মাস ও বৎসর" onChange={handleChange} value={formData.bAddExamDate} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormDescription className="mt-5 font-bold">
-                  ৬. মিলিটারি সাইন্স/ সার্টিফিকেট কোর্স /
-                  ডিপ্লোমা কোর্স /এম.এফ. পরীক্ষা/ ডিপ্লোমা চিকিৎসা বিজ্ঞান
-                </FormDescription>
-                <FormLabel>পরীক্ষার নাম</FormLabel>
-                <FormControl>
-                  <Input placeholder="পরীক্ষার নাম" onChange={handleChange} value={formData.militaryExamName} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel> রোল নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder=" রোল নং" onChange={handleChange} value={formData.militaryRollNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>পরীক্ষার বৎসর</FormLabel>
-                    <FormControl>
-                      <Input placeholder="পরীক্ষার বৎসর" onChange={handleChange} value={formData.militaryExamYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>রেজিস্ট্রেশন নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="রেজিস্ট্রেশন নং" onChange={handleChange} value={formData.militaryRegistrationNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>শিক্ষাবর্ষ</FormLabel>
-                    <FormControl>
-                      <Input placeholder="শিক্ষাবর্ষ" onChange={handleChange} value={formData.militaryAcademicYear} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <div className="lg:flex lg:justify-evenly space-x-8">
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ফলাফল</FormLabel>
-                    <FormControl>
-                      <Input placeholder="ফলাফল" onChange={handleChange} value={formData.militaryResult} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="lg:w-[590px]">
-              <FormField
-                control={form.control}
-                name=""
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>সনদপত্র নং</FormLabel>
-                    <FormControl>
-                      <Input placeholder="সনদপত্র নং" onChange={handleChange} value={formData.militaryCertificateNumber} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>হল/কলেজ/ইনস্টিটিউট</FormLabel>
-                <FormControl>
-                  <Input placeholder="হল/কলেজ/ইনস্টিটিউট" required onChange={handleChange} value={formData.militaryInstitute} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name=""
-            render={({ field }) => (
-              <FormItem className="text-left">
-                <FormLabel className="font-bold text-left">মার্কশীট ও অন্যান্য এটাচমেন্ট জমা দিন</FormLabel>
-                <FormControl>
-                  <Input placeholder="মার্কশীট ও অন্যান্য এটাচমেন্ট জমা দিন" required type="file" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-        </form>
-        <Link to="/pdf">
-          <Button type="submit" className="mt-5">Submit </Button>
-        </Link>
-      </Form>
+          <p className="text-left text-red-700">Be careful. You can upload upto 8MB.</p>
+        </div>
+        {/* <Link to="/pdf">  */}
+        <Button disabled={!isAble} type="submit" className="mt-5">
+          Submit{" "}
+        </Button>
+        {/* </Link> */}
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Formfillup
+export default Formfillup;

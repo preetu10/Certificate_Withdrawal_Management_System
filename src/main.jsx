@@ -17,6 +17,12 @@ import Provost from './pages/provost/provost.jsx';
 import ExamController from './pages/ExamController/ExamController.jsx';
 import Varifier from './pages/Varifier/Varifier.jsx';
 import Progressbar from './pages/ProgressBar/ProgressBar.jsx';
+import { LogIn } from 'lucide-react';
+import Login from './pages/Login/Login.jsx';
+import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient()
 
 
 const router = createBrowserRouter([
@@ -35,7 +41,12 @@ const router = createBrowserRouter([
       },
       {
         path: '/allsections',
-        element: <Formfillup></Formfillup>
+        element: <Formfillup></Formfillup>,
+      },
+      {
+        path: '/allsections/:form_id',
+        element: <Formfillup></Formfillup>,
+        loader: () => fetch('http://bike-csecu.com:5000/api/certificate-withdrawal/search-formData/20701009')
       },
       {
         path: '/pdf',
@@ -60,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: '/progressbar',
         element: <Progressbar></Progressbar>
+      },
+      {
+        path: '/login',
+        element: <Login></Login>
       }
     ]
   },
@@ -67,6 +82,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
+    </QueryClientProvider>
+  </React.StrictMode>,
 )
