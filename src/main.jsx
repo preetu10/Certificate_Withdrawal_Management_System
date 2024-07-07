@@ -23,13 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./components/functions/AuthProvider";
 import PrivateRoute from "./components/functions/PrivateRoute";
 import RoleChecking from "./components/functions/RoleChecking";
-import CommonPage from "./pages/CommonPage/CommonPage";import { LogIn } from 'lucide-react';
-import Login from './pages/Login/Login.jsx';
-import { HelmetProvider } from 'react-helmet-async';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient()
-
+import CommonPage from "./pages/CommonPage/CommonPage";
 
 const router = createBrowserRouter([
   {
@@ -76,12 +70,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RoleChecking role="student" path="/common-path">
-              <Formfillup></Formfillup>,
-      },
-      {
-        path: '/allsections/:form_id',
-        element: <Formfillup></Formfillup>,
-        loader: () => fetch('http://bike-csecu.com:5000/api/certificate-withdrawal/search-formData/20701009')
+              <Formfillup></Formfillup>
             </RoleChecking>
           </PrivateRoute>
         ),
@@ -139,14 +128,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/progressbar',
-        element: <Progressbar></Progressbar>
-      },
-      {
-        path: '/login',
-        element: <Login></Login>
-      }
-    ]
         path: "/progressbar",
         element: (
           <PrivateRoute>
@@ -169,13 +150,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
-        <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
         <RouterProvider router={router} />
       </HelmetProvider>
     </QueryClientProvider>
-      </HelmetProvider>
-    </QueryClientProvider>
     <ToastContainer />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
