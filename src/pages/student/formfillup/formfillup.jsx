@@ -1,16 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 ("use client");
 
 // import { toast } from "@/components/ui/use-toast"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
 import { useQuery } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { AuthContext } from "@/components/functions/AuthProvider.jsx";
 
 const Formfillup = () => {
+  const {degree}=useParams();
+  //console.log(degree);
+  const {user}=useContext(AuthContext);
+  //console.log("checking user",user);
   const [files, setFiles] = useState([]);
   const [payorderID, setPayorderID] = useState("");
   const [formType, setFormType] = useState("");
@@ -19,12 +24,13 @@ const Formfillup = () => {
   const navigate = useNavigate();
 
   const axiosPublic = useAxiosPublic();
+  // const userID="93712c7c-0304-11ef-a96d-3c5282764ceb";
   const { data: student = {}, isPending } = useQuery({
     queryKey: "student",
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
-          "/certificate-withdrawal/93712c7c-0304-11ef-a96d-3c5282764ceb"
+          `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degree}`
         );
         return res.data;
       } catch (error) {
@@ -32,33 +38,30 @@ const Formfillup = () => {
       }
     },
   });
-
+//22c4de9a-3bb0-11ef-9101-3c5282764ceb---shojib
+//93712c7c-0304-11ef-a96d-3c5282764ceb --momo
   if (isPending) {
     return <div>Loading...</div>;
   }
   console.log(student);
 
-  const date = new Date(student?.results[1]?.exam_start_date);
   const options = { year: "numeric", month: "long" };
+  const date = new Date(student?.results[1]?.exam_start_date);
   const formattedDate1 = date.toLocaleDateString("en-US", options);
 
   const date2 = new Date(student?.results[3]?.exam_start_date);
-  const options2 = { year: "numeric", month: "long" };
-  const formattedDate2 = date2.toLocaleDateString("en-US", options2);
+  const formattedDate2 = date2.toLocaleDateString("en-US", options);
 
   const date3 = new Date(student?.results[5]?.exam_start_date);
-  const options3 = { year: "numeric", month: "long" };
-  const formattedDate3 = date3.toLocaleDateString("en-US", options3);
+  const formattedDate3 = date3.toLocaleDateString("en-US", options);
 
   const date4 = new Date(student?.results[7]?.exam_start_date);
-  const options4 = { year: "numeric", month: "long" };
-  const formattedDate4 = date4.toLocaleDateString("en-US", options4);
+  const formattedDate4 = date4.toLocaleDateString("en-US", options);
 
   const date_masters = new Date(student?.results[2]?.exam_start_date);
-  const option_masters = { year: "numeric", month: "long" };
   const formattedDateMasters = date_masters.toLocaleDateString(
     "en-US",
-    option_masters
+    options
   );
 
   const presentAddress =
@@ -69,28 +72,33 @@ const Formfillup = () => {
     student.presentAddress[0].post_office +
     ", " +
     student.presentAddress[0].district;
-  //console.log(presentAddress);
+
 
   const handlePayorderID = (e) => {
     setPayorderID(e.target.value);
   };
+
   const handleFormTypeChange = (e) => {
     setFormType(e.target.value);
     if (e.target.value == "মূল সনদপত্র নিয়মিত") {
       setPayment("৮০০");
       setFormTypeValue("Main");
     }
-    if (e.target.value == "ডুবলিকেট মূল সনদ") {
+   else if (e.target.value == "ডুবলিকেট মূল সনদ") {
       setPayment("১৫০০");
       setFormTypeValue("Main");
     }
-    if (e.target.value == "সাময়িক সনদ") {
+    else if (e.target.value == "সাময়িক সনদ") {
       setPayment("৪০০");
       setFormTypeValue("Provisional");
     }
-    if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
+   else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
       setPayment("১১০০");
       setFormTypeValue("Provisional");
+    }
+    else{
+      setPayment("0");
+      setFormTypeValue("");
     }
   };
 
@@ -100,7 +108,11 @@ const Formfillup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if(student.program_abbr!==degree){
+      toast.error("You have not selected the degree correctly. Please select the degree you have completed");
+      navigate("/select-certificate-type")
+      return;
+    }
     const file_attachments = [];
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
@@ -158,8 +170,8 @@ const Formfillup = () => {
         sec_year_exam_time:
           formattedDate2 == "Invalid Date" ? "" : formattedDate2,
         student_id: Number(student?.student_id),
-        student_name_bn: student.first_name,
-        student_name_eng: student.first_name_bn,
+        student_name_bn: student.first_name_bn+" " + student.last_name_bn,
+        student_name_eng: student.first_name+" " + student.last_name,
         thana: student?.permanentAddress[0].thana,
         third_year_exam_actual_year: student?.results[5]?.exam_session || "",
         third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
@@ -207,7 +219,7 @@ const Formfillup = () => {
                 value={formType}
                 onChange={handleFormTypeChange}
               >
-                <option disabled selected>
+                <option value="" disabled selected>
                   ---সনদের ধরণ---
                 </option>
                 <option>মূল সনদপত্র নিয়মিত</option>
@@ -274,7 +286,7 @@ const Formfillup = () => {
               type="text"
               name="first_name_bn"
               disabled
-              value={student.first_name_bn}
+              value={student.first_name_bn+" "+student.last_name_bn}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -286,7 +298,7 @@ const Formfillup = () => {
               type="text"
               name="first_name"
               disabled
-              value={student.first_name}
+              value={student.first_name+" "+student.last_name}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -895,7 +907,7 @@ const Formfillup = () => {
         )}
 
         {/* masters degree start */}
-        {(student?.program_abbr.toLowerCase() == "msc" ||
+        {(student?.program_abbr.toLowerCase() == "msc(engg)" ||
           student?.program_abbr.toLowerCase() == "mba") && (
           <>
             {/* preli */}
