@@ -5,9 +5,10 @@ module.exports = {
     './pages/**/*.{js,jsx}',
     './components/**/*.{js,jsx}',
     './app/**/*.{js,jsx}',
+    "src/wels-components/**/*.{ts,tsx}",
     './src/**/*.{js,jsx}',
   ],
-  prefix: "yes",
+  // prefix: "yes",
   theme: {
     container: {
       center: true,
@@ -50,6 +51,14 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
         },
       },
       borderRadius: {

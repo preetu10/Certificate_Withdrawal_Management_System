@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { HistoryTable } from './historyTable'
 import { PaginationDemo } from './pagination'
 import Rules from './rules'
