@@ -24,6 +24,7 @@ import AuthProvider from "./components/functions/AuthProvider";
 import PrivateRoute from "./components/functions/PrivateRoute";
 import RoleChecking from "./components/functions/RoleChecking";
 import CommonPage from "./pages/CommonPage/CommonPage";
+import SelectDegree from "./pages/student/formfillup/SelectDegree";
 
 const router = createBrowserRouter([
   {
@@ -64,9 +65,19 @@ const router = createBrowserRouter([
             </RoleChecking>
           </PrivateRoute>
         ),
+      }
+      ,{
+        path:"/select-certificate-type",
+        element:(
+          <PrivateRoute>
+          <RoleChecking role="student" path="/common-path">
+          <SelectDegree></SelectDegree>
+          </RoleChecking>
+        </PrivateRoute>
+        ),
       },
       {
-        path: "/certificate-withdrawal-form",
+        path: "/certificate-withdrawal-form/:degree",
         element: (
           <PrivateRoute>
             <RoleChecking role="student" path="/common-path">
@@ -86,7 +97,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/payment",
+        path: "/payment/:degree",
         element: (
           <PrivateRoute>
             <RoleChecking role="student" path="/common-path">

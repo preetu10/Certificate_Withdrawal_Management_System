@@ -17,6 +17,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Link } from "react-router-dom"
+import { Button } from "@/components/ui/button"
 
 const table = [
     {
@@ -47,6 +49,12 @@ const table = [
 
 export function HistoryTable() {
     return (
+        <>
+        <div className="text-right my-5">
+         <Link to="/select-certificate-type">
+                <Button className="bg-gray-200 text-black">Apply for Certificate</Button>
+            </Link>
+            </div>
         <Table className="border">
             <TableHeader>
                 <TableRow >
@@ -82,6 +90,6 @@ export function HistoryTable() {
                 ))}
             </TableBody>
         </Table>
-
+</>
     )
 }

@@ -18,25 +18,7 @@ const Login = () => {
   // }, [loadingUser])
 
   const axiosPublic = useAxiosPublic();
-  //   const { data: student = {}, isPending } = useQuery({
-  //     queryKey: "student",
-  //     queryFn: async () => {
-  //       try {
-  //         const res = await axiosPublic.get(
-  //           "/api/certificate-withdrawal/93712c7c-0304-11ef-a96d-3c5282764ceb"
-  //         );
-  //         return res.data;
-  //       } catch (error) {
-  //         console.log("Failed to fetch student data");
-  //       }
-  //     },
-  //   });
 
-  //   if (isPending) {
-  //     return <div>Loading...</div>;
-  //   }
-
-  //   console.log(student);
   const handleLogin = async () => {
     setLoading(true);
     if (
