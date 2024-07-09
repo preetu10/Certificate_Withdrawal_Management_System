@@ -7,89 +7,62 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectLabel,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-
-const table = [
-    {
-        serial: "01",
-        application: "Application ID:",
-        details: "See Details",
-        applicationID: "00001",
-    },
-    {
-        serial: "02",
-        application: "Application ID:",
-        details: "See Details",
-        applicationID: "00002",
-    },
-    {
-        serial: "03",
-        application: "Application ID:",
-        details: "See Details",
-        applicationID: "00003",
-    },
-    {
-        serial: "04",
-        application: "Application ID:",
-        details: "See Details",
-        applicationID: "00004",
-    },
-]
+} from "@/components/ui/table";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import useAxiosPublic from "@/customHooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "@/components/functions/AuthProvider";
 
 export function HistoryTable() {
+    const { user } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const { data: history = [] } = useQuery({
+        queryKey: "history",
+        queryFn: async () => {
+            try {
+                const res = await axiosPublic.get(
+                    //`/certificate-withdrawal/search-formData/?user_id=${user.user_id}`
+                    `/certificate-withdrawal/search-formData/93712c7c-0304-11ef-a96d-3c5282764ceb`
+                );
+                console.log(res?.data);
+                return res.data;
+            } catch (error) {
+                console.log("Failed to fetch student history");
+                return [];
+            }
+        },
+    });
+
     return (
         <>
-        <div className="text-right my-5">
-         <Link to="/select-certificate-type">
-                <Button className="bg-gray-200 text-black">Apply for Certificate</Button>
-            </Link>
+            <div className="text-right my-5">
+                <Link to="/select-certificate-type">
+                    <Button className="bg-gray-200 text-black">Apply for Certificate</Button>
+                </Link>
             </div>
-        <Table className="border">
-            <TableHeader>
-                <TableRow >
-                    <TableHead className="text-center">Serial No</TableHead>
-                    <TableHead className="text-center">Certificate Type</TableHead>
-                    <TableHead className="text-center">Degree</TableHead>
-                    <TableHead className="text-center">Details</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {table.map((serial) => (
-                    <TableRow key={serial.serial}>
-                        <TableCell className="text-center">{serial.serial}</TableCell>
-                        <TableCell className="text-center">{serial.application}</TableCell>
-                        <TableCell className="text-center">{serial.applicationID}</TableCell>
-                        <TableCell className="justify-center flex">
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="See details" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="applications" className="font-semibold">Applications</SelectItem>
-                                    <SelectItem value="form" className="font-semibold">Form</SelectItem>
-                                    <SelectGroup>
-                                        <SelectLabel className="font-semibold">Attachments</SelectLabel>
-                                        <SelectItem value="est" className="ml-5">Marksheet</SelectItem>
-                                        <SelectItem value="cst" className="ml-5">Photos</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </TableCell>
+            <Table className="border">
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="text-center">Serial No</TableHead>
+                        <TableHead className="text-center">Student Id</TableHead>
+                        <TableHead className="text-center">Certificate Type</TableHead>
+                        <TableHead className="text-center">Degree</TableHead>
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-</>
-    )
+                </TableHeader>
+                <TableBody>
+                    {history.map((item, index) => (
+                        <TableRow key={index}>
+                            <TableCell className="text-center">{index + 1}</TableCell>
+                            <TableCell className="text-center">{item.student_id}</TableCell>
+                            <TableCell className="text-center">{item.form_type}</TableCell>
+                            <TableCell className="text-center">{item.degree}</TableCell>
+                            <TableCell className="text-center cursor-pointer"><Link to="/studentSeeDetails">See Details</Link></TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </>
+    );
 }
