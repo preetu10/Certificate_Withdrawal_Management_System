@@ -25,7 +25,8 @@ import PrivateRoute from "./components/functions/PrivateRoute";
 import RoleChecking from "./components/functions/RoleChecking";
 import CommonPage from "./pages/CommonPage/CommonPage";
 import SelectDegree from "./pages/student/formfillup/SelectDegree";
-
+import StudentForm from "./pages/SeeDetails/StudentForm";
+import OthersHistory from "./pages/OthersStakeholders/OthersHistory";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      
+
+
+
+      
       {
         path: "/",
         element: (
@@ -111,11 +117,24 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RoleChecking role="provost" path="/common-path">
-              <Provost></Provost>
+             <OthersHistory></OthersHistory>
             </RoleChecking>
           </PrivateRoute>
         ),
       },
+
+      {
+        path: "/seeDetails",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role="provost" path="/common-path">
+           <StudentForm></StudentForm>
+           </RoleChecking>
+        </PrivateRoute>
+        ),
+      },
+
+
       {
         path: "/examController",
         element: (

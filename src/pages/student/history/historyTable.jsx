@@ -70,22 +70,7 @@ export function HistoryTable() {
                         <TableCell className="text-center">{serial.serial}</TableCell>
                         <TableCell className="text-center">{serial.application}</TableCell>
                         <TableCell className="text-center">{serial.applicationID}</TableCell>
-                        <TableCell className="justify-center flex">
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="See details" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="applications" className="font-semibold">Applications</SelectItem>
-                                    <SelectItem value="form" className="font-semibold">Form</SelectItem>
-                                    <SelectGroup>
-                                        <SelectLabel className="font-semibold">Attachments</SelectLabel>
-                                        <SelectItem value="est" className="ml-5">Marksheet</SelectItem>
-                                        <SelectItem value="cst" className="ml-5">Photos</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </TableCell>
+                        <TableCell className="text-center"><Link to="/progressbar">{serial.details} </Link></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
@@ -93,3 +78,15 @@ export function HistoryTable() {
 </>
     )
 }
+/*student
+foyazunnesamomo.345@gmail.com
+113asd@#*/
+/*provost
+ayeshasareen48@gmail.com
+81be0c8d*/
+/*zahidhasandfree@gmail.com
+c981e7d5
+eta verifier_1*/
+/*samihaaktter@gmail.com
+6a8df97e
+eta exam_controller*/
