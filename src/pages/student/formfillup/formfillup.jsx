@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 //import { toast } from "@/components/ui/use-toast";
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
@@ -27,7 +27,7 @@ const Formfillup = () => {
   const axiosPublic = useAxiosPublic();
   // const userID="93712c7c-0304-11ef-a96d-3c5282764ceb";
   const { data: student = {}, isPending } = useQuery({
-    queryKey: "student",
+    queryKey: `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degree}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
@@ -74,7 +74,6 @@ const Formfillup = () => {
     ", " +
     student.presentAddress[0].district;
 
-
   const handlePayorderID = (e) => {
     setPayorderID(e.target.value);
   };
@@ -84,20 +83,16 @@ const Formfillup = () => {
     if (e.target.value == "মূল সনদপত্র নিয়মিত") {
       setPayment("৮০০");
       setFormTypeValue("Main");
-    }
-    else if (e.target.value == "ডুবলিকেট মূল সনদ") {
+    } else if (e.target.value == "ডুবলিকেট মূল সনদ") {
       setPayment("১৫০০");
       setFormTypeValue("Main");
-    }
-    else if (e.target.value == "সাময়িক সনদ") {
+    } else if (e.target.value == "সাময়িক সনদ") {
       setPayment("৪০০");
       setFormTypeValue("Provisional");
-    }
-    else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
+    } else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
       setPayment("১১০০");
       setFormTypeValue("Provisional");
-    }
-    else {
+    } else {
       setPayment("0");
       setFormTypeValue("");
     }
@@ -110,8 +105,10 @@ const Formfillup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (student.program_abbr !== degree) {
-      toast.error("You have not selected the degree correctly. Please select the degree you have completed");
-      navigate("/select-certificate-type")
+      toast.error(
+        "You have not selected the degree correctly. Please select the degree you have completed"
+      );
+      navigate("/select-certificate-type");
       return;
     }
     const file_attachments = [];
@@ -445,710 +442,710 @@ const Formfillup = () => {
 
         {(student?.program_abbr.toLowerCase() == "bsc(engg)" ||
           student?.program_abbr == "bba") && (
-            <>
-              {/* ka section */}
-              <div className="py-2">
-                <span className="text-black text-xl font-bold ">
-                  {student?.program_abbr.toLowerCase() == "bsc(engg)"
-                    ? "বিএসসি (ইন্জিনিয়ারিং) পরীক্ষা "
-                    : "বিবিএ পরীক্ষা"}
-                </span>
-                <br />
-                <br />
-                <span className="text-center text-xl font-bold ">ক।</span>
+          <>
+            {/* ka section */}
+            <div className="py-2">
+              <span className="text-black text-xl font-bold ">
+                {student?.program_abbr.toLowerCase() == "bsc(engg)"
+                  ? "বিএসসি (ইন্জিনিয়ারিং) পরীক্ষা "
+                  : "বিবিএ পরীক্ষা"}
+              </span>
+              <br />
+              <br />
+              <span className="text-center text-xl font-bold ">ক।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> ১ম বর্ষ বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> ১ম বর্ষ বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              {/* kha section */}
-              <div className="py-2">
-                <br />
-                <br />
-                <span className="text-center text-xl font-bold ">খ।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> ২য় বর্ষ বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[3]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[3]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[3]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            {/* kha section */}
+            <div className="py-2">
+              <br />
+              <br />
+              <span className="text-center text-xl font-bold ">খ।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> ২য় বর্ষ বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[3]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[3]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[3]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[3]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={formattedDate2 == "Invalid Date" ? "" : formattedDate2}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              {/* গ। section */}
-              <div className="py-2">
-                <br />
-                <br />
-                <span className="text-center text-xl font-bold ">গ।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[3]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> ৩য় বর্ষ বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[5]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={formattedDate2 == "Invalid Date" ? "" : formattedDate2}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[5]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[5]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            {/* গ। section */}
+            <div className="py-2">
+              <br />
+              <br />
+              <span className="text-center text-xl font-bold ">গ।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> ৩য় বর্ষ বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[5]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[5]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[5]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[5]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={formattedDate3 == "Invalid Date" ? "" : formattedDate3}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[5]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={formattedDate3 == "Invalid Date" ? "" : formattedDate3}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
 
-              {/* gha section */}
-              <div className="py-2">
-                <br />
-                <br />
-                <span className="text-center text-xl font-bold "> ঘ।</span>
+            {/* gha section */}
+            <div className="py-2">
+              <br />
+              <br />
+              <span className="text-center text-xl font-bold "> ঘ।</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> ৪র্থ বর্ষ বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> ৪র্থ বর্ষ বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[7]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[7]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[7]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[7]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[7]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[7]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[7]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={formattedDate4 == "Invalid Date" ? "" : formattedDate4}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-            </>
-          )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[7]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={formattedDate4 == "Invalid Date" ? "" : formattedDate4}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+          </>
+        )}
 
         {/* masters degree start */}
         {(student?.program_abbr.toLowerCase() == "msc(engg)" ||
           student?.program_abbr.toLowerCase() == "mba") && (
-            <>
-              {/* preli */}
-              <div className="py-2">
-                <span className="text-black text-xl font-bold ">
-                  {student?.program_abbr.toLowerCase() == "msc(engg)"
-                    ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
-                    : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
-                </span>
-                <br />
-                <br />
+          <>
+            {/* preli */}
+            <div className="py-2">
+              <span className="text-black text-xl font-bold ">
+                {student?.program_abbr.toLowerCase() == "msc(engg)"
+                  ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
+                  : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
+              </span>
+              <br />
+              <br />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[1]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              {/* final */}
-              <div className="py-2">
-                <span className="text-black font-bold ">
-                  {student?.program_abbr.toLowerCase() == "msc(engg)"
-                    ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
-                    : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
-                </span>
-                <br />
-                <br />
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black"> বিষয়</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.department_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">হল/কলেজ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[2]?.exam_centre}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[1]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার নাম</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[2]?.exam_name}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">পরীক্ষার বৎসর</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[2]?.exam_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">রোল নং/আই. ডি . নং</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.student_id}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">শিক্ষাবর্ষ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.academic_session}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+            </div>
+            {/* final */}
+            <div className="py-2">
+              <span className="text-black font-bold ">
+                {student?.program_abbr.toLowerCase() == "msc(engg)"
+                  ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
+                  : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
+              </span>
+              <br />
+              <br />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black"> বিষয়</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.department_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={student?.results[2]?.cgpa}
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
-                <div className="w-full lg:w-[590px]">
-                  <label>
-                    <span className="text-black">
-                      পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    name=""
-                    disabled
-                    value={
-                      formattedDateMasters == "Invalid Date"
-                        ? ""
-                        : formattedDateMasters
-                    }
-                    className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                  />
-                </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">হল/কলেজ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[2]?.exam_centre}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
               </div>
-            </>
-          )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার নাম</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[2]?.exam_name}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">পরীক্ষার বৎসর</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[2]?.exam_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">রোল নং/আই. ডি . নং</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.student_id}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">শিক্ষাবর্ষ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.academic_session}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={student?.results[2]?.cgpa}
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+              <div className="w-full lg:w-[590px]">
+                <label>
+                  <span className="text-black">
+                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name=""
+                  disabled
+                  value={
+                    formattedDateMasters == "Invalid Date"
+                      ? ""
+                      : formattedDateMasters
+                  }
+                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+                />
+              </div>
+            </div>
+          </>
+        )}
         {/* attachments */}
         <div className="w-full px-5 items-stretch">
           <label>
