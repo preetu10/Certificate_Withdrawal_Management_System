@@ -15,7 +15,7 @@ import useAxiosPublic from "@/customHooks/useAxiosPublic";
 const StudentForm = () => {
   //const {degree}=useParams();
   //console.log(degree);
-  const {user}=useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   //console.log("checking user",user);
   const [files, setFiles] = useState([]);
   const [payorderID, setPayorderID] = useState("");
@@ -26,13 +26,12 @@ const StudentForm = () => {
   const axiosPublic = useAxiosPublic();
   // const userID="93712c7c-0304-11ef-a96d-3c5282764ceb";
   const { data: student = {}, isPending } = useQuery({
-    queryKey: "student",
+    queryKey: `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${student.form_id}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
-        //`/certificate-withdrawal/search-formData/other-stakeholders/${user.user_id}`
-       `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${student.form_id}`
-
+          //`/certificate-withdrawal/search-formData/other-stakeholders/${user.user_id}`
+          `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${student.form_id}`
         );
         console.log(res?.data);
         return res.data;
@@ -44,162 +43,161 @@ const StudentForm = () => {
   if (isPending) {
     return <div>Loading...</div>;
   }
-//   console.log(student);
+  //   console.log(student);
 
-//   const options = { year: "numeric", month: "long" };
-//   //const date = new Date(student?.results[1]?.exam_start_date);
-//   const formattedDate1 = date.toLocaleDateString("en-US", options);
+  //   const options = { year: "numeric", month: "long" };
+  //   //const date = new Date(student?.results[1]?.exam_start_date);
+  //   const formattedDate1 = date.toLocaleDateString("en-US", options);
 
-//   //const date2 = new Date(student?.results[3]?.exam_start_date);
-//   const formattedDate2 = date2.toLocaleDateString("en-US", options);
+  //   //const date2 = new Date(student?.results[3]?.exam_start_date);
+  //   const formattedDate2 = date2.toLocaleDateString("en-US", options);
 
-//   //const date3 = new Date(student?.results[5]?.exam_start_date);
-//   const formattedDate3 = date3.toLocaleDateString("en-US", options);
+  //   //const date3 = new Date(student?.results[5]?.exam_start_date);
+  //   const formattedDate3 = date3.toLocaleDateString("en-US", options);
 
-//  // const date4 = new Date(student?.results[7]?.exam_start_date);
-//   const formattedDate4 = date4.toLocaleDateString("en-US", options);
+  //  // const date4 = new Date(student?.results[7]?.exam_start_date);
+  //   const formattedDate4 = date4.toLocaleDateString("en-US", options);
 
-//   //const date_masters = new Date(student?.results[2]?.exam_start_date);
-//   const formattedDateMasters = date_masters.toLocaleDateString(
-//     "en-US",
-//     options
-//   );
+  //   //const date_masters = new Date(student?.results[2]?.exam_start_date);
+  //   const formattedDateMasters = date_masters.toLocaleDateString(
+  //     "en-US",
+  //     options
+  //   );
 
-//   const presentAddress =
-//     student.presentAddress[0].village +
-//     ", " +
-//     student.presentAddress[0].thana +
-//     ", " +
-//     student.presentAddress[0].post_office +
-//     ", " +
-//     student.presentAddress[0].district;
+  //   const presentAddress =
+  //     student.presentAddress[0].village +
+  //     ", " +
+  //     student.presentAddress[0].thana +
+  //     ", " +
+  //     student.presentAddress[0].post_office +
+  //     ", " +
+  //     student.presentAddress[0].district;
 
+  //   const handlePayorderID = (e) => {
+  //     setPayorderID(e.target.value);
+  //   };
 
-//   const handlePayorderID = (e) => {
-//     setPayorderID(e.target.value);
-//   };
+  //   const handleFormTypeChange = (e) => {
+  //     setFormType(e.target.value);
+  //     if (e.target.value == "মূল সনদপত্র নিয়মিত") {
+  //       setPayment("৮০০");
+  //       setFormTypeValue("Main");
+  //     }
+  //    else if (e.target.value == "ডুবলিকেট মূল সনদ") {
+  //       setPayment("১৫০০");
+  //       setFormTypeValue("Main");
+  //     }
+  //     else if (e.target.value == "সাময়িক সনদ") {
+  //       setPayment("৪০০");
+  //       setFormTypeValue("Provisional");
+  //     }
+  //    else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
+  //       setPayment("১১০০");
+  //       setFormTypeValue("Provisional");
+  //     }
+  //     else{
+  //       setPayment("0");
+  //       setFormTypeValue("");
+  //     }
+  //   };
 
-//   const handleFormTypeChange = (e) => {
-//     setFormType(e.target.value);
-//     if (e.target.value == "মূল সনদপত্র নিয়মিত") {
-//       setPayment("৮০০");
-//       setFormTypeValue("Main");
-//     }
-//    else if (e.target.value == "ডুবলিকেট মূল সনদ") {
-//       setPayment("১৫০০");
-//       setFormTypeValue("Main");
-//     }
-//     else if (e.target.value == "সাময়িক সনদ") {
-//       setPayment("৪০০");
-//       setFormTypeValue("Provisional");
-//     }
-//    else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
-//       setPayment("১১০০");
-//       setFormTypeValue("Provisional");
-//     }
-//     else{
-//       setPayment("0");
-//       setFormTypeValue("");
-//     }
-//   };
+  //   const handleFileChange = (event) => {
+  //     setFiles(event.target.files);
+  //   };
 
-//   const handleFileChange = (event) => {
-//     setFiles(event.target.files);
-//   };
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     if(student.program_abbr!==degree){
+  //       toast.error("You have not selected the degree correctly. Please select the degree you have completed");
+  //       navigate("/select-certificate-type")
+  //       return;
+  //     }
+  //     const file_attachments = [];
+  //     const formData = new FormData();
+  //     for (let i = 0; i < files.length; i++) {
+  //       formData.append("items", files[i]);
+  //       console.log(files[i]);
+  //     }
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if(student.program_abbr!==degree){
-//       toast.error("You have not selected the degree correctly. Please select the degree you have completed");
-//       navigate("/select-certificate-type")
-//       return;
-//     }
-//     const file_attachments = [];
-//     const formData = new FormData();
-//     for (let i = 0; i < files.length; i++) {
-//       formData.append("items", files[i]);
-//       console.log(files[i]);
-//     }
+  //     try {
+  //       const response = await axiosPublic.post("/upload", formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       });
+  //       const getFile = response?.data?.files;
+  //       getFile.forEach((a) => {
+  //         file_attachments.push({
+  //           attachment: a.filename,
+  //           attachment_name: a.originalname,
+  //         });
+  //       });
 
-//     try {
-//       const response = await axiosPublic.post("/upload", formData, {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
-//       const getFile = response?.data?.files;
-//       getFile.forEach((a) => {
-//         file_attachments.push({
-//           attachment: a.filename,
-//           attachment_name: a.originalname,
-//         });
-//       });
-
-      const data = {
-//         academic_session: student?.academic_session,
-//         form_type: formTypeValue || "",
-//         money: Number(payment) || null,
-//         payorder_id: payorderID,
-//         degree: student?.program_abbr,
-//         district: student?.permanentAddress[0].district,
-         //father_name_bn: student?.fathers_name_bn,
-//         father_name_eng: student?.fathers_name,
-//         fifth_year_exam_actual_year: "",
-//         fifth_year_exam_cgpa: null,
-//         fifth_year_exam_name: "",
-//         fifth_year_exam_time: "",
-//        //fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
-//         //fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
-//         //fir_year_exam_name: student?.results[1]?.exam_name || "",
-//         fir_year_exam_time:
-//           formattedDate1 == "Invalid Date" ? "" : formattedDate1,
-//        // fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
-//         //fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
-//         //fourth_year_exam_name: student?.results[7]?.exam_name || "",
-//         fourth_year_exam_time:s
-//           formattedDate4 == "Invalid Date" ? "" : formattedDate4,
-//         hall_name: student?.hall_name,
-//         mobile_phone: student?.phone,
-//         mother_name_bn: student?.mothers_name_bn,
-//         mother_name_eng: student?.mothers_name,
-//         post_office: student?.permanentAddress[0].post_office,
-//         present_address: presentAddress,
-//         profile_image: student?.profile_image,
-//         //sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
-//         //sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
-//         //sec_year_exam_name: student?.results[3]?.exam_name || "",
-//         sec_year_exam_time:
-//           formattedDate2 == "Invalid Date" ? "" : formattedDate2,
-//         student_id: Number(student?.student_id),
-//         student_name_bn: student.first_name_bn+" " + student.last_name_bn,
-//         student_name_eng: student.first_name+" " + student.last_name,
-//         thana: student?.permanentAddress[0].thana,
-//         //third_year_exam_actual_year: student?.results[5]?.exam_session || "",
-//        // third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
-//         //third_year_exam_name: student?.results[5]?.exam_name || "",
-//         third_year_exam_time:
-//           formattedDate3 == "Invalid Date" ? "" : formattedDate3,
-//         village: student?.permanentAddress[0].village,
-//         file_attachments: file_attachments,
+  const data = {
+    //         academic_session: student?.academic_session,
+    //         form_type: formTypeValue || "",
+    //         money: Number(payment) || null,
+    //         payorder_id: payorderID,
+    //         degree: student?.program_abbr,
+    //         district: student?.permanentAddress[0].district,
+    //father_name_bn: student?.fathers_name_bn,
+    //         father_name_eng: student?.fathers_name,
+    //         fifth_year_exam_actual_year: "",
+    //         fifth_year_exam_cgpa: null,
+    //         fifth_year_exam_name: "",
+    //         fifth_year_exam_time: "",
+    //        //fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
+    //         //fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+    //         //fir_year_exam_name: student?.results[1]?.exam_name || "",
+    //         fir_year_exam_time:
+    //           formattedDate1 == "Invalid Date" ? "" : formattedDate1,
+    //        // fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
+    //         //fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
+    //         //fourth_year_exam_name: student?.results[7]?.exam_name || "",
+    //         fourth_year_exam_time:s
+    //           formattedDate4 == "Invalid Date" ? "" : formattedDate4,
+    //         hall_name: student?.hall_name,
+    //         mobile_phone: student?.phone,
+    //         mother_name_bn: student?.mothers_name_bn,
+    //         mother_name_eng: student?.mothers_name,
+    //         post_office: student?.permanentAddress[0].post_office,
+    //         present_address: presentAddress,
+    //         profile_image: student?.profile_image,
+    //         //sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
+    //         //sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
+    //         //sec_year_exam_name: student?.results[3]?.exam_name || "",
+    //         sec_year_exam_time:
+    //           formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+    //         student_id: Number(student?.student_id),
+    //         student_name_bn: student.first_name_bn+" " + student.last_name_bn,
+    //         student_name_eng: student.first_name+" " + student.last_name,
+    //         thana: student?.permanentAddress[0].thana,
+    //         //third_year_exam_actual_year: student?.results[5]?.exam_session || "",
+    //        // third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
+    //         //third_year_exam_name: student?.results[5]?.exam_name || "",
+    //         third_year_exam_time:
+    //           formattedDate3 == "Invalid Date" ? "" : formattedDate3,
+    //         village: student?.permanentAddress[0].village,
+    //         file_attachments: file_attachments,
   };
-//       console.log(data);
-//       const formResponse = await axiosPublic.post(
-//         "/certificate-withdrawal/post-form",
-//         data,
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-//       if (formResponse.status == 200) {
-//         toast.success("Submission successful");
-//         navigate("/");
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
+  //       console.log(data);
+  //       const formResponse = await axiosPublic.post(
+  //         "/certificate-withdrawal/post-form",
+  //         data,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (formResponse.status == 200) {
+  //         toast.success("Submission successful");
+  //         navigate("/");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
   return (
     // <div>
@@ -1136,21 +1134,26 @@ const StudentForm = () => {
 
     //   </form>
     // </div>
-       
+
     <div>
       <div className="">
-            <label>
-              <span className="text-black bold">মন্তব্য</span>
-            </label>
-            <input
-              type="text"
-              placeholder="আপনার মন্তব্য শেয়ার করুন"
-              className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-              required style={{ height: '100px' }}
-            />
-          </div>
-      <Button type="submit" className="mt-5">Accept </Button>
-      <Button type="submit" className="mt-5 ml-20">Reject</Button>
+        <label>
+          <span className="text-black bold">মন্তব্য</span>
+        </label>
+        <input
+          type="text"
+          placeholder="আপনার মন্তব্য শেয়ার করুন"
+          className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
+          required
+          style={{ height: "100px" }}
+        />
+      </div>
+      <Button type="submit" className="mt-5">
+        Accept{" "}
+      </Button>
+      <Button type="submit" className="mt-5 ml-20">
+        Reject
+      </Button>
     </div>
   );
 };

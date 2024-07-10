@@ -49,11 +49,6 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      
-
-
-
-      
       {
         path: "/",
         element: (
@@ -73,8 +68,8 @@ const router = createBrowserRouter([
             </RoleChecking>
           </PrivateRoute>
         ),
-      }
-      , {
+      },
+      {
         path: "/select-certificate-type",
         element: (
           <PrivateRoute>
@@ -119,7 +114,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RoleChecking role="provost" path="/common-path">
-             <OthersHistory></OthersHistory>
+              <OthersHistory></OthersHistory>
             </RoleChecking>
           </PrivateRoute>
         ),
@@ -130,12 +125,11 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RoleChecking role="provost" path="/common-path">
-           <StudentForm></StudentForm>
-           </RoleChecking>
-        </PrivateRoute>
+              <StudentForm></StudentForm>
+            </RoleChecking>
+          </PrivateRoute>
         ),
       },
-
 
       {
         path: "/examController",
@@ -170,14 +164,14 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/studentSeeDetails",
+        path: "/studentSeeDetails/:form_id",
         element: (
           <PrivateRoute>
             <RoleChecking role="student" path="/commom-path">
               <StudentSeeDetails></StudentSeeDetails>
             </RoleChecking>
           </PrivateRoute>
-        )
+        ),
       },
       {
         path: "/login",
