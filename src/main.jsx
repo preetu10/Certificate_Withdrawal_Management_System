@@ -27,6 +27,8 @@ import CommonPage from "./pages/CommonPage/CommonPage";
 import SelectDegree from "./pages/student/formfillup/SelectDegree";
 import StudentForm from "./pages/SeeDetails/StudentForm";
 import OthersHistory from "./pages/OthersStakeholders/OthersHistory";
+import StudentSeeDetails from "./pages/student/StudentSeeDetails/StudentSeeDetails";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,14 +74,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       }
-      ,{
-        path:"/select-certificate-type",
-        element:(
+      , {
+        path: "/select-certificate-type",
+        element: (
           <PrivateRoute>
-          <RoleChecking role="student" path="/common-path">
-          <SelectDegree></SelectDegree>
-          </RoleChecking>
-        </PrivateRoute>
+            <RoleChecking role="student" path="/common-path">
+              <SelectDegree></SelectDegree>
+            </RoleChecking>
+          </PrivateRoute>
         ),
       },
       {
@@ -166,6 +168,16 @@ const router = createBrowserRouter([
             </RoleChecking>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/studentSeeDetails",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role="student" path="/commom-path">
+              <StudentSeeDetails></StudentSeeDetails>
+            </RoleChecking>
+          </PrivateRoute>
+        )
       },
       {
         path: "/login",
