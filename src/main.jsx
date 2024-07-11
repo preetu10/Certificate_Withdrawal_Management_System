@@ -25,6 +25,9 @@ import PrivateRoute from "./components/functions/PrivateRoute";
 import RoleChecking from "./components/functions/RoleChecking";
 import CommonPage from "./pages/CommonPage/CommonPage";
 import SelectDegree from "./pages/student/formfillup/SelectDegree";
+import StudentForm from "./pages/SeeDetails/StudentForm";
+import OthersHistory from "./pages/OthersStakeholders/OthersHistory";
+import StudentSeeDetails from "./pages/student/StudentSeeDetails/StudentSeeDetails";
 
 const router = createBrowserRouter([
   {
@@ -106,26 +109,28 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      // {
-      //   path: "/provost",
-      //   element: (
-      //     <PrivateRoute>
-      //       <RoleChecking
-      //         roles={[
-      //           "exam_controller",
-      //           "provost",
-      //           "certificate_section_incharge",
-      //           "certificate_verifier_1",
-      //           "certificate_verifier_2",
-      //           "vc",
-      //         ]}
-      //         path="/no-permission"
-      //       >
-      //         <ExamController />
-      //       </RoleChecking>
-      //     </PrivateRoute>
-      //   ),
-      // },
+      {
+        path: "/provost",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role="provost" path="/common-path">
+              <OthersHistory></OthersHistory>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "/seeDetails",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role="provost" path="/common-path">
+              <StudentForm></StudentForm>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+
       {
         path: "/examController",
         element: (
@@ -154,6 +159,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <RoleChecking role="student" path="/common-path">
               <Progressbar></Progressbar>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/studentSeeDetails/:form_id",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role="student" path="/commom-path">
+              <StudentSeeDetails></StudentSeeDetails>
             </RoleChecking>
           </PrivateRoute>
         ),

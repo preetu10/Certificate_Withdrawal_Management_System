@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 ("use client");
 import { useNavigate, useParams } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
 import { useQuery } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
 import { AuthContext } from "@/components/functions/AuthProvider.jsx";
 import ResultSectionHons from "./ResultSectionHons.jsx";
 import ResultSectionMasters from "./ResultSectionMasters.jsx";
@@ -15,6 +16,7 @@ import ResultBPharm from "./ResultBPharm.jsx";
 const Formfillup = () => {
   const { degree } = useParams();
   const { user } = useContext(AuthContext);
+  //console.log(degree);
   const [files, setFiles] = useState([]);
   const [payorderID, setPayorderID] = useState("");
   const [formType, setFormType] = useState("");
@@ -23,7 +25,7 @@ const Formfillup = () => {
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const { data: student = {}, isPending } = useQuery({
-    queryKey: "student",
+    queryKey: `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degree}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
@@ -390,7 +392,6 @@ const Formfillup = () => {
                 মোট টাকা{" "}
               </span>
             </label>
-            {/* eta select er upor depend kore change kora lgbe usestate er maddhome */}
             <input
               type="text"
               name="payment_amount"

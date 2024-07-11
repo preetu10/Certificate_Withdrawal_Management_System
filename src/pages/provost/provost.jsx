@@ -63,6 +63,7 @@ const Provost = () => {
                         <TableHead className="text-center">Serial No</TableHead>
                         <TableHead className="text-center">Student ID</TableHead>
                         <TableHead className="text-center">Details</TableHead>
+                        <TableHead className="text-center">Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -70,9 +71,8 @@ const Provost = () => {
                         <TableRow key={item.serial}>
                             <TableCell className="text-center">{item.serial}</TableCell>
                             <TableCell className="text-center">{item.application}</TableCell>
-                            <TableCell className="text-center">See Details</TableCell>
-                            <TableCell className="text-center text-green-600">Accepted</TableCell>
-                            <TableCell className="text-center text-red-600">Rejected</TableCell>
+                            <TableCell className="text-center"><Link to="/seeDetails">{item.details}</Link></TableCell>
+                            <TableCell className="text-center text-green-600">Pending</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
