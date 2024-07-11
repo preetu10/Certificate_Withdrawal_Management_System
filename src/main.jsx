@@ -11,7 +11,7 @@ import { FeeTable } from "./pages/student/fee/feetable.jsx";
 import Formfillup from "./pages/student/formfillup/formfillup.jsx";
 import Pdf from "./pages/PDF/pdf.jsx";
 import Payment from "./pages/student/fee/payment.jsx";
-import Provost from "./pages/provost/provost.jsx";
+//import Provost from "./pages/provost/provost.jsx";
 import ExamController from "./pages/ExamController/ExamController.jsx";
 import Varifier from "./pages/Varifier/Varifier.jsx";
 import Progressbar from "./pages/ProgressBar/ProgressBar.jsx";
@@ -65,15 +65,15 @@ const router = createBrowserRouter([
             </RoleChecking>
           </PrivateRoute>
         ),
-      }
-      ,{
-        path:"/select-certificate-type",
-        element:(
+      },
+      {
+        path: "/select-certificate-type",
+        element: (
           <PrivateRoute>
-          <RoleChecking role="student" path="/common-path">
-          <SelectDegree></SelectDegree>
-          </RoleChecking>
-        </PrivateRoute>
+            <RoleChecking role="student" path="/common-path">
+              <SelectDegree></SelectDegree>
+            </RoleChecking>
+          </PrivateRoute>
         ),
       },
       {
@@ -106,16 +106,26 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/provost",
-        element: (
-          <PrivateRoute>
-            <RoleChecking role="provost" path="/common-path">
-              <Provost></Provost>
-            </RoleChecking>
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   path: "/provost",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking
+      //         roles={[
+      //           "exam_controller",
+      //           "provost",
+      //           "certificate_section_incharge",
+      //           "certificate_verifier_1",
+      //           "certificate_verifier_2",
+      //           "vc",
+      //         ]}
+      //         path="/no-permission"
+      //       >
+      //         <ExamController />
+      //       </RoleChecking>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: "/examController",
         element: (
