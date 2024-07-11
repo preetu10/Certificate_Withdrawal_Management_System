@@ -11,7 +11,7 @@ import { FeeTable } from "./pages/student/fee/feetable.jsx";
 import Formfillup from "./pages/student/formfillup/formfillup.jsx";
 import Pdf from "./pages/PDF/pdf.jsx";
 import Payment from "./pages/student/fee/payment.jsx";
-import Provost from "./pages/provost/provost.jsx";
+//import Provost from "./pages/provost/provost.jsx";
 import ExamController from "./pages/ExamController/ExamController.jsx";
 import Varifier from "./pages/Varifier/Varifier.jsx";
 import Progressbar from "./pages/ProgressBar/ProgressBar.jsx";

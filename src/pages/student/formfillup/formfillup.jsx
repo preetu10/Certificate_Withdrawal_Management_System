@@ -1,31 +1,29 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 ("use client");
+import { useNavigate, useParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-//import { toast } from "@/components/ui/use-toast";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
 import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
 import { useQuery } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "@/components/functions/AuthProvider.jsx";
+import ResultSectionHons from "./ResultSectionHons.jsx";
+import ResultSectionMasters from "./ResultSectionMasters.jsx";
+import ResultBPharm from "./ResultBPharm.jsx";
 
 const Formfillup = () => {
   const { degree } = useParams();
-  //console.log(degree);
   const { user } = useContext(AuthContext);
-  //console.log("checking user",user);
+  //console.log(degree);
   const [files, setFiles] = useState([]);
   const [payorderID, setPayorderID] = useState("");
   const [formType, setFormType] = useState("");
   const [payment, setPayment] = useState("0");
   const [formTypeValue, setFormTypeValue] = useState("");
   const navigate = useNavigate();
-
   const axiosPublic = useAxiosPublic();
-  // const userID="93712c7c-0304-11ef-a96d-3c5282764ceb";
   const { data: student = {}, isPending } = useQuery({
     queryKey: `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degree}`,
     queryFn: async () => {
@@ -39,31 +37,30 @@ const Formfillup = () => {
       }
     },
   });
-  //22c4de9a-3bb0-11ef-9101-3c5282764ceb---shojib
-  //93712c7c-0304-11ef-a96d-3c5282764ceb --momo
+
+  useEffect(() => {
+    if (!isPending && student?.results?.length === 0) {
+      toast.warning("You have selected incorrect degree. Please select correct degree to apply for certificate.");
+      navigate("/select-certificate-type");
+    }
+  }, [isPending, student, navigate]);
+
   if (isPending) {
     return <div>Loading...</div>;
   }
   console.log(student);
-
-  const options = { year: "numeric", month: "long" };
-  const date = new Date(student?.results[1]?.exam_start_date);
-  const formattedDate1 = date.toLocaleDateString("en-US", options);
-
-  const date2 = new Date(student?.results[3]?.exam_start_date);
-  const formattedDate2 = date2.toLocaleDateString("en-US", options);
-
-  const date3 = new Date(student?.results[5]?.exam_start_date);
-  const formattedDate3 = date3.toLocaleDateString("en-US", options);
-
-  const date4 = new Date(student?.results[7]?.exam_start_date);
-  const formattedDate4 = date4.toLocaleDateString("en-US", options);
-
-  const date_masters = new Date(student?.results[2]?.exam_start_date);
-  const formattedDateMasters = date_masters.toLocaleDateString(
-    "en-US",
-    options
-  );
+  const formatExamDate = (dateString) => {
+    const options = { year: "numeric", month: "long" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+  };
+  const formattedDate1 = formatExamDate(student?.results[0]?.exam_start_date);
+  const formattedDate2 = formatExamDate(student?.results[1]?.exam_start_date);
+  const formattedDate3 = formatExamDate(student?.results[2]?.exam_start_date);
+  const formattedDate4 = formatExamDate(student?.results[3]?.exam_start_date);
+  const formattedDate5 = formatExamDate(student?.results[4]?.exam_start_date);
+  const formattedDate6 = formatExamDate(student?.results[5]?.exam_start_date);
+  const formattedDate8 = formatExamDate(student?.results[7]?.exam_start_date);
 
   const presentAddress =
     student.presentAddress[0].village +
@@ -73,6 +70,171 @@ const Formfillup = () => {
     student.presentAddress[0].post_office +
     ", " +
     student.presentAddress[0].district;
+
+  let studentResult = {};
+  if (degree.toLowerCase() == "b.sc.engg" || degree.toLowerCase() == "b.b.a") {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
+      fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      fir_year_exam_name: student?.results[1]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+
+      sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
+      sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
+      sec_year_exam_name: student?.results[3]?.exam_name || "",
+      sec_year_exam_time:
+        formattedDate4 == "Invalid Date" ? "" : formattedDate4,
+
+      third_year_exam_actual_year: student?.results[5]?.exam_session || "",
+      third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
+      third_year_exam_name: student?.results[5]?.exam_name || "",
+      third_year_exam_time:
+        formattedDate6 == "Invalid Date" ? "" : formattedDate6,
+
+      fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
+      fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
+      fourth_year_exam_name: student?.results[7]?.exam_name || "",
+      fourth_year_exam_time:
+        formattedDate8 == "Invalid Date" ? "" : formattedDate8,
+
+      fifth_year_exam_actual_year: "",
+      fifth_year_exam_cgpa: null,
+      fifth_year_exam_name: "",
+      fifth_year_exam_time: "",
+    };
+  } else if (
+    degree.toLowerCase() == "b.a(hons)" ||
+    degree.toLowerCase() == "b.sc(hons)" ||
+    degree.toLowerCase() == "l.l.b(hons)" ||
+    degree.toLowerCase() == "b.s.s(hons)"
+  ) {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[0]?.exam_session || "",
+      fir_year_exam_cgpa: Number(student?.results[0]?.cgpa) || null,
+      fir_year_exam_name: student?.results[0]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate1 == "Invalid Date" ? "" : formattedDate1,
+
+      sec_year_exam_actual_year: student?.results[1]?.exam_session || "",
+      sec_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      sec_year_exam_name: student?.results[1]?.exam_name || "",
+      sec_year_exam_time:
+        formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+
+      third_year_exam_actual_year: student?.results[2]?.exam_session || "",
+      third_year_exam_cgpa: Number(student?.results[2]?.cgpa) || null,
+      third_year_exam_name: student?.results[2]?.exam_name || "",
+      third_year_exam_time:
+        formattedDate3 == "Invalid Date" ? "" : formattedDate3,
+
+      fourth_year_exam_actual_year: student?.results[3]?.exam_session || "",
+      fourth_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
+      fourth_year_exam_name: student?.results[3]?.exam_name || "",
+      fourth_year_exam_time:
+        formattedDate4 == "Invalid Date" ? "" : formattedDate4,
+
+      fifth_year_exam_actual_year: "",
+      fifth_year_exam_cgpa: null,
+      fifth_year_exam_name: "",
+      fifth_year_exam_time: "",
+    };
+  } else if (
+    degree.toLowerCase() == "m.a" ||
+    degree.toLowerCase() == "m.sc" ||
+    degree.toLowerCase() == "l.l.m" ||
+    degree.toLowerCase() == "m.s.s" ||
+    degree.toLowerCase() == "m.pharm"
+  ) {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[0]?.exam_session || "",
+      fir_year_exam_cgpa: Number(student?.results[0]?.cgpa) || null,
+      fir_year_exam_name: student?.results[0]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate1 == "Invalid Date" ? "" : formattedDate1,
+
+      sec_year_exam_actual_year: "",
+      sec_year_exam_cgpa: null,
+      sec_year_exam_name: "",
+      sec_year_exam_time: "",
+
+      third_year_exam_actual_year: "",
+      third_year_exam_cgpa: null,
+      third_year_exam_name: "",
+      third_year_exam_time: "",
+
+      fourth_year_exam_actual_year: "",
+      fourth_year_exam_cgpa: null,
+      fourth_year_exam_name: "",
+      fourth_year_exam_time: "",
+
+      fifth_year_exam_actual_year: "",
+      fifth_year_exam_cgpa: null,
+      fifth_year_exam_name: "",
+      fifth_year_exam_time: "",
+    };
+  } else if (degree.toLowerCase() == "m.b.a") {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
+      fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      fir_year_exam_name: student?.results[1]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+
+      sec_year_exam_actual_year: "",
+      sec_year_exam_cgpa: null,
+      sec_year_exam_name: "",
+      sec_year_exam_time: "",
+
+      third_year_exam_actual_year: "",
+      third_year_exam_cgpa: null,
+      third_year_exam_name: "",
+      third_year_exam_time: "",
+
+      fourth_year_exam_actual_year: "",
+      fourth_year_exam_cgpa: null,
+      fourth_year_exam_name: "",
+      fourth_year_exam_time: "",
+
+      fifth_year_exam_actual_year: "",
+      fifth_year_exam_cgpa: null,
+      fifth_year_exam_name: "",
+      fifth_year_exam_time: "",
+    };
+  } else if (degree.toLowerCase() == "b.pharm") {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[0]?.exam_session || "",
+      fir_year_exam_cgpa: Number(student?.results[0]?.cgpa) || null,
+      fir_year_exam_name: student?.results[0]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate1 == "Invalid Date" ? "" : formattedDate1,
+
+      sec_year_exam_actual_year: student?.results[1]?.exam_session || "",
+      sec_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      sec_year_exam_name: student?.results[1]?.exam_name || "",
+      sec_year_exam_time:
+        formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+
+      third_year_exam_actual_year: student?.results[2]?.exam_session || "",
+      third_year_exam_cgpa: Number(student?.results[2]?.cgpa) || null,
+      third_year_exam_name: student?.results[2]?.exam_name || "",
+      third_year_exam_time:
+        formattedDate3 == "Invalid Date" ? "" : formattedDate3,
+
+      fourth_year_exam_actual_year: student?.results[3]?.exam_session || "",
+      fourth_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
+      fourth_year_exam_name: student?.results[3]?.exam_name || "",
+      fourth_year_exam_time:
+        formattedDate4 == "Invalid Date" ? "" : formattedDate4,
+
+      fifth_year_exam_actual_year: student?.results[4]?.exam_session || "",
+      fifth_year_exam_cgpa: Number(student?.results[4]?.cgpa) || null,
+      fifth_year_exam_name: student?.results[4]?.exam_name || "",
+      fifth_year_exam_time:
+        formattedDate5 == "Invalid Date" ? "" : formattedDate5,
+    };
+  }
+  console.log(studentResult);
 
   const handlePayorderID = (e) => {
     setPayorderID(e.target.value);
@@ -85,13 +247,13 @@ const Formfillup = () => {
       setFormTypeValue("Main");
     } else if (e.target.value == "ডুবলিকেট মূল সনদ") {
       setPayment("১৫০০");
-      setFormTypeValue("Main");
+      setFormTypeValue("Main(Duplicate)");
     } else if (e.target.value == "সাময়িক সনদ") {
       setPayment("৪০০");
       setFormTypeValue("Provisional");
     } else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
       setPayment("১১০০");
-      setFormTypeValue("Provisional");
+      setFormTypeValue("Provisional(Duplicate)");
     } else {
       setPayment("0");
       setFormTypeValue("");
@@ -101,23 +263,14 @@ const Formfillup = () => {
   const handleFileChange = (event) => {
     setFiles(event.target.files);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (student.program_abbr !== degree) {
-      toast.error(
-        "You have not selected the degree correctly. Please select the degree you have completed"
-      );
-      navigate("/select-certificate-type");
-      return;
-    }
     const file_attachments = [];
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("items", files[i]);
-      console.log(files[i]);
+     // console.log(files[i]);
     }
-
     try {
       const response = await axiosPublic.post("/upload", formData, {
         headers: {
@@ -131,30 +284,15 @@ const Formfillup = () => {
           attachment_name: a.originalname,
         });
       });
-
       const data = {
         academic_session: student?.academic_session,
         form_type: formTypeValue || "",
         money: Number(payment) || null,
         payorder_id: payorderID,
-        degree: student?.program_abbr,
+        degree: degree,
         district: student?.permanentAddress[0].district,
         father_name_bn: student?.fathers_name_bn,
         father_name_eng: student?.fathers_name,
-        fifth_year_exam_actual_year: "",
-        fifth_year_exam_cgpa: null,
-        fifth_year_exam_name: "",
-        fifth_year_exam_time: "",
-        fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
-        fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
-        fir_year_exam_name: student?.results[1]?.exam_name || "",
-        fir_year_exam_time:
-          formattedDate1 == "Invalid Date" ? "" : formattedDate1,
-        fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
-        fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
-        fourth_year_exam_name: student?.results[7]?.exam_name || "",
-        fourth_year_exam_time:
-          formattedDate4 == "Invalid Date" ? "" : formattedDate4,
         hall_name: student?.hall_name,
         mobile_phone: student?.phone,
         mother_name_bn: student?.mothers_name_bn,
@@ -162,22 +300,14 @@ const Formfillup = () => {
         post_office: student?.permanentAddress[0].post_office,
         present_address: presentAddress,
         profile_image: student?.profile_image,
-        sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
-        sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
-        sec_year_exam_name: student?.results[3]?.exam_name || "",
-        sec_year_exam_time:
-          formattedDate2 == "Invalid Date" ? "" : formattedDate2,
-        student_id: Number(student?.student_id),
+        student_id: Number(student?.student_id) || null,
         student_name_bn: student.first_name_bn + " " + student.last_name_bn,
         student_name_eng: student.first_name + " " + student.last_name,
         thana: student?.permanentAddress[0].thana,
-        third_year_exam_actual_year: student?.results[5]?.exam_session || "",
-        third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
-        third_year_exam_name: student?.results[5]?.exam_name || "",
-        third_year_exam_time:
-          formattedDate3 == "Invalid Date" ? "" : formattedDate3,
         village: student?.permanentAddress[0].village,
         file_attachments: file_attachments,
+        department_name: student?.department_name,
+        ...studentResult
       };
       console.log(data);
       const formResponse = await axiosPublic.post(
@@ -197,7 +327,6 @@ const Formfillup = () => {
       console.log(error);
     }
   };
-
   return (
     <div>
       <Helmet>
@@ -263,7 +392,6 @@ const Formfillup = () => {
                 মোট টাকা{" "}
               </span>
             </label>
-            {/* eta select er upor depend kore change kora lgbe usestate er maddhome */}
             <input
               type="text"
               name="payment_amount"
@@ -437,714 +565,46 @@ const Formfillup = () => {
             className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
           />
         </div>
-
-        {/* ekahne student.program ashbe  */}
-
-        {(student?.program_abbr.toLowerCase() == "bsc(engg)" ||
-          student?.program_abbr == "bba") && (
-          <>
-            {/* ka section */}
-            <div className="py-2">
-              <span className="text-black text-xl font-bold ">
-                {student?.program_abbr.toLowerCase() == "bsc(engg)"
-                  ? "বিএসসি (ইন্জিনিয়ারিং) পরীক্ষা "
-                  : "বিবিএ পরীক্ষা"}
-              </span>
-              <br />
-              <br />
-              <span className="text-center text-xl font-bold ">ক।</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> ১ম বর্ষ বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            {/* kha section */}
-            <div className="py-2">
-              <br />
-              <br />
-              <span className="text-center text-xl font-bold ">খ।</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> ২য় বর্ষ বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[3]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[3]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[3]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[3]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={formattedDate2 == "Invalid Date" ? "" : formattedDate2}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            {/* গ। section */}
-            <div className="py-2">
-              <br />
-              <br />
-              <span className="text-center text-xl font-bold ">গ।</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> ৩য় বর্ষ বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[5]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[5]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[5]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[5]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={formattedDate3 == "Invalid Date" ? "" : formattedDate3}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-
-            {/* gha section */}
-            <div className="py-2">
-              <br />
-              <br />
-              <span className="text-center text-xl font-bold "> ঘ।</span>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> ৪র্থ বর্ষ বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[7]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[7]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[7]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[7]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={formattedDate4 == "Invalid Date" ? "" : formattedDate4}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-          </>
+        {(degree.toLowerCase() == "b.sc.engg" ||
+          degree.toLowerCase() == "b.b.a" ||
+          degree.toLowerCase() == "b.a(hons)" ||
+          degree.toLowerCase() == "l.l.b(hons)" ||
+          degree.toLowerCase() == "b.sc(hons)" ||
+          degree.toLowerCase() == "b.s.s(hons)") && (
+          <ResultSectionHons
+            studentResult={studentResult}
+            department={student?.department_name}
+            exam_centre={student?.results[0]?.exam_centre}
+            student_id={Number(student?.student_id)}
+            academic_session={student?.academic_session}
+            degree={degree}
+          ></ResultSectionHons>
         )}
-
+        {degree.toLowerCase() == "b.pharm" && (
+          <ResultBPharm
+            studentResult={studentResult}
+            department={student?.department_name}
+            exam_centre={student?.results[0]?.exam_centre}
+            student_id={Number(student?.student_id)}
+            academic_session={student?.academic_session}
+            degree={degree}
+          ></ResultBPharm>
+        )}
         {/* masters degree start */}
-        {(student?.program_abbr.toLowerCase() == "msc(engg)" ||
-          student?.program_abbr.toLowerCase() == "mba") && (
-          <>
-            {/* preli */}
-            <div className="py-2">
-              <span className="text-black text-xl font-bold ">
-                {student?.program_abbr.toLowerCase() == "msc(engg)"
-                  ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
-                  : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
-              </span>
-              <br />
-              <br />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[1]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={formattedDate1 == "Invalid Date" ? "" : formattedDate1}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            {/* final */}
-            <div className="py-2">
-              <span className="text-black font-bold ">
-                {student?.program_abbr.toLowerCase() == "msc(engg)"
-                  ? "এম.এসসি. (ইন্জিনিয়ারিং) (প্রিলিমিনারি) পরীক্ষা "
-                  : "এমবিএ  (প্রিলিমিনারি) পরীক্ষা"}
-              </span>
-              <br />
-              <br />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black"> বিষয়</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.department_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">হল/কলেজ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[2]?.exam_centre}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার নাম</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[2]?.exam_name}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">পরীক্ষার বৎসর</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[2]?.exam_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">রোল নং/আই. ডি . নং</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.student_id}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">শিক্ষাবর্ষ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.academic_session}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-16 px-5 items-stretch justify-center">
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">প্রাপ্ত শ্রেণী/জিপিএ</span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={student?.results[2]?.cgpa}
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-              <div className="w-full lg:w-[590px]">
-                <label>
-                  <span className="text-black">
-                    পরীক্ষা অনুষ্ঠিত মাস ও বৎসর
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  name=""
-                  disabled
-                  value={
-                    formattedDateMasters == "Invalid Date"
-                      ? ""
-                      : formattedDateMasters
-                  }
-                  className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
-                />
-              </div>
-            </div>
-          </>
+        {(degree.toLowerCase() == "m.b.a" ||
+          degree.toLowerCase() == "m.a" ||
+          degree.toLowerCase() == "m.sc" ||
+          degree.toLowerCase() == "l.l.m" ||
+          degree.toLowerCase() == "m.s.s" ||
+          degree.toLowerCase() == "m.pharm") && (
+          <ResultSectionMasters
+            studentResult={studentResult}
+            department={student?.department_name}
+            exam_centre={student?.results[0]?.exam_centre}
+            student_id={Number(student?.student_id)}
+            academic_session={student?.academic_session}
+            degree={degree}
+          ></ResultSectionMasters>
         )}
         {/* attachments */}
         <div className="w-full px-5 items-stretch">
@@ -1175,5 +635,4 @@ const Formfillup = () => {
     </div>
   );
 };
-
 export default Formfillup;
