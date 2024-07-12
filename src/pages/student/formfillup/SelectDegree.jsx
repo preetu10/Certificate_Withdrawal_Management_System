@@ -24,7 +24,7 @@ const SelectDegree = () => {
       setDegreeName("M.Sc.Engg");
     } else if (e.target.value === "এম. বি. এ") {
       setDegreeName("M.B.A");
-    } else if (e.target.value === "বি. ফার্ম ") {
+    } else if (e.target.value === "বি. ফার্ম") {
       setDegreeName("B.Pharm");
     } else if (e.target.value === "এম. ফার্ম") {
       setDegreeName("M.Pharm");
@@ -65,7 +65,7 @@ const SelectDegree = () => {
               <option>বি. এ (অনার্স)</option>
               <option>বি. এস. সি (অনার্স)</option>
               <option>বি. এস. সি(ইন্জিনিয়ারিং)</option>
-              <option>বি .বি. এ</option>
+              <option>বি. বি. এ</option>
               <option>বি. এস. এস (অনার্স)</option>
               <option>এম. এস. এস</option>
               <option>এম. এ</option>
