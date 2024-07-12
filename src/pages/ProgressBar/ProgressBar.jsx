@@ -35,7 +35,7 @@ const Progressbar = () => {
   if (isPending) {
     return <div>Loading...</div>;
   }
-  console.log("data coming 1", data);
+  //console.log("data coming 1", data);
   return (
     <div className="mx-auto md:max-w-2xl mt-24">
       <ProcedureProgress showSerial={true} direction="vertical">
@@ -72,7 +72,7 @@ const Progressbar = () => {
             </span>
             {data?.verifications[0]?.comment && (
               <span className="px-5 font-normal text-sm md:text-lg">
-                Comment: {data?.verifications[0]?.comment}
+                &quot;{data?.verifications[0]?.comment}&quot;
               </span>
             )}
           </div>
@@ -102,7 +102,7 @@ const Progressbar = () => {
             </span>
             {data?.verifications[1]?.comment && (
               <span className="px-5 font-normal text-sm md:text-lg">
-                Comment: {data?.verifications[1]?.comment}
+                &quot;{data?.verifications[1]?.comment}&quot;
               </span>
             )}
           </div>
@@ -132,7 +132,7 @@ const Progressbar = () => {
             </span>
             {data?.verifications[2]?.comment && (
               <span className="px-5 font-normal text-sm md:text-lg">
-                Comment: {data?.verifications[2]?.comment}
+                &quot;{data?.verifications[2]?.comment}&quot;
               </span>
             )}
           </div>
@@ -162,7 +162,7 @@ const Progressbar = () => {
             </span>
             {data?.verifications[3]?.comment && (
               <span className="px-5 font-normal text-sm md:text-lg">
-                Comment: {data?.verifications[3]?.comment}
+                &quot;{data?.verifications[3]?.comment}&quot;
               </span>
             )}
           </div>
@@ -192,7 +192,7 @@ const Progressbar = () => {
             </span>
             {data?.verifications[4]?.comment && (
               <span className="px-5 font-normal text-sm md:text-lg">
-                Comment: {data?.verifications[4]?.comment}
+                &quot;{data?.verifications[4]?.comment}&quot;
               </span>
             )}
           </div>
@@ -224,7 +224,7 @@ const Progressbar = () => {
               </span>
               {data?.verifications[5]?.comment && (
                 <span className="px-5 font-normal text-sm md:text-lg">
-                  Comment: {data?.verifications[5]?.comment}
+                  &quot;{data?.verifications[5]?.comment}&quot;
                 </span>
               )}
             </div>
