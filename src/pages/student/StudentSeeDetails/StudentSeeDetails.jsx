@@ -203,6 +203,17 @@ const StudentSeeDetails = () => {
       </div>
       <div>
         <div className="text-left mb-3 px-4">
+          <label>Department</label>
+        </div>
+        <input
+          className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl mb-5"
+          type="text"
+          value={formData?.department_name}
+          readOnly
+        />
+      </div>
+      <div>
+        <div className="text-left mb-3 px-4">
           <label>Submission Date</label>
         </div>
         <input
