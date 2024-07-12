@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const { user, logOut } = React.useContext(AuthContext);
+  const form_id=8;
   return (
     <div>
       <NavigationMenu>
@@ -50,7 +51,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/progressbar">
+            <Link to={`/progressbar/${form_id}`}>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Progress Bar
               </NavigationMenuLink>
