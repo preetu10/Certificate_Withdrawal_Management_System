@@ -23,15 +23,15 @@ const StudentForm = () => {
   const [payment, setPayment] = useState("0");
   const [formTypeValue, setFormTypeValue] = useState("");
   const navigate = useNavigate();
+  const { form_id: formID } = useParams();
   const axiosPublic = useAxiosPublic();
-  // const userID="93712c7c-0304-11ef-a96d-3c5282764ceb";
   const { data: student = {}, isPending } = useQuery({
-    queryKey: `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${student.form_id}`,
+    queryKey: `OtherStakeholders/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
           //`/certificate-withdrawal/search-formData/other-stakeholders/${user.user_id}`
-          `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${student.form_id}`
+          `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`
         );
         console.log(res?.data);
         return res.data;
