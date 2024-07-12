@@ -121,7 +121,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/seeDetails",
+        path: "/seeDetails/:form_id",
         element: (
           <PrivateRoute>
             <RoleChecking role="provost" path="/common-path">
