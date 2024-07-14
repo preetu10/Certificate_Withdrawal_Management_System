@@ -31,7 +31,7 @@ const Formfillup = () => {
         const res = await axiosPublic.get(
           `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degree}`
         );
-        return res.data;
+        return res?.data;
       } catch (error) {
         console.log("Failed to fetch student data");
       }
@@ -40,7 +40,9 @@ const Formfillup = () => {
 
   useEffect(() => {
     if (!isPending && student?.results?.length === 0) {
-      toast.warning("You have selected incorrect degree. Please select correct degree to apply for certificate.");
+      toast.warning(
+        "You have selected incorrect degree. Please select correct degree to apply for certificate."
+      );
       navigate("/select-certificate-type");
     }
   }, [isPending, student, navigate]);
@@ -63,37 +65,57 @@ const Formfillup = () => {
   const formattedDate8 = formatExamDate(student?.results[7]?.exam_start_date);
 
   const presentAddress =
-    student.presentAddress[0].village +
+    student?.presentAddress[0].village +
     ", " +
-    student.presentAddress[0].thana +
+    student?.presentAddress[0].thana +
     ", " +
-    student.presentAddress[0].post_office +
+    student?.presentAddress[0].post_office +
     ", " +
-    student.presentAddress[0].district;
+    student?.presentAddress[0].district;
 
   let studentResult = {};
   if (degree.toLowerCase() == "b.sc.engg" || degree.toLowerCase() == "b.b.a") {
     studentResult = {
       fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
-      fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      fir_year_exam_cgpa:
+        Number(
+          ((student?.results[0]?.cgpa + student?.results[1]?.cgpa) / 2).toFixed(
+            2
+          )
+        ) || null,
       fir_year_exam_name: student?.results[1]?.exam_name || "",
       fir_year_exam_time:
         formattedDate2 == "Invalid Date" ? "" : formattedDate2,
 
       sec_year_exam_actual_year: student?.results[3]?.exam_session || "",
-      sec_year_exam_cgpa: Number(student?.results[3]?.cgpa) || null,
+      sec_year_exam_cgpa:
+        Number(
+          ((student?.results[2]?.cgpa + student?.results[3]?.cgpa) / 2).toFixed(
+            2
+          )
+        ) || null,
       sec_year_exam_name: student?.results[3]?.exam_name || "",
       sec_year_exam_time:
         formattedDate4 == "Invalid Date" ? "" : formattedDate4,
 
       third_year_exam_actual_year: student?.results[5]?.exam_session || "",
-      third_year_exam_cgpa: Number(student?.results[5]?.cgpa) || null,
+      third_year_exam_cgpa:
+        Number(
+          ((student?.results[4]?.cgpa + student?.results[5]?.cgpa) / 2).toFixed(
+            2
+          )
+        ) || null,
       third_year_exam_name: student?.results[5]?.exam_name || "",
       third_year_exam_time:
         formattedDate6 == "Invalid Date" ? "" : formattedDate6,
 
       fourth_year_exam_actual_year: student?.results[7]?.exam_session || "",
-      fourth_year_exam_cgpa: Number(student?.results[7]?.cgpa) || null,
+      fourth_year_exam_cgpa:
+        Number(
+          ((student?.results[6]?.cgpa + student?.results[7]?.cgpa) / 2).toFixed(
+            2
+          )
+        ) || null,
       fourth_year_exam_name: student?.results[7]?.exam_name || "",
       fourth_year_exam_time:
         formattedDate8 == "Invalid Date" ? "" : formattedDate8,
@@ -176,10 +198,52 @@ const Formfillup = () => {
   } else if (degree.toLowerCase() == "m.b.a") {
     studentResult = {
       fir_year_exam_actual_year: student?.results[1]?.exam_session || "",
-      fir_year_exam_cgpa: Number(student?.results[1]?.cgpa) || null,
+      fir_year_exam_cgpa:
+        Number(
+          ((student?.results[0]?.cgpa + student?.results[1]?.cgpa) / 2).toFixed(
+            2
+          )
+        ) || null,
       fir_year_exam_name: student?.results[1]?.exam_name || "",
       fir_year_exam_time:
         formattedDate2 == "Invalid Date" ? "" : formattedDate2,
+
+      sec_year_exam_actual_year: "",
+      sec_year_exam_cgpa: null,
+      sec_year_exam_name: "",
+      sec_year_exam_time: "",
+
+      third_year_exam_actual_year: "",
+      third_year_exam_cgpa: null,
+      third_year_exam_name: "",
+      third_year_exam_time: "",
+
+      fourth_year_exam_actual_year: "",
+      fourth_year_exam_cgpa: null,
+      fourth_year_exam_name: "",
+      fourth_year_exam_time: "",
+
+      fifth_year_exam_actual_year: "",
+      fifth_year_exam_cgpa: null,
+      fifth_year_exam_name: "",
+      fifth_year_exam_time: "",
+    };
+  } else if (degree.toLowerCase() == "m.sc.engg") {
+    studentResult = {
+      fir_year_exam_actual_year: student?.results[2]?.exam_session || "",
+      fir_year_exam_cgpa:
+        Number(
+          (
+            (student?.results[0]?.cgpa +
+              student?.results[1]?.cgpa +
+              student?.results[2]?.cgpa) /
+            3
+          ).toFixed(2)
+        ) || null,
+
+      fir_year_exam_name: student?.results[2]?.exam_name || "",
+      fir_year_exam_time:
+        formattedDate3 == "Invalid Date" ? "" : formattedDate3,
 
       sec_year_exam_actual_year: "",
       sec_year_exam_cgpa: null,
@@ -269,7 +333,7 @@ const Formfillup = () => {
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("items", files[i]);
-     // console.log(files[i]);
+      // console.log(files[i]);
     }
     try {
       const response = await axiosPublic.post("/upload", formData, {
@@ -290,24 +354,24 @@ const Formfillup = () => {
         money: Number(payment) || null,
         payorder_id: payorderID,
         degree: degree,
-        district: student?.permanentAddress[0].district,
+        district: student?.permanentAddress[0]?.district,
         father_name_bn: student?.fathers_name_bn,
         father_name_eng: student?.fathers_name,
         hall_name: student?.hall_name,
         mobile_phone: student?.phone,
         mother_name_bn: student?.mothers_name_bn,
         mother_name_eng: student?.mothers_name,
-        post_office: student?.permanentAddress[0].post_office,
+        post_office: student?.permanentAddress[0]?.post_office,
         present_address: presentAddress,
         profile_image: student?.profile_image,
         student_id: Number(student?.student_id) || null,
-        student_name_bn: student.first_name_bn + " " + student.last_name_bn,
-        student_name_eng: student.first_name + " " + student.last_name,
-        thana: student?.permanentAddress[0].thana,
-        village: student?.permanentAddress[0].village,
+        student_name_bn: student?.first_name_bn + " " + student?.last_name_bn,
+        student_name_eng: student?.first_name + " " + student?.last_name,
+        thana: student?.permanentAddress[0]?.thana,
+        village: student?.permanentAddress[0]?.village,
         file_attachments: file_attachments,
         department_name: student?.department_name,
-        ...studentResult
+        ...studentResult,
       };
       console.log(data);
       const formResponse = await axiosPublic.post(
@@ -412,7 +476,7 @@ const Formfillup = () => {
               type="text"
               name="first_name_bn"
               disabled
-              value={student.first_name_bn + " " + student.last_name_bn}
+              value={student?.first_name_bn + " " + student?.last_name_bn}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -424,7 +488,7 @@ const Formfillup = () => {
               type="text"
               name="first_name"
               disabled
-              value={student.first_name + " " + student.last_name}
+              value={student?.first_name + " " + student?.last_name}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -440,7 +504,7 @@ const Formfillup = () => {
               name="fathers_name_bn"
               placeholder="পিতার নাম"
               disabled
-              value={student.fathers_name_bn}
+              value={student?.fathers_name_bn}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -453,7 +517,7 @@ const Formfillup = () => {
               name="fathers_name"
               placeholder="নাম"
               disabled
-              value={student.fathers_name}
+              value={student?.fathers_name}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -468,7 +532,7 @@ const Formfillup = () => {
               type="text"
               name="mothers_name_bn"
               disabled
-              value={student.mothers_name_bn}
+              value={student?.mothers_name_bn}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -480,7 +544,7 @@ const Formfillup = () => {
               type="text"
               name="mothers_name"
               disabled
-              value={student.mothers_name}
+              value={student?.mothers_name}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -495,7 +559,7 @@ const Formfillup = () => {
               type="text"
               name="village"
               disabled
-              value={student.permanentAddress[0].village}
+              value={student?.permanentAddress[0]?.village}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -507,7 +571,7 @@ const Formfillup = () => {
               type="text"
               name="post_office"
               disabled
-              value={student.permanentAddress[0].post_office}
+              value={student?.permanentAddress[0]?.post_office}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -522,7 +586,7 @@ const Formfillup = () => {
               type="text"
               name="thana"
               disabled
-              value={student.permanentAddress[0].thana}
+              value={student?.permanentAddress[0]?.thana}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -534,7 +598,7 @@ const Formfillup = () => {
               type="text"
               name="district"
               disabled
-              value={student.permanentAddress[0].district}
+              value={student?.permanentAddress[0]?.district}
               className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
             />
           </div>
@@ -596,6 +660,7 @@ const Formfillup = () => {
           degree.toLowerCase() == "m.sc" ||
           degree.toLowerCase() == "l.l.m" ||
           degree.toLowerCase() == "m.s.s" ||
+          degree.toLowerCase() == "m.sc.engg" ||
           degree.toLowerCase() == "m.pharm") && (
           <ResultSectionMasters
             studentResult={studentResult}
@@ -628,7 +693,32 @@ const Formfillup = () => {
           </p>
         </div>
         {/* conditional button */}
-        <Button type="submit" className="mt-5">
+        <Button
+          type="submit"
+          className="mt-5"
+          disabled={
+            !(
+              ((degree.toLowerCase() == "b.sc.engg" ||
+                degree.toLowerCase() == "b.b.a") &&
+                student?.results[7]?.cgpa) ||
+              ((degree.toLowerCase() == "b.a(hons)" ||
+                degree.toLowerCase() == "b.sc(hons)" ||
+                degree.toLowerCase() == "l.l.b(hons)" ||
+                degree.toLowerCase() == "b.s.s(hons)") &&
+                student?.results[3]?.cgpa) ||
+              ((degree.toLowerCase() == "m.a" ||
+                degree.toLowerCase() == "m.sc" ||
+                degree.toLowerCase() == "l.l.m" ||
+                degree.toLowerCase() == "m.s.s" ||
+                degree.toLowerCase() == "m.pharm") &&
+                student?.results[0]?.cgpa) ||
+              (degree.toLowerCase() == "m.b.a" && student?.results[1]?.cgpa) ||
+              (degree.toLowerCase() == "m.sc.engg" &&
+                student?.results[2]?.cgpa) ||
+              (degree.toLowerCase() == "b.pharm" && student?.results[4]?.cgpa)
+            )
+          }
+        >
           Submit{" "}
         </Button>
       </form>
