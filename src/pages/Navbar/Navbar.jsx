@@ -25,7 +25,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/provost">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Provost
               </NavigationMenuLink>
@@ -33,7 +33,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/examController">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Exam Controller
               </NavigationMenuLink>
@@ -41,7 +41,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/varifier">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Varifier
               </NavigationMenuLink>
