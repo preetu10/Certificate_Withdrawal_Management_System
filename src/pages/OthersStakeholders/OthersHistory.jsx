@@ -4,6 +4,8 @@ import { PaginationDemo } from "../student/history/pagination";
 import useAxiosPublic from "@/customHooks/useAxiosPublic";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/components/functions/AuthProvider";
+import Varifier from "../Varifier/Varifier";
+import ExamController from "../ExamController/ExamController";
 
 function OthersHistory() {
   const [pageLimit, setPageLimit] = useState(5);
@@ -11,16 +13,11 @@ function OthersHistory() {
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
   const { data, isLoading, refetch } = useQuery({
-    queryKey: `/certificate-withdrawal/search-formData/${
-      user?.user_id
-    }?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
+    queryKey: `/certificate-withdrawal/search-formData/${user?.user_id}?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
-          `/certificate-withdrawal-otherStakeholders/search-formData/${
-            user?.user_id
-          }?currentPage=${currentPage}${
-            pageLimit ? "&pageLimit=" + pageLimit : ""
+          `/certificate-withdrawal-otherStakeholders/search-formData/${user?.user_id}?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""
           }`,
           {
             headers: {
@@ -48,6 +45,21 @@ function OthersHistory() {
         currentPage={currentPage}
         role={user?.role}
       ></Provost>
+
+      <Varifier
+        history={data?.data}
+        pageLimit={pageLimit}
+        currentPage={currentPage}
+        role={user?.role}>
+      </Varifier>
+
+      <ExamController
+        history={data?.data}
+        pageLimit={pageLimit}
+        currentPage={currentPage}
+        role={user?.role}>
+      </ExamController>
+
       {pageLimit ? (
         <PaginationDemo
           currentPage={currentPage}
