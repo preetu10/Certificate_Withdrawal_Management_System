@@ -15,8 +15,11 @@ const ResultSectionMasters = ({ studentResult,
       } else if (degree.toLowerCase() == "m.sc") {
         degreeName = "এম. এস. সি  পরীক্ষা";
       }
-      else if(degreeName.toLowerCase() == "m.s.s") {
+      else if(degree.toLowerCase() == "m.s.s") {
         degreeName = "এম. এস. এস  পরীক্ষা";
+      }
+      else if(degree.toLowerCase() == "m.sc.engg") {
+        degreeName = "এম. এস. সি(ইন্জিনিয়ারিং)  পরীক্ষা";
       }
     return (
             <>
