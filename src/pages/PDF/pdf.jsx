@@ -900,5 +900,4 @@ const Pdf = () => {
     </div>
   );
 };
-
 export default Pdf;
