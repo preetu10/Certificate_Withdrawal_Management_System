@@ -305,6 +305,7 @@ const StudentSeeDetails = () => {
           />
         </div>
       ))}
+      <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
     </div>
   );
 };

@@ -22,6 +22,7 @@ const Formfillup = () => {
   const [formType, setFormType] = useState("");
   const [payment, setPayment] = useState("0");
   const [formTypeValue, setFormTypeValue] = useState("");
+  const [paymentValue, setPaymentValue] = useState(0);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const { data: student = {}, isPending } = useQuery({
@@ -308,15 +309,19 @@ const Formfillup = () => {
     setFormType(e.target.value);
     if (e.target.value == "মূল সনদপত্র নিয়মিত") {
       setPayment("৮০০");
+      setPaymentValue(800);
       setFormTypeValue("Main");
     } else if (e.target.value == "ডুবলিকেট মূল সনদ") {
       setPayment("১৫০০");
+      setPaymentValue(1500);
       setFormTypeValue("Main(Duplicate)");
     } else if (e.target.value == "সাময়িক সনদ") {
       setPayment("৪০০");
+      setPaymentValue(400);
       setFormTypeValue("Provisional");
     } else if (e.target.value == "সাময়িক সনদ (ডুবলিকেট)") {
       setPayment("১১০০");
+      setPaymentValue(1100);
       setFormTypeValue("Provisional(Duplicate)");
     } else {
       setPayment("0");
@@ -351,7 +356,7 @@ const Formfillup = () => {
       const data = {
         academic_session: student?.academic_session,
         form_type: formTypeValue || "",
-        money: Number(payment) || null,
+        money: Number(paymentValue) || null,
         payorder_id: payorderID,
         degree: degree,
         district: student?.permanentAddress[0]?.district,

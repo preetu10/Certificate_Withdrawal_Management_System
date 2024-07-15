@@ -90,7 +90,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/pdf",
+        path: "/pdf/:formID",
         element: (
           <PrivateRoute>
             <RoleChecking role="student" path="/common-path">
