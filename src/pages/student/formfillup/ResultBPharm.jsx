@@ -510,7 +510,7 @@ const ResultBPharm = ({
             type="text"
             name=""
             disabled
-            value={studentResult?.fifth_exam_actual_year}
+            value={studentResult?.fifth_year_exam_actual_year}
             className="w-full border-2 border-gray-300 py-3 px-8 rounded-xl"
           />
         </div>
