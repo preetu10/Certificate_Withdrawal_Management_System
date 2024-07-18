@@ -151,38 +151,38 @@ const router = createBrowserRouter([
         ),
       },
 
-      {
-        path: "/examController",
-        element: (
-          <PrivateRoute>
-            <RoleChecking role="exam_controller" path="/common-path">
-              <ExamController></ExamController>
-            </RoleChecking>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/varifier",
-        element: (
-          <PrivateRoute>
-            <RoleChecking
-              role="certificate_verifier1"
-              path="/common-path"
-            ></RoleChecking>
-            <Varifier></Varifier>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/progressbar/:form_id",
-        element: (
-          <PrivateRoute>
-            <RoleChecking role={["student"]} path="/common-path">
-              <Progressbar></Progressbar>
-            </RoleChecking>
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   path: "/examController",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking role="exam_controller" path="/common-path">
+      //         <ExamController></ExamController>
+      //       </RoleChecking>
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/varifier",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking
+      //         role="certificate_verifier1"
+      //         path="/common-path"
+      //       ></RoleChecking>
+      //       <Varifier></Varifier>
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/progressbar/:form_id",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking role={["student"]} path="/common-path">
+      //         <Progressbar></Progressbar>
+      //       </RoleChecking>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: "/studentSeeDetails/:form_id",
         element: (
@@ -197,7 +197,17 @@ const router = createBrowserRouter([
         path: "/othersHistory",
         element: (
           <PrivateRoute>
-            <RoleChecking role={["provost", "certificate_verifier1", "certificate_verifier2", "exam_controller", "certificate_section_incharge", "vice_chancellor"]} path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "exam_controller",
+                "certificate_section_incharge",
+                "vice_chancellor",
+              ]}
+              path="/common-path"
+            >
               <OthersHistory />
             </RoleChecking>
           </PrivateRoute>
