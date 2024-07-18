@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         path: "/",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <History></History>
             </RoleChecking>
           </PrivateRoute>
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         path: "/feetable",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <FeeTable></FeeTable>
             </RoleChecking>
           </PrivateRoute>
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         path: "/select-certificate-type",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <SelectDegree></SelectDegree>
             </RoleChecking>
           </PrivateRoute>
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
         path: "/certificate-withdrawal-form/:degree",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Formfillup></Formfillup>
             </RoleChecking>
           </PrivateRoute>
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         path: "/pdf",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Pdf></Pdf>
             </RoleChecking>
           </PrivateRoute>
@@ -103,7 +103,7 @@ const router = createBrowserRouter([
         path: "/payment/:degree",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Payment></Payment>
             </RoleChecking>
           </PrivateRoute>
@@ -113,7 +113,17 @@ const router = createBrowserRouter([
         path: "/provost",
         element: (
           <PrivateRoute>
-            <RoleChecking role="provost" path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "exam_controller",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "certificate_section_incharge",
+                "vc",
+              ]}
+              path="/common-path"
+            >
               <OthersHistory></OthersHistory>
             </RoleChecking>
           </PrivateRoute>
@@ -124,7 +134,17 @@ const router = createBrowserRouter([
         path: "/seeDetails/:form_id",
         element: (
           <PrivateRoute>
-            <RoleChecking role="provost" path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "exam_controller",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "certificate_section_incharge",
+                "vc",
+              ]}
+              path="/common-path"
+            >
               <StudentForm></StudentForm>
             </RoleChecking>
           </PrivateRoute>
@@ -157,7 +177,7 @@ const router = createBrowserRouter([
         path: "/progressbar/:form_id",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Progressbar></Progressbar>
             </RoleChecking>
           </PrivateRoute>
@@ -167,7 +187,7 @@ const router = createBrowserRouter([
         path: "/studentSeeDetails/:form_id",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/commom-path">
+            <RoleChecking role={["student"]} path="/commom-path">
               <StudentSeeDetails></StudentSeeDetails>
             </RoleChecking>
           </PrivateRoute>

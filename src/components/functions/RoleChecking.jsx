@@ -5,10 +5,8 @@ import { Navigate } from "react-router-dom";
 
 const RoleChecking = ({ role, children, path }) => {
   const { user } = useContext(AuthContext);
-  if (user?.role !== role) return <Navigate to={path}></Navigate>;
-  // if (!roles.includes(user?.role)) {
-  //   return <Navigate to={path} />;
-  // }
+  // if (user?.role !== role) return <Navigate to={path}></Navigate>;
+  if (!role.includes(user?.role)) return <Navigate to={path} />;
   else return <>{children}</>;
 };
 
