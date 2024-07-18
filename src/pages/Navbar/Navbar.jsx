@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const { user, logOut } = React.useContext(AuthContext);
-  const form_id=8;
   return (
     <div>
       <NavigationMenu>
@@ -27,7 +25,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/provost">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Provost
               </NavigationMenuLink>
@@ -35,7 +33,7 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/examController">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Exam Controller
               </NavigationMenuLink>
@@ -43,17 +41,9 @@ export default function Navbar() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link to="/varifier">
+            <Link to="/othersHistory">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Varifier
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <Link to={`/progressbar/${form_id}`}>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Progress Bar
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>

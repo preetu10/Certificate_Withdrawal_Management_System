@@ -9,28 +9,35 @@ const Logos = ({degree}) => {
             <h1 className="text-2xl font-bold text-orange-500">Payment Methods</h1>
 
             <div className="my-10">
-                <div className="lg:flex md:flex w-96 mx-auto">
+                <div className="lg:flex gap-4 md:flex w-96 mx-auto">
                 <Link to={`/certificate-withdrawal-form/${degreeName}`}>
                     <div className="mx-auto my-5 border-2 border-black rounded-lg p-2 w-28 h-20 flex justify-center items-center">
-                        <img src="./bkash-logo.png" alt="" />
+                        <img src="/bkash-logo.png" alt="" />
                     </div>
                     </Link>
-                    
+                    <Link to={`/certificate-withdrawal-form/${degreeName}`}>
                     <div className="mx-auto my-5 border-2 border-black rounded-lg p-2 w-28 h-20 flex justify-center items-center">
-                        <Link to="/certificate-withdrawal-form"><img src="./public/nagad.png" alt="" /></Link>
+                        <img src="/nagad.png" alt="" />
                     </div>
+                    </Link>
+                    <Link to={`/certificate-withdrawal-form/${degreeName}`}>
                     <div className="mx-auto my-5 border-2 border-black rounded-lg p-2 w-28 h-20 flex justify-center items-center">
-                        <Link to={`/certificate-withdrawal-form/${degreeName}`}><img src="rocket.png" alt="" /></Link>
+                       <img src="/rocket.png" alt="" />
                     </div>
+                    </Link>
                 </div>
 
-                <div className="lg:flex md:flex w-72 mx-auto">
+                <div className="lg:flex gap-4 md:flex w-72 mx-auto">
+                <Link to={`/certificate-withdrawal-form/${degreeName}`}>
                     <div className="mx-auto my-5 border-2 border-black rounded-lg p-2 w-28 h-20 flex justify-center items-center">
-                        <Link to={`/certificate-withdrawal-form/${degreeName}`}> <img src="visa.png" alt="" /></Link>
+                       <img src="/visa.png" alt="" />
                     </div>
+                    </Link>
+                    <Link to={`/certificate-withdrawal-form/${degreeName}`}>
                     <div className="mx-auto my-5 border-2 border-black rounded-lg p-2 w-28 h-20 flex justify-center items-center">
-                        <Link to={`/certificate-withdrawal-form/${degreeName}`}> <img src="upay.png" alt="" /></Link>
+                      <img src="/upay.png" alt="" />
                     </div>
+                    </Link>
                 </div>
 
             </div>

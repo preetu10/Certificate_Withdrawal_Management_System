@@ -90,7 +90,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/pdf",
+        path: "/pdf/:formID",
         element: (
           <PrivateRoute>
             <RoleChecking role={["student"]} path="/common-path">
@@ -189,6 +189,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <RoleChecking role={["student"]} path="/commom-path">
               <StudentSeeDetails></StudentSeeDetails>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/othersHistory",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role={["provost", "certificate_verifier1", "certificate_verifier2", "exam_controller", "certificate_section_incharge", "vice_chancellor"]} path="/common-path">
+              <OthersHistory />
             </RoleChecking>
           </PrivateRoute>
         ),
