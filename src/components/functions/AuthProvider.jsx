@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { baseURL } from "@/customHooks/useAxiosPublic";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
@@ -26,7 +27,7 @@ const AuthProvider = ({ children }) => {
             Authorization: "Bearer " + session_id,
           },
         });
-        // console.log(response?.data?.user);
+         console.log(response?.data?.user);
         if (response?.data?.user?.user_id) {
           setUser({
             ...response?.data?.user,
