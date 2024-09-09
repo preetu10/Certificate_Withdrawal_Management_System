@@ -13,11 +13,16 @@ function OthersHistory() {
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
   const { data, isLoading, refetch } = useQuery({
-    queryKey: `/certificate-withdrawal/search-formData/${user?.user_id}?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
+    queryKey: `/certificate-withdrawal/search-formData/${
+      user?.user_id
+    }?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
-          `/certificate-withdrawal-otherStakeholders/search-formData/${user?.user_id}?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""
+          `/certificate-withdrawal-otherStakeholders/search-formData/${
+            user?.user_id
+          }?currentPage=${currentPage}${
+            pageLimit ? "&pageLimit=" + pageLimit : ""
           }`,
           {
             headers: {
@@ -45,21 +50,6 @@ function OthersHistory() {
         currentPage={currentPage}
         role={user?.role}
       ></Provost>
-
-      <Varifier
-        history={data?.data}
-        pageLimit={pageLimit}
-        currentPage={currentPage}
-        role={user?.role}>
-      </Varifier>
-
-      <ExamController
-        history={data?.data}
-        pageLimit={pageLimit}
-        currentPage={currentPage}
-        role={user?.role}>
-      </ExamController>
-
       {pageLimit ? (
         <PaginationDemo
           currentPage={currentPage}

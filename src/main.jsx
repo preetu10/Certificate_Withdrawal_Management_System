@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         path: "/",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <History></History>
             </RoleChecking>
           </PrivateRoute>
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         path: "/feetable",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <FeeTable></FeeTable>
             </RoleChecking>
           </PrivateRoute>
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         path: "/select-certificate-type",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <SelectDegree></SelectDegree>
             </RoleChecking>
           </PrivateRoute>
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
         path: "/certificate-withdrawal-form/:degree",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Formfillup></Formfillup>
             </RoleChecking>
           </PrivateRoute>
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         path: "/pdf/:formID",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Pdf></Pdf>
             </RoleChecking>
           </PrivateRoute>
@@ -103,7 +103,7 @@ const router = createBrowserRouter([
         path: "/payment/:degree",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
+            <RoleChecking role={["student"]} path="/common-path">
               <Payment></Payment>
             </RoleChecking>
           </PrivateRoute>
@@ -113,7 +113,17 @@ const router = createBrowserRouter([
         path: "/provost",
         element: (
           <PrivateRoute>
-            <RoleChecking role="provost" path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "exam_controller",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "certificate_section_incharge",
+                "vc",
+              ]}
+              path="/common-path"
+            >
               <OthersHistory></OthersHistory>
             </RoleChecking>
           </PrivateRoute>
@@ -124,50 +134,60 @@ const router = createBrowserRouter([
         path: "/seeDetails/:form_id",
         element: (
           <PrivateRoute>
-            <RoleChecking role="provost" path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "exam_controller",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "certificate_section_incharge",
+                "vc",
+              ]}
+              path="/common-path"
+            >
               <StudentForm></StudentForm>
             </RoleChecking>
           </PrivateRoute>
         ),
       },
 
-      {
-        path: "/examController",
-        element: (
-          <PrivateRoute>
-            <RoleChecking role="exam_controller" path="/common-path">
-              <ExamController></ExamController>
-            </RoleChecking>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/varifier",
-        element: (
-          <PrivateRoute>
-            <RoleChecking
-              role="certificate_verifier1"
-              path="/common-path"
-            ></RoleChecking>
-            <Varifier></Varifier>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/progressbar/:form_id",
-        element: (
-          <PrivateRoute>
-            <RoleChecking role="student" path="/common-path">
-              <Progressbar></Progressbar>
-            </RoleChecking>
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   path: "/examController",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking role="exam_controller" path="/common-path">
+      //         <ExamController></ExamController>
+      //       </RoleChecking>
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/varifier",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking
+      //         role="certificate_verifier1"
+      //         path="/common-path"
+      //       ></RoleChecking>
+      //       <Varifier></Varifier>
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/progressbar/:form_id",
+      //   element: (
+      //     <PrivateRoute>
+      //       <RoleChecking role={["student"]} path="/common-path">
+      //         <Progressbar></Progressbar>
+      //       </RoleChecking>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: "/studentSeeDetails/:form_id",
         element: (
           <PrivateRoute>
-            <RoleChecking role="student" path="/commom-path">
+            <RoleChecking role={["student"]} path="/commom-path">
               <StudentSeeDetails></StudentSeeDetails>
             </RoleChecking>
           </PrivateRoute>
@@ -177,7 +197,17 @@ const router = createBrowserRouter([
         path: "/othersHistory",
         element: (
           <PrivateRoute>
-            <RoleChecking role={["provost", "certificate_verifier1", "certificate_verifier2", "exam_controller", "certificate_section_incharge", "vice_chancellor"]} path="/common-path">
+            <RoleChecking
+              role={[
+                "provost",
+                "certificate_verifier1",
+                "certificate_verifier2",
+                "exam_controller",
+                "certificate_section_incharge",
+                "vice_chancellor",
+              ]}
+              path="/common-path"
+            >
               <OthersHistory />
             </RoleChecking>
           </PrivateRoute>
