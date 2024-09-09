@@ -112,7 +112,7 @@ const StudentSeeDetails = () => {
           readOnly
         />
       </div>
-      
+
       <div>
         <div className="text-left mb-3 px-4">
           <label>Village</label>
@@ -297,12 +297,14 @@ const StudentSeeDetails = () => {
           <div className="text-left mb-3 px-4">
             <label>{attachment.attachment_name}:</label>
           </div>
-          <input
-            className=" w-full border-2 border-gray-300 py-3 px-8 rounded-xl mb-5"
-            type="text"
-            value={attachment.attachment}
-            readOnly
-          />
+          <a
+            href={`http://bike-csecu.com:5000/upload/${attachment.attachment}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full border-2 border-gray-300 py-3 px-8 rounded-xl mb-5 bg-gray-100 hover:bg-gray-200 text-blue-600"
+          >
+            View Attachment
+          </a>
         </div>
       ))}
       <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
