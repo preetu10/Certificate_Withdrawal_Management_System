@@ -640,15 +640,15 @@ const Formfillup = () => {
           degree.toLowerCase() == "l.l.b(hons)" ||
           degree.toLowerCase() == "b.sc(hons)" ||
           degree.toLowerCase() == "b.s.s(hons)") && (
-          <ResultSectionHons
-            studentResult={studentResult}
-            department={student?.department_name}
-            exam_centre={student?.results[0]?.exam_centre}
-            student_id={Number(student?.student_id)}
-            academic_session={student?.academic_session}
-            degree={degree}
-          ></ResultSectionHons>
-        )}
+            <ResultSectionHons
+              studentResult={studentResult}
+              department={student?.department_name}
+              exam_centre={student?.results[0]?.exam_centre}
+              student_id={Number(student?.student_id)}
+              academic_session={student?.academic_session}
+              degree={degree}
+            ></ResultSectionHons>
+          )}
         {degree.toLowerCase() == "b.pharm" && (
           <ResultBPharm
             studentResult={studentResult}
@@ -667,15 +667,15 @@ const Formfillup = () => {
           degree.toLowerCase() == "m.s.s" ||
           degree.toLowerCase() == "m.sc.engg" ||
           degree.toLowerCase() == "m.pharm") && (
-          <ResultSectionMasters
-            studentResult={studentResult}
-            department={student?.department_name}
-            exam_centre={student?.results[0]?.exam_centre}
-            student_id={Number(student?.student_id)}
-            academic_session={student?.academic_session}
-            degree={degree}
-          ></ResultSectionMasters>
-        )}
+            <ResultSectionMasters
+              studentResult={studentResult}
+              department={student?.department_name}
+              exam_centre={student?.results[0]?.exam_centre}
+              student_id={Number(student?.student_id)}
+              academic_session={student?.academic_session}
+              degree={degree}
+            ></ResultSectionMasters>
+          )}
         {/* attachments */}
         <div className="w-full px-5 items-stretch">
           <label>
