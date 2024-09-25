@@ -79,7 +79,7 @@ const Provost = ({ history, pageLimit, currentPage, role }) => {
               <TableCell className="text-center flex justify-center items-center">
                 {item?.verificationUpdate === "Rejected" ? (
                   <div className="flex items-center w-full justify-between">
-                    <p className="flex-1 text-center">{item?.status}</p>{" "}
+                    <p className="flex-1 text-center">{item?.verificationUpdate}</p>{" "}
                     <ImCross size={15} color="red" />
                   </div>
                 ) : item?.verificationUpdate === "Accepted" ? (
@@ -99,7 +99,7 @@ const Provost = ({ history, pageLimit, currentPage, role }) => {
                 )}
               </TableCell>
               <TableCell className="text-center">
-                <Link to={`/seeDetails/${item?.cf_form_id}`}>See Details</Link>
+                <Link to={`/seeDetails/${item?.cf_form_id}/${item?.verificationUpdate}`}>See Details</Link>
               </TableCell>
             </TableRow>
           ))}

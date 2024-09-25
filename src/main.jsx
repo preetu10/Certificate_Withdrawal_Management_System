@@ -131,7 +131,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/seeDetails/:form_id",
+        path: "/seeDetails/:form_id/:verificationUpdate",
         element: (
           <PrivateRoute>
             <RoleChecking
