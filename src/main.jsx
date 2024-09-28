@@ -194,6 +194,16 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/progressbar/:form_id",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role={["student"]} path="/commom-path">
+              <Progressbar></Progressbar>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/othersHistory",
         element: (
           <PrivateRoute>
