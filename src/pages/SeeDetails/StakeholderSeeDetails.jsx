@@ -39,7 +39,7 @@ const StakeholderSeeDetails = () => {
 
   return (
     <div>
-      <h1 className="text-2xl mb-5 font-bold">Student Details</h1>
+      <h1 className="text-2xl mb-5 font-bold mt-5">Student Details</h1>
       <div>
         <div className="text-left mb-3 px-4">
           <label>Name (English)</label>

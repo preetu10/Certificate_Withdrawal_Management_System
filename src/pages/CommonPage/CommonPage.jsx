@@ -13,9 +13,7 @@ const CommonPage = () => {
           <div class="flex flex-col p-12 md:px-16">
             <h2 class="text-2xl font-bold uppercase text-black lg:text-4xl">University Of Chittagong</h2>
             <p class="mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
+              The Certificate Withdrawal Management System for the University of Chittagong streamlines the certificate application and withdrawal process by offering an efficient, user-friendly online platform. It enhances transparency, speeds up processing, and simplifies communication between students and university administration.
             </p>
           </div>
         </div>
