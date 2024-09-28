@@ -47,10 +47,11 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar flex justify-between items-center px-4 shadow-md">
+    <div className="navbar flex justify-between items-center px-4 shadow-md w-full">
 
-      <div className="navbar-left">
-        <h1 className="text-xl font-semibold">University of Chittagong</h1>
+      <div className="navbar-left text-left">
+        <h1 className="text-xl font-bold">University of Chittagong</h1>
+        <p className="text-xs">Certificate Withdrawal Management System</p>
       </div>
 
 
@@ -91,7 +92,7 @@ export default function Navbar() {
         {user && (
           <div className="relative group">
             <img
-              src={user.profilePic || "/cu_logo.png"}
+              src={user.profilePic || "/user.png"}
               alt="Profile"
               className="w-10 h-10 rounded-full cursor-pointer"
             />
