@@ -120,7 +120,7 @@ const router = createBrowserRouter([
                 "certificate_verifier1",
                 "certificate_verifier2",
                 "certificate_section_incharge",
-                "vc",
+                "vice_chancellor",
               ]}
               path="/common-path"
             >
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
                 "certificate_verifier1",
                 "certificate_verifier2",
                 "certificate_section_incharge",
-                "vc",
+                "vice_chancellor",
               ]}
               path="/common-path"
             >
