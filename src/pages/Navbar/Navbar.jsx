@@ -12,55 +12,111 @@ import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const { user, logOut } = React.useContext(AuthContext);
+  let role="General";
+  // if(user?.role){
+  //   if(user?.role=="student")
+  //     setRole("Student")
+  //   else if(user?.role=="provost")
+  //     setRole("Provost")
+  //   else if(user?.role=="certificate_verifier1")
+  //     setRole("First Verifier")
+  //   else if(user?.role=="certificate_verifier2")
+  //     setRole("Second Verifier")
+  //   else if(user?.role=="certificate_section_incharge")
+  //     setRole("Certificate Section In-charge")
+  //   else if(user?.role=="exam_controller")
+  //     setRole("Exam Controller")
+  //   else if(user?.role=="vice_chancellor")
+  //     setRole("Vice Chancellor")
+  // }
+  if(user?.role){
+    if(user?.role=="student")
+      role="Student"
+    else if(user?.role=="provost")
+      role="Provost"
+    else if(user?.role=="certificate_verifier1")
+     role="First Verifier"
+    else if(user?.role=="certificate_verifier2")
+      role="Second Verifier"
+    else if(user?.role=="certificate_section_incharge")
+      role="Certificate Section In-charge"
+    else if(user?.role=="exam_controller")
+      role="Exam Controller"
+    else if(user?.role=="vice_chancellor")
+      role="Vice Chancellor"
+  }
+
   return (
-    <div>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <Link to="/">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Student
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+    <div className="navbar flex justify-between items-center px-4 shadow-md w-full">
 
-          <NavigationMenuItem>
-            <Link to="/othersHistory">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Provost
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+      <div className="navbar-left text-left">
+        <h1 className="text-xl font-bold">University of Chittagong</h1>
+        <p className="text-xs">Certificate Withdrawal Management System</p>
+      </div>
 
-          <NavigationMenuItem>
-            <Link to="/othersHistory">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Exam Controller
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
 
-          <NavigationMenuItem>
-            <Link to="/othersHistory">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Varifier
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            {user ? (
-              <Button onClick={logOut}>Logout</Button>
-            ) : (
-              <Link to="/login">
+      <div className="navbar-center">
+        <NavigationMenu>
+          <NavigationMenuList className="flex gap-4">
+            <NavigationMenuItem>
+              <Link to="/common-path">
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Login
+                  Home
                 </NavigationMenuLink>
               </Link>
+            </NavigationMenuItem>
+
+            {user && user.role === "student" ? (
+              <NavigationMenuItem>
+                <Link to="/">
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    History
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            ) : (
+              <NavigationMenuItem>
+                <Link to="/othersHistory">
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    History
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
             )}
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+
+      <div className="navbar-right flex items-center space-x-4">
+        {user && (
+          <div className="relative group">
+            <img
+              src={user.profilePic || "/user.png"}
+              alt="Profile"
+              className="w-10 h-10 rounded-full cursor-pointer"
+            />
+
+            <div className="absolute right-0 mt-2 w-48 p-2 bg-gray-100 border text-black shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+              <p className="text-sm font-medium">{user?.first_name}</p>
+              <p className="text-xs text-gray-500">{role}</p>
+            </div>
+          </div>
+        )}
+
+
+        <div>
+          {user ? (
+            <Button onClick={logOut} className="ml-2">
+              Logout
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button className="ml-2">Login</Button>
+            </Link>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

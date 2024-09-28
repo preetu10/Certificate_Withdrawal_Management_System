@@ -120,7 +120,7 @@ const router = createBrowserRouter([
                 "certificate_verifier1",
                 "certificate_verifier2",
                 "certificate_section_incharge",
-                "vc",
+                "vice_chancellor",
               ]}
               path="/common-path"
             >
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
                 "certificate_verifier1",
                 "certificate_verifier2",
                 "certificate_section_incharge",
-                "vc",
+                "vice_chancellor",
               ]}
               path="/common-path"
             >
@@ -189,6 +189,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <RoleChecking role={["student"]} path="/commom-path">
               <StudentSeeDetails></StudentSeeDetails>
+            </RoleChecking>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/progressbar/:form_id",
+        element: (
+          <PrivateRoute>
+            <RoleChecking role={["student"]} path="/commom-path">
+              <Progressbar></Progressbar>
             </RoleChecking>
           </PrivateRoute>
         ),

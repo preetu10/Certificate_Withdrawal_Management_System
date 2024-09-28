@@ -15,10 +15,12 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import { FaQuestion } from "react-icons/fa";
+import { AuthContext } from "@/components/functions/AuthProvider";
 
 // const table = [
 //     {
@@ -52,11 +54,12 @@ import { FaQuestion } from "react-icons/fa";
 // ];
 
 const Provost = ({ history, pageLimit, currentPage, role }) => {
+  const { user } = useContext(AuthContext);
   console.log(history);
   return (
     <div>
       <h1 className="text-2xl font-bold my-10">
-        Applications for certificate withdrawal(Provost)
+        Applications for certificate withdrawal ({user.role})
       </h1>
       <Table className="border">
         <TableHeader>
