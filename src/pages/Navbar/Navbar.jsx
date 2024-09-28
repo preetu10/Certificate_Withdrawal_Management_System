@@ -12,6 +12,39 @@ import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const { user, logOut } = React.useContext(AuthContext);
+  let role="General";
+  // if(user?.role){
+  //   if(user?.role=="student")
+  //     setRole("Student")
+  //   else if(user?.role=="provost")
+  //     setRole("Provost")
+  //   else if(user?.role=="certificate_verifier1")
+  //     setRole("First Verifier")
+  //   else if(user?.role=="certificate_verifier2")
+  //     setRole("Second Verifier")
+  //   else if(user?.role=="certificate_section_incharge")
+  //     setRole("Certificate Section In-charge")
+  //   else if(user?.role=="exam_controller")
+  //     setRole("Exam Controller")
+  //   else if(user?.role=="vice_chancellor")
+  //     setRole("Vice Chancellor")
+  // }
+  if(user?.role){
+    if(user?.role=="student")
+      role="Student"
+    else if(user?.role=="provost")
+      role="Provost"
+    else if(user?.role=="certificate_verifier1")
+     role="First Verifier"
+    else if(user?.role=="certificate_verifier2")
+      role="Second Verifier"
+    else if(user?.role=="certificate_section_incharge")
+      role="Certificate Section In-charge"
+    else if(user?.role=="exam_controller")
+      role="Exam Controller"
+    else if(user?.role=="vice_chancellor")
+      role="Vice Chancellor"
+  }
 
   return (
     <div className="navbar flex justify-between items-center px-4 shadow-md w-full">
@@ -65,8 +98,8 @@ export default function Navbar() {
             />
 
             <div className="absolute right-0 mt-2 w-48 p-2 bg-gray-100 border text-black shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-              <p className="text-sm font-medium">{user.first_name}</p>
-              <p className="text-xs text-gray-500">{user.role}</p>
+              <p className="text-sm font-medium">{user?.first_name}</p>
+              <p className="text-xs text-gray-500">{role}</p>
             </div>
           </div>
         )}
