@@ -697,7 +697,6 @@ const Formfillup = () => {
             Be careful. You can upload upto 8MB.
           </p>
         </div>
-        {/* conditional button */}
         <Button
           type="submit"
           className="mt-5"

@@ -11,16 +11,13 @@ function History() {
   const axiosPublic = useAxiosPublic();
   const { user } = useContext(AuthContext);
   const { data, isLoading, refetch } = useQuery({
-    queryKey: `/certificate-withdrawal/search-formData/${
-      user?.user_id
-    }?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
+    queryKey: `/certificate-withdrawal/search-formData/${user?.user_id
+      }?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
-          `/certificate-withdrawal/search-formData/${
-            user?.user_id
-          }?currentPage=${currentPage}${
-            pageLimit ? "&pageLimit=" + pageLimit : ""
+          `/certificate-withdrawal/search-formData/${user?.user_id
+          }?currentPage=${currentPage}${pageLimit ? "&pageLimit=" + pageLimit : ""
           }`,
           {
             headers: {
