@@ -18,22 +18,21 @@ const StudentForm = () => {
   const [payment, setPayment] = useState("0");
   const [formTypeValue, setFormTypeValue] = useState("");
   const [comment, setComment] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // To disable buttons after submission
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState(null); // Add local state for verification status
+
   const navigate = useNavigate();
-  const { form_id: formID, verificationUpdate: verificationUpdate } = useParams();
+  const { form_id: formID } = useParams();
   const axiosPublic = useAxiosPublic();
 
   // Fetching student details
-
-  console.log(user?.user_id);
-  const { data: student = {}, isPending } = useQuery({
+  const { data: student = {}, isPending, refetch } = useQuery({
     queryKey: `OtherStakeholders/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`,
     queryFn: async () => {
       try {
         const res = await axiosPublic.get(
           `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`
         );
-        console.log(res?.data);
         return res.data;
       } catch (error) {
         console.log("Failed to fetch student data");
@@ -44,7 +43,6 @@ const StudentForm = () => {
   if (isPending) {
     return <div>Loading...</div>;
   }
-
 
   const handleSubmit = async (status) => {
     setIsSubmitting(true);
@@ -69,24 +67,28 @@ const StudentForm = () => {
 
       console.log("Post successful:", response?.data);
       toast.success(`Form ${status === "Accepted" ? "Accepted" : "Rejected"} successfully`);
-      setIsSubmitting(true);
+
+      // Update the local state with the new verification status
+      setVerificationStatus(status);
+
+      // Refetch to update any other data if needed
+      refetch();
 
     } catch (error) {
       console.error("Failed to submit form:", error);
       toast.error("Submission failed. Please try again.");
     } finally {
-
+      setIsSubmitting(false);
     }
   };
-
-
-  console.log(verificationUpdate)
 
   return (
     <div>
       <StakeholderSeeDetails />
-      {verificationUpdate === "Pending" ?
-
+      {/* Show verification status if updated, otherwise fall back to the pending status */}
+      {verificationStatus ? (
+        <p>{verificationStatus}</p>
+      ) : (
         <>
           <div className="">
             <label>
@@ -117,11 +119,8 @@ const StudentForm = () => {
           >
             Reject
           </Button>
-        </> :
-
-        <>
-          <p>{verificationUpdate}</p>
-        </>}
+        </>
+      )}
     </div>
   );
 };
