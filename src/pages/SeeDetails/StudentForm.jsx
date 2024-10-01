@@ -19,10 +19,11 @@ const StudentForm = () => {
   const [formTypeValue, setFormTypeValue] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [verificationStatus, setVerificationStatus] = useState(null); // Add local state for verification status
+  // const [verificationStatus, setVerificationStatus] = useState(null); // Add local state for verification status
 
-  const navigate = useNavigate();
-  const { form_id: formID } = useParams();
+   const navigate = useNavigate();
+  // const { form_id: formID } = useParams();
+  const { form_id: formID, verificationUpdate: verificationUpdate } = useParams();
   const axiosPublic = useAxiosPublic();
 
   // Fetching student details
@@ -33,7 +34,9 @@ const StudentForm = () => {
         const res = await axiosPublic.get(
           `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`
         );
-        return res.data;
+        // console.log(res?.data?.status);
+        // setVerificationStatus(res?.data?.status);
+        return res?.data;
       } catch (error) {
         console.log("Failed to fetch student data");
       }
@@ -69,10 +72,12 @@ const StudentForm = () => {
       toast.success(`Form ${status === "Accepted" ? "Accepted" : "Rejected"} successfully`);
 
       // Update the local state with the new verification status
-      setVerificationStatus(status);
+      // setVerificationStatus(status);
 
       // Refetch to update any other data if needed
-      refetch();
+      // refetch();
+      navigate("/othersHistory");
+
 
     } catch (error) {
       console.error("Failed to submit form:", error);
@@ -86,8 +91,8 @@ const StudentForm = () => {
     <div>
       <StakeholderSeeDetails />
       {/* Show verification status if updated, otherwise fall back to the pending status */}
-      {verificationStatus ? (
-        <p>{verificationStatus}</p>
+      {verificationUpdate!=="Pending" ? (
+        <p>{verificationUpdate}</p>
       ) : (
         <>
           <div className="">

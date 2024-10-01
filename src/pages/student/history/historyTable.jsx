@@ -28,6 +28,9 @@ export function HistoryTable({ history, pageLimit, currentPage }) {
           </Button>
         </Link>
       </div>
+      <h1 className="text-2xl font-bold py-4">
+      My Applications
+      </h1>
       <Table className="border">
         <TableHeader>
           <TableRow>
