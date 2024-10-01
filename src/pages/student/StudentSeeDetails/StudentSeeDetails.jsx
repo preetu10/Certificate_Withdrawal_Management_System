@@ -33,7 +33,7 @@ const StudentSeeDetails = () => {
 
   const formData = data?.data[0];
   const attachments = data?.attachments;
-  console.log(formData)
+  console.log(formData);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -45,7 +45,7 @@ const StudentSeeDetails = () => {
         </Link>
       </div>
 
-      <h1 className="text-2xl mb-5 font-bold">Student's  Details</h1>
+      <h1 className="text-2xl mb-5 font-bold">Student's Details</h1>
       <div>
         <div className="text-left mb-3 px-4">
           <label>Name (English)</label>
@@ -307,7 +307,11 @@ const StudentSeeDetails = () => {
           </a>
         </div>
       ))}
-      <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
+      <Link to={`/pdf/${formID}`}>
+        <p className="text-lg text-blue-800 font-medium underline">
+          Download Form
+        </p>
+      </Link>
     </div>
   );
 };

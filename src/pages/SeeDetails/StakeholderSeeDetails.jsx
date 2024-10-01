@@ -33,7 +33,7 @@ const StakeholderSeeDetails = () => {
 
   const formData = data?.data[0];
   const attachments = data?.attachments;
-  console.log(formData)
+  console.log(formData);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -301,7 +301,11 @@ const StakeholderSeeDetails = () => {
           </a>
         </div>
       ))}
-      <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
+      <Link to={`/pdf/${formID}`}>
+        <p className="text-lg text-blue-800 font-medium underline">
+          Download Form
+        </p>
+      </Link>
     </div>
   );
 };
