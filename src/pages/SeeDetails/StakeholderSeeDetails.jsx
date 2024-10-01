@@ -24,6 +24,8 @@ const StakeholderSeeDetails = () => {
             },
           }
         );
+        console.log(res?.data);
+        // refetch();
         return res?.data;
       } catch (error) {
         console.log("Failed to fetch student history");
@@ -301,7 +303,7 @@ const StakeholderSeeDetails = () => {
           </a>
         </div>
       ))}
-      <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
+      {/* <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link> */}
     </div>
   );
 };
