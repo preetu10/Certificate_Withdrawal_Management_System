@@ -1,9 +1,42 @@
 /* eslint-disable react/prop-types */
 
-import { Link } from 'react-router-dom'
+import { AuthContext } from '@/components/functions/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import { useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import useAxiosPublic from "../../../customHooks/useAxiosPublic.jsx";
+import { toast } from 'react-toastify';
 const Logos = ({ degree }) => {
     const degreeName = degree.degree;
+    const { user } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
     console.log(degreeName);
+    const { data: student = {}, isPending } = useQuery({
+        queryKey: `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degreeName}`,
+        queryFn: async () => {
+          try {
+            const res = await axiosPublic.get(
+              `/certificate-withdrawal/?user_id=${user.user_id}&program_abbr=${degreeName}`
+            );
+            return res?.data;
+          } catch (error) {
+            console.log("Failed to fetch student data");
+          }
+        },
+      });
+      useEffect(() => {
+        if (!isPending && student?.results?.length === 0) {
+          toast.warning(
+            "You have selected incorrect degree. Please select correct degree to apply for certificate."
+          );
+          navigate("/select-certificate-type");
+        }
+      }, [isPending, student, navigate]);
+    
+      if (isPending) {
+        return <div>Loading...</div>;
+      }
     return (
         <div>
             <h1 className="mt-5 text-2xl font-bold text-orange-500">Payment Methods</h1>

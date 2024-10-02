@@ -65,7 +65,7 @@ export function HistoryTable({ history, pageLimit, currentPage }) {
                 {item?.status === "Rejected" ? (
                   <div className="flex items-center w-full justify-between">
                     <p className="flex-1 text-center">
-                      {roleMapping[item?.verificationUpdate]}
+                      {roleMapping[item?.verificationUpdate]||"Pending"}
                     </p>{" "}
                     <ImCross size={15} color="red" />
                   </div>

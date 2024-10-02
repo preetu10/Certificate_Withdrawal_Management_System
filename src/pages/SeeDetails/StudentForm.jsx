@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 ("use client");
-
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -39,8 +38,6 @@ const StudentForm = () => {
         const res = await axiosPublic.get(
           `/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`
         );
-        // console.log(res?.data?.status);
-        // setVerificationStatus(res?.data?.status);
         return res?.data;
       } catch (error) {
         console.log("Failed to fetch student data");
