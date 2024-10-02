@@ -43,7 +43,7 @@ const Progressbar = () => {
           <div className="flex items-center">
             {" "}
             <span className="font-semibold text-base md:text-lg text-gray-700">
-             Student
+              Student
             </span>
           </div>
         </ProgressStep>
@@ -65,15 +65,15 @@ const Progressbar = () => {
             )
           }
         >
-          <div className="flex items-center">
+          <div className="flex flex-row items-center">
             {" "}
-            <span className="font-semibold text-base md:text-lg text-gray-700">
+            <div className="font-semibold text-base md:text-lg text-gray-700">
               Provost
-            </span>
+            </div>
             {data?.verifications[0]?.comment && (
-              <span className="px-5 font-normal text-sm md:text-lg">
-                &quot;{data?.verifications[0]?.comment}&quot;
-              </span>
+              <div className="px-5 font-normal text-sm md:text-base">
+                <span className="font-semibold">Comment: </span>&quot;{data?.verifications[0]?.comment}&quot;
+              </div>
             )}
           </div>
         </ProgressStep>
@@ -95,15 +95,15 @@ const Progressbar = () => {
             )
           }
         >
-          <div className="flex items-center">
+          <div className="flex flex-row items-center">
             {" "}
-            <span className="font-semibold text-base md:text-lg text-gray-700">
+            <div className="font-semibold text-base md:text-lg text-gray-700">
               First Verifier
-            </span>
+            </div>
             {data?.verifications[1]?.comment && (
-              <span className="px-5 font-normal text-sm md:text-lg">
-                &quot;{data?.verifications[1]?.comment}&quot;
-              </span>
+              <div className="px-5 font-normal text-sm md:text-base">
+               <span className="font-semibold">Comment: </span>&quot;{data?.verifications[1]?.comment}&quot;
+              </div>
             )}
           </div>
         </ProgressStep>
@@ -125,15 +125,15 @@ const Progressbar = () => {
             )
           }
         >
-          <div className="flex items-center">
+          <div className="flex flex-row items-center">
             {" "}
-            <span className="font-semibold text-base md:text-lg text-gray-700">
+            <div className="font-semibold text-base md:text-lg text-gray-700">
               Second Verifier
-            </span>
+            </div>
             {data?.verifications[2]?.comment && (
-              <span className="px-5 font-normal text-sm md:text-lg">
-                &quot;{data?.verifications[2]?.comment}&quot;
-              </span>
+              <div className="px-5 font-normal text-sm md:text-base">
+                <span className="font-semibold">Comment: </span>&quot;{data?.verifications[2]?.comment}&quot;
+              </div>
             )}
           </div>
         </ProgressStep>
@@ -155,15 +155,15 @@ const Progressbar = () => {
             )
           }
         >
-          <div className="flex items-center">
+          <div className="flex flex-row items-center">
             {" "}
-            <span className="font-semibold text-base md:text-lg text-gray-700">
+            <div className="font-semibold text-base md:text-lg text-gray-700">
               Section Incharge
-            </span>
+            </div>
             {data?.verifications[3]?.comment && (
-              <span className="px-5 font-normal text-sm md:text-lg">
-                &quot;{data?.verifications[3]?.comment}&quot;
-              </span>
+              <div className="px-5 font-normal text-sm md:text-base">
+                <span className="font-semibold">Comment: </span>&quot;{data?.verifications[3]?.comment}&quot;
+              </div>
             )}
           </div>
         </ProgressStep>
@@ -185,15 +185,15 @@ const Progressbar = () => {
             )
           }
         >
-          <div className="flex items-center">
+          <div className="flex flex-row items-center">
             {" "}
-            <span className="font-semibold text-base md:text-lg text-gray-700">
+            <div className="font-semibold text-base md:text-lg text-gray-700">
               Exam Controller
-            </span>
+            </div>
             {data?.verifications[4]?.comment && (
-              <span className="px-5 font-normal text-sm md:text-lg">
-                &quot;{data?.verifications[4]?.comment}&quot;
-              </span>
+              <div className="px-5 font-normal text-sm md:text-base">
+                <span className="font-semibold">Comment: </span>&quot;{data?.verifications[4]?.comment}&quot;
+              </div>
             )}
           </div>
         </ProgressStep>
@@ -217,20 +217,33 @@ const Progressbar = () => {
               )
             }
           >
-            <div className="flex items-center">
+            <div className="flex flex-row items-center">
               {" "}
-              <span className="font-semibold text-base md:text-lg text-gray-700">
+              <div className="font-semibold text-base md:text-lg text-gray-700">
                 Vice Chancellor
-              </span>
+              </div>
               {data?.verifications[5]?.comment && (
-                <span className="px-5 font-normal text-sm md:text-lg">
-                  &quot;{data?.verifications[5]?.comment}&quot;
-                </span>
+                <div className="px-5 font-normal text-sm md:text-base">
+                <span className="font-semibold">Comment: </span> &quot;{data?.verifications[5]?.comment}&quot;
+                </div>
               )}
             </div>
           </ProgressStep>
         )}
       </ProcedureProgress>
+      {(((data?.data[0]?.form_type == "Main" ||
+        data?.data[0]?.form_type == "Main(Duplicate)") &&
+        data?.verifications[5]?.status === "Accepted") ||
+        ((data?.data[0]?.form_type == "Provisional" ||
+          data?.data[0]?.form_type == "Provisional(Duplicate)") &&
+          data?.verifications[4]?.status === "Accepted")) && (
+        <div className="mt-4 text-blue-800 font-semibold text-lg flex mx-auto">
+          <p >
+            Your application for certificate is verified by the authority.
+            Please collect it from the Certificate Section of Academic Building.
+          </p>
+        </div>
+      )}
       ;
     </div>
   );

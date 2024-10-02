@@ -19,6 +19,17 @@ import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 
 export function HistoryTable({ history, pageLimit, currentPage }) {
+  const roleMapping = {
+    student: "Student",
+    provost: "Provost",
+    certificate_verifier1: "First Verifier",
+    certificate_verifier2: "Second Verifier",
+    certificate_section_incharge: "Certificate Section In-charge",
+    exam_controller: "Exam Controller",
+    vice_chancellor: "Vice Chancellor"
+  };
+  
+  // let roles = roleMapping[user?.role] || "General";
   return (
     <>
       <div className="text-right my-5">
@@ -54,21 +65,21 @@ export function HistoryTable({ history, pageLimit, currentPage }) {
                 {item?.status === "Rejected" ? (
                   <div className="flex items-center w-full justify-between">
                     <p className="flex-1 text-center">
-                      {item?.verificationUpdate}
+                      {roleMapping[item?.verificationUpdate]}
                     </p>{" "}
                     <ImCross size={15} color="red" />
                   </div>
                 ) : item?.status === "Accepted" ? (
                   <div className="flex items-center w-full justify-between">
                     <p className="flex-1 text-center">
-                      {item?.verificationUpdate}
+                    {roleMapping[item?.verificationUpdate]}
                     </p>
                     <TiTick size={25} color="green" />
                   </div>
                 ) : (
                   <div className="flex items-center w-full justify-between">
                     <p className="flex-1 text-center">
-                      {item?.verificationUpdate}
+                    {roleMapping[item?.verificationUpdate]}
                     </p>{" "}
                     <FaQuestion size={15} color="cyan" />
                   </div>

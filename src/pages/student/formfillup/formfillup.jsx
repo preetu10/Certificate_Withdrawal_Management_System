@@ -51,7 +51,7 @@ const Formfillup = () => {
   if (isPending) {
     return <div>Loading...</div>;
   }
-  console.log(student);
+  console.log(student?.profile_image);
   const formatExamDate = (dateString) => {
     const options = { year: "numeric", month: "long" };
     const date = new Date(dateString);
@@ -432,10 +432,10 @@ const Formfillup = () => {
           <img
             className="border-2 border-gray-300"
             name="profile_image"
-            src={student?.profile_image}
+            src={student?.profile_image||"/user.png"}
             alt="ছবি"
-            width="180px"
-            height="180px"
+            width="170px"
+            height="170px"
           />
         </div>
         {/* pay order info */}
