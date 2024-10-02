@@ -20,13 +20,18 @@ const StudentForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [verificationStatus, setVerificationStatus] = useState(null); // Add local state for verification status
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   // const { form_id: formID } = useParams();
-  const { form_id: formID, verificationUpdate: verificationUpdate } = useParams();
+  const { form_id: formID, verificationUpdate: verificationUpdate } =
+    useParams();
   const axiosPublic = useAxiosPublic();
 
   // Fetching student details
-  const { data: student = {}, isPending, refetch } = useQuery({
+  const {
+    data: student = {},
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: `OtherStakeholders/certificate-withdrawal-common/see-details/?user_id=${user.user_id}&form_id=${formID}`,
     queryFn: async () => {
       try {
@@ -66,11 +71,10 @@ const StudentForm = () => {
       );
 
       console.log("Post successful:", response?.data);
-      toast.success(`Form ${status === "Accepted" ? "Accepted" : "Rejected"} successfully`);
-
+      // toast.success(`Form ${status === "Accepted" ? "Accepted" : "Rejected"} successfully`);
+      if (status === "Accepted") toast.success("Form Successfully Accepted.");
+      else toast.error("Form Rejected.");
       navigate("/othersHistory");
-
-
     } catch (error) {
       console.error("Failed to submit form:", error);
       toast.error("Submission failed. Please try again.");
@@ -83,7 +87,7 @@ const StudentForm = () => {
     <div>
       <StakeholderSeeDetails />
       {/* Show verification status if updated, otherwise fall back to the pending status */}
-      {verificationUpdate!=="Pending" ? (
+      {verificationUpdate !== "Pending" ? (
         <p>{verificationUpdate}</p>
       ) : (
         <>

@@ -294,7 +294,7 @@ const StakeholderSeeDetails = () => {
             <label>{attachment.attachment_name}:</label>
           </div>
           <a
-            href={`http://bike-csecu.com:5000/upload/${attachment.attachment}`}
+            href={`http://localhost:5000/upload/${attachment.attachment}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full border-2 border-gray-300 py-3 px-8 rounded-xl mb-5 bg-gray-100 hover:bg-gray-200 text-blue-600"
