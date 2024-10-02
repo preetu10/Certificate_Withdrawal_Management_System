@@ -21,6 +21,7 @@ import { TiTick } from "react-icons/ti";
 export function HistoryTable({ history, pageLimit, currentPage }) {
   const roleMapping = {
     student: "Student",
+    pending: "Pending",
     provost: "Provost",
     certificate_verifier1: "First Verifier",
     certificate_verifier2: "Second Verifier",
@@ -65,7 +66,7 @@ export function HistoryTable({ history, pageLimit, currentPage }) {
                 {item?.status === "Rejected" ? (
                   <div className="flex items-center w-full justify-between">
                     <p className="flex-1 text-center">
-                      {roleMapping[item?.verificationUpdate]||"Pending"}
+                      {roleMapping[item?.verificationUpdate]}
                     </p>{" "}
                     <ImCross size={15} color="red" />
                   </div>
