@@ -71,11 +71,6 @@ const StudentForm = () => {
       console.log("Post successful:", response?.data);
       toast.success(`Form ${status === "Accepted" ? "Accepted" : "Rejected"} successfully`);
 
-      // Update the local state with the new verification status
-      // setVerificationStatus(status);
-
-      // Refetch to update any other data if needed
-      // refetch();
       navigate("/othersHistory");
 
 

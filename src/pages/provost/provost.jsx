@@ -56,23 +56,33 @@ import { AuthContext } from "@/components/functions/AuthProvider";
 const Provost = ({ history, pageLimit, currentPage, role }) => {
   const { user } = useContext(AuthContext);
   console.log(user);
-  let roles="General";
-  if(user?.role){
-    if(user?.role=="student")
-      roles="Student"
-    else if(user?.role=="provost")
-      roles="Provost"
-    else if(user?.role=="certificate_verifier1")
-     roles="First Verifier"
-    else if(user?.role=="certificate_verifier2")
-      roles="Second Verifier"
-    else if(user?.role=="certificate_section_incharge")
-      roles="Certificate Section In-charge"
-    else if(user?.role=="exam_controller")
-      roles="Exam Controller"
-    else if(user?.role=="vice_chancellor")
-      roles="Vice Chancellor"
-  }
+  const roleMapping = {
+    student: "Student",
+    provost: "Provost",
+    certificate_verifier1: "First Verifier",
+    certificate_verifier2: "Second Verifier",
+    certificate_section_incharge: "Certificate Section In-charge",
+    exam_controller: "Exam Controller",
+    vice_chancellor: "Vice Chancellor"
+  };
+  
+  let roles = roleMapping[user?.role] || "General";
+  // if(user?.role){
+  //   if(user?.role=="student")
+  //     roles="Student"
+  //   else if(user?.role=="provost")
+  //     roles="Provost"
+  //   else if(user?.role=="certificate_verifier1")
+  //    roles="First Verifier"
+  //   else if(user?.role=="certificate_verifier2")
+  //     roles="Second Verifier"
+  //   else if(user?.role=="certificate_section_incharge")
+  //     roles="Certificate Section In-charge"
+  //   else if(user?.role=="exam_controller")
+  //     roles="Exam Controller"
+  //   else if(user?.role=="vice_chancellor")
+  //     roles="Vice Chancellor"
+  // }
   return (
     <div>
       <h1 className="text-2xl font-bold my-10">
