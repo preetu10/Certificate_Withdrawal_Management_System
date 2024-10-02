@@ -35,7 +35,7 @@ const StakeholderSeeDetails = () => {
 
   const formData = data?.data[0];
   const attachments = data?.attachments;
-  console.log(formData)
+  console.log(formData);
 
   if (isLoading) return <div>Loading...</div>;
 

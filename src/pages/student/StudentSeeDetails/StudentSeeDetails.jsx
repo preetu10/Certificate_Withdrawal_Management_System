@@ -33,7 +33,7 @@ const StudentSeeDetails = () => {
 
   const formData = data?.data[0];
   const attachments = data?.attachments;
-  console.log(formData)
+  console.log(formData);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -45,7 +45,7 @@ const StudentSeeDetails = () => {
         </Link>
       </div>
 
-      <h1 className="text-2xl mb-5 font-bold">Student's  Details</h1>
+      <h1 className="text-2xl mb-5 font-bold">Student's Details</h1>
       <div>
         <div className="text-left mb-3 px-4">
           <label>Name (English)</label>
@@ -298,7 +298,8 @@ const StudentSeeDetails = () => {
             <label>{attachment.attachment_name}:</label>
           </div>
           <a
-            href={`http://bike-csecu.com:5000/upload/${attachment.attachment}`}
+            // href={`http://bike-csecu.com:5000/upload/${attachment.attachment}`}
+            href={`http://localhost:5000/upload/${attachment.attachment}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full border-2 border-gray-300 py-3 px-8 rounded-xl mb-5 bg-gray-100 hover:bg-gray-200 text-blue-600"
@@ -307,7 +308,11 @@ const StudentSeeDetails = () => {
           </a>
         </div>
       ))}
-      <Link to={`/pdf/${formID}`}><p className="text-lg text-blue-800 font-medium underline">Download Form</p></Link>
+      <Link to={`/pdf/${formID}`}>
+        <p className="text-lg text-blue-800 font-medium underline">
+          Download Form
+        </p>
+      </Link>
     </div>
   );
 };

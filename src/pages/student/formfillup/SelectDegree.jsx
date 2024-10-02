@@ -44,7 +44,7 @@ const SelectDegree = () => {
     <div>
       <div className="hind-siliguri-regular">
         <div className="mx-auto">
-          <img className="mx-auto w-24 h-30" src="cu_logo.png" alt="" />
+          <img className="mx-auto w-24 h-30 mt-5" src="cu_logo.png" alt="" />
           <h1 className="text-xl font-bold mt-5">চট্টগ্রাম বিশ্ববিদ্যালয়</h1>
           <div className="flex flex-col mx-auto justify-center mt-5 mb-5">
             <label>
