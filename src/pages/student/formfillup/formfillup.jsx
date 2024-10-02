@@ -40,18 +40,18 @@ const Formfillup = () => {
   });
 
   useEffect(() => {
-    if (!isPending && student?.results?.length === 0) {
-      toast.warning(
-        "You have selected incorrect degree. Please select correct degree to apply for certificate."
-      );
-      navigate("/select-certificate-type");
-    }
+    // if (!isPending && student?.results?.length === 0) {
+    //   toast.warning(
+    //     "You have selected incorrect degree. Please select correct degree to apply for certificate."
+    //   );
+    //   navigate("/select-certificate-type");
+    // }
   }, [isPending, student, navigate]);
 
   if (isPending) {
     return <div>Loading...</div>;
   }
-  console.log(student?.profile_image);
+ // console.log(student?.profile_image);
   const formatExamDate = (dateString) => {
     const options = { year: "numeric", month: "long" };
     const date = new Date(dateString);
